@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.*;
+
 public class Player extends Entity {
 
     GamePanel gamePanel;
@@ -9,6 +11,8 @@ public class Player extends Entity {
 
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
+
+        setDefaultValues();
     }
 
     public void setDefaultValues() {
@@ -16,5 +20,27 @@ public class Player extends Entity {
         x = 100;
         y = 100;
         speed = 4;
+    }
+
+    public void update() {
+
+        if (keyHandler.upPressed) {
+            y -= speed;
+        }
+        if (keyHandler.downPressed) {
+            y += speed;
+        }
+        if (keyHandler.leftPressed) {
+            x -= speed;
+        }
+        if (keyHandler.rightPressed) {
+            x += speed;
+        }
+    }
+
+    public void draw(Graphics2D g2) {
+
+        g2.setColor(Color.white);
+        g2.fillRect(x, y, gamePanel.tileSize, gamePanel.tileSize);
     }
 }
