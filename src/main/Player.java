@@ -102,27 +102,18 @@ public class Player extends Entity {
         }
 
         spriteCounter++;
-        if (spriteCounter > 8) {
-            if (spriteNum == 1) {
-                spriteNum = 2;
-            }else if (spriteNum == 2) {
-                spriteNum = 3;
-            }else if (spriteNum == 3) {
-                spriteNum = 4;
-            }else if (spriteNum == 4) {
-                spriteNum = 5;
-            }else if (spriteNum == 5) {
-                spriteNum = 6;
-            }else if (spriteNum == 6) {
-                spriteNum = 7;
-            }else if (spriteNum == 7) {
-                spriteNum = 8;
-            }else if (spriteNum == 8) {
-                spriteNum = 9;
-            }else if (spriteNum == 9) {
-                spriteNum = 10;
-            }else if (spriteNum == 10) {
-                spriteNum = 1;
+        if (spriteCounter > 5) {
+            switch(spriteNum) {
+                case 1 -> spriteNum = 2;
+                case 2 -> spriteNum = 3;
+                case 3 -> spriteNum = 4;
+                case 4 -> spriteNum = 5;
+                case 5 -> spriteNum = 6;
+                case 6 -> spriteNum = 7;
+                case 7 -> spriteNum = 8;
+                case 8 -> spriteNum = 9;
+                case 9 -> spriteNum = 10;
+                case 10 -> spriteNum = 1;
             }
             spriteCounter = 0;
         }
