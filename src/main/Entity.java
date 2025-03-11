@@ -4,8 +4,9 @@ import java.awt.image.BufferedImage;
 
 public class Entity {
 
-    public int x, y;
+    public int worldX, worldY;
     public int speed;
+
 
     public BufferedImage standingUp;
     public BufferedImage[] standingDown = new BufferedImage[10];

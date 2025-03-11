@@ -12,10 +12,16 @@ public class Player extends Entity {
     GamePanel gamePanel;
     KeyHandler keyHandler;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
 
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
+
+        screenX = gamePanel.screenWidth/2 - gamePanel.tileSize/2;
+        screenY = gamePanel.screenHeight/2 - gamePanel.tileSize/2;
 
         setDefaultValues();
         getPlayerImage();
@@ -23,8 +29,8 @@ public class Player extends Entity {
 
     public void setDefaultValues() {
 
-        x = 100;
-        y = 100;
+        worldX = gamePanel.tileSize * 10;
+        worldY = gamePanel.tileSize * 12;
         speed = 4;
         direction = "standing";
         lastDirection = "down";
@@ -84,19 +90,19 @@ public class Player extends Entity {
         if (keyHandler.upPressed) {
             direction = "up";
             lastDirection = "up";
-            y -= speed;
+            worldY -= speed;
         } else if (keyHandler.downPressed) {
             direction = "down";
             lastDirection = "down";
-            y += speed;
+            worldY += speed;
         } else if (keyHandler.leftPressed) {
             direction = "left";
             lastDirection = "left";
-            x -= speed;
+            worldX -= speed;
         } else if (keyHandler.rightPressed) {
             direction = "right";
             lastDirection = "right";
-            x += speed;
+            worldX += speed;
         } else if (keyHandler.upReleased || keyHandler.downReleased || keyHandler.leftReleased || keyHandler.rightReleased) {
             direction = "standing";
         }
@@ -141,41 +147,24 @@ public class Player extends Entity {
         BufferedImage image = null;
 
         if (direction.equals("standing")) {
-            switch (lastDirection) {
-                case "up":
-                    image = standingUp;
-                    break;
-                case "down":
-                    image = standingDown[spriteNum - 1];
-                    break;
-                case "left":
-                    image = standingLeft[spriteNum - 1];
-                    break;
-                case "right":
-                    image = standingRight[spriteNum - 1];
-                    break;
-            }
+            image = switch (lastDirection) {
+                case "up" -> standingUp;
+                case "down" -> standingDown[spriteNum - 1];
+                case "left" -> standingLeft[spriteNum - 1];
+                case "right" -> standingRight[spriteNum - 1];
+                default -> image;
+            };
         }
 
-        switch (direction) {
-            case "up":
-                image = up[movingSpriteNum - 1];
-                break;
-
-            case "down":
-                image = down[movingSpriteNum - 1];
-                break;
-
-            case "left":
-                image = left[movingSpriteNum - 1];
-                break;
-
-            case "right":
-                image = right[movingSpriteNum - 1];
-                break;
-        }
+        image = switch (direction) {
+            case "up" -> up[movingSpriteNum - 1];
+            case "down" -> down[movingSpriteNum - 1];
+            case "left" -> left[movingSpriteNum - 1];
+            case "right" -> right[movingSpriteNum - 1];
+            default -> image;
+        };
 
 
-        g2.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
+        g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 }

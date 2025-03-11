@@ -20,10 +20,10 @@ public class TileManager {
 
         this.gamePanel = gamePanel;
         tile = new Tile[99];
-        mapTileNum = new int[gamePanel.maxScreenCol][gamePanel.maxScreenRow];
+        mapTileNum = new int[gamePanel.maxWorldCol][gamePanel.maxWorldRow];
 
         getTileImage();
-        loadMap();
+        loadMap("/maps/World_Map_V1");
     }
 
     public void getTileImage() {
@@ -55,15 +55,14 @@ public class TileManager {
         }
     }
 
-    public void loadMap() {
+    public void loadMap(String filePath) {
 
         try {
 
-            InputStream inputStream = getClass().getResourceAsStream("/maps/Map_V1.txt");
+            InputStream inputStream = getClass().getResourceAsStream(filePath + ".txt");
             assert inputStream != null;
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-            int col = 0;
             int row = 0;
 
             String line;
@@ -71,32 +70,12 @@ public class TileManager {
 
                 String[] numbers = line.split(" ");
 
-                for (col = 0; col < gamePanel.maxScreenCol; col++) {
+                for (int col = 0; col < gamePanel.maxWorldCol; col++) {
                     int number = Integer.parseInt(numbers[col]);
                     mapTileNum[col][row] = number;
                 }
                 row++;
             }
-
-//            while (col < gamePanel.maxScreenCol && row < gamePanel.maxScreenRow) {
-//
-//                String line = bufferedReader.readLine();
-//
-//                while (col < gamePanel.maxScreenCol) {
-//
-//                    String[] numbers = line.split("-");
-//
-//                    int number = Integer.parseInt(numbers[col]);
-//
-//                    mapTileNum[col][row] = number;
-//                    col++;
-//
-//                    if (col == gamePanel.maxScreenCol) {
-//                        col = 0;
-//                        row++;
-//                    }
-//                }
-//            }
             bufferedReader.close();
 
         } catch (Exception e) {
@@ -106,29 +85,32 @@ public class TileManager {
 
     public void draw(Graphics2D g2) {
 
-        int col = 0;
-        int row = 0;
-        int x = 0;
-        int y = 0;
+        int worldCol = 0;
+        int worldRow = 0;
 
-        while (col < gamePanel.maxScreenCol && row < gamePanel.maxScreenRow) {
 
-            int tileNum = mapTileNum[col][row];
+        while (worldCol < gamePanel.maxWorldCol && worldRow < gamePanel.maxWorldRow) {
+
+            int tileNum = mapTileNum[worldCol][worldRow];
+
+            int worldX = worldCol * gamePanel.tileSize;
+            int worldY = worldRow * gamePanel.tileSize;
+            int screenX = worldX - gamePanel.player.worldX + gamePanel.player.screenX;
+            int screenY = worldY - gamePanel.player.worldY + gamePanel.player.screenY;
+
 
             if (tileNum >= 0 && tileNum < tile.length) {
-                g2.drawImage(tile[tileNum].image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
+                g2.drawImage(tile[tileNum].image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
 
 
             } else {
                 System.out.println("Invalid Tile-Index: " + tileNum);
             }
-            col++;
-            x += gamePanel.tileSize;
-            if (col == gamePanel.maxScreenCol) {
-                col = 0;
-                x = 0;
-                row++;
-                y += gamePanel.tileSize;
+            worldCol++;
+
+            if (worldCol == gamePanel.maxWorldCol) {
+                worldCol = 0;
+                worldRow++;
             }
         }
     }
