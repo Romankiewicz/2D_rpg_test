@@ -20,8 +20,14 @@ public class Player extends Entity {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
 
-        screenX = gamePanel.screenWidth/2 - gamePanel.tileSize/2;
-        screenY = gamePanel.screenHeight/2 - gamePanel.tileSize/2;
+        screenX = gamePanel.screenWidth / 2 - gamePanel.tileSize / 2;
+        screenY = gamePanel.screenHeight / 2 - gamePanel.tileSize / 2;
+
+        solidArea = new Rectangle();
+        solidArea.x = 16;
+        solidArea.y = 30;
+        solidArea.width = 40;
+        solidArea.height = 40;
 
         setDefaultValues();
         getPlayerImage();
@@ -87,29 +93,49 @@ public class Player extends Entity {
 
     public void update() {
 
+        //MOVE PLAYER
         if (keyHandler.upPressed) {
             direction = "up";
             lastDirection = "up";
-            worldY -= speed;
         } else if (keyHandler.downPressed) {
             direction = "down";
             lastDirection = "down";
-            worldY += speed;
         } else if (keyHandler.leftPressed) {
             direction = "left";
             lastDirection = "left";
-            worldX -= speed;
         } else if (keyHandler.rightPressed) {
             direction = "right";
             lastDirection = "right";
-            worldX += speed;
         } else if (keyHandler.upReleased || keyHandler.downReleased || keyHandler.leftReleased || keyHandler.rightReleased) {
             direction = "standing";
         }
 
+        //COLLISION CHECKING
+        collisionOn = false;
+        gamePanel.collisionChecker.checkTile(this);
+
+        if (!collisionOn) {
+            switch (direction) {
+                case "up":
+                    worldY -= speed;
+                    break;
+                case "down":
+                    worldY += speed;
+                    break;
+                case "left":
+                    worldX -= speed;
+                    break;
+                case "right":
+                    worldX += speed;
+                    break;
+            }
+        }
+
+
+        //SPRITE CHANGER
         spriteCounter++;
         if (spriteCounter > 5) {
-            switch(spriteNum) {
+            switch (spriteNum) {
                 case 1 -> spriteNum = 2;
                 case 2 -> spriteNum = 3;
                 case 3 -> spriteNum = 4;
