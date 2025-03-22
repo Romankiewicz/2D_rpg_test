@@ -1,6 +1,7 @@
 package tile;
 
 import main.GamePanel;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -29,150 +30,55 @@ public class TileManager {
 
     public void getTileImage() {
 
-        try {
-
             //GRASS
-            tile[10] = new Tile();
-            tile[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass" +
-                    "/Grass_0.png")));
-            tile[11] = new Tile();
-            tile[11].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass" +
-                    "/Grass_1.png")));
-            tile[12] = new Tile();
-            tile[12].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass" +
-                    "/Grass_2.png")));
-            tile[13] = new Tile();
-            tile[13].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass" +
-                    "/Grass_3.png")));
+            setup(10, "grass/Grass_0", false);
+            setup(11, "grass/Grass_1", false);
+            setup(12, "grass/Grass_2", false);
+            setup(13, "grass/Grass_3", false);
 
             //ROADS
-            tile[20] = new Tile();
-            tile[20].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/road/Road_Horizontal.png")));
-
-            tile[21] = new Tile();
-            tile[21].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/road/Road_Vertical.png")));
-
-            tile[22] = new Tile();
-            tile[22].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/road/T-Cross_Up.png")));
-
-            tile[23] = new Tile();
-            tile[23].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/road/T-Cross_Down.png")));
-
-            tile[24] = new Tile();
-            tile[24].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/road/T-Cross_Left.png")));
-
-            tile[25] = new Tile();
-            tile[25].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/road/T-Cross_Right.png")));
+            setup(20, "road/Road_Horizontal", false);
+            setup(21, "road/Road_Vertical", false);
+            setup(22, "road/T-Cross_Up", false);
+            setup(23, "road/T-Cross_Down", false);
+            setup(24, "road/T-Cross_Left", false);
+            setup(25, "road/T-Cross_Right", false);
 
             //WALLS
-            tile[30] = new Tile();
-            tile[30].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/wall/Wall_Horizontal.png")));
-            tile[30].collision = true;
-
-            tile[31] = new Tile();
-            tile[31].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/wall/Door.png")));
-            tile[31].collision = true;
-
-            tile[32] = new Tile();
-            tile[32].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/wall/Door_Open.png")));
-
+            setup(30, "wall/Wall_Horizontal", true);
 
             //WATER
-            tile[40] = new Tile();
-            tile[40].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Center_1.png")));
-            tile[40].collision = true;
-
-            tile[41] = new Tile();
-            tile[41].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Center_2.png")));
-            tile[41].collision = true;
-
-            tile[42] = new Tile();
-            tile[42].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Top.png")));
-            tile[42].collision = true;
-
-            tile[43] = new Tile();
-            tile[43].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Left.png")));
-            tile[43].collision = true;
-
-            tile[44] = new Tile();
-            tile[44].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Bottom.png")));
-            tile[44].collision = true;
-
-            tile[45] = new Tile();
-            tile[45].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Right.png")));
-            tile[45].collision = true;
-
-            tile[46] = new Tile();
-            tile[46].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Top_Left.png")));
-            tile[46].collision = true;
-
-            tile[47] = new Tile();
-            tile[47].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Top_Right.png")));
-            tile[47].collision = true;
-
-            tile[48] = new Tile();
-            tile[48].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Bottom_Left.png")));
-            tile[48].collision = true;
-
-            tile[49] = new Tile();
-            tile[49].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Bottom_Right.png")));
-            tile[49].collision = true;
-
-            tile[50] = new Tile();
-            tile[50].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Top_Left_1.png")));
-            tile[50].collision = true;
-
-            tile[51] = new Tile();
-            tile[51].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Top_Right_1.png")));
-            tile[51].collision = true;
-
-            tile[52] = new Tile();
-            tile[52].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Bottom_Left_1.png")));
-            tile[52].collision = true;
-
-            tile[53] = new Tile();
-            tile[53].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/water/Water_Bottom_Right_1.png")));
-            tile[53].collision = true;
-
+            setup(40, "water/Water_Center_1", true);
+            setup(41, "water/Water_Center_2", true);
+            setup(42, "water/Water_Top", true);
+            setup(43, "water/Water_left", true);
+            setup(44, "water/Water_Bottom", true);
+            setup(45, "water/Water_right", true);
+            setup(46, "water/Water_Top_Left", true);
+            setup(47, "water/Water_Top_Right", true);
+            setup(48, "water/Water_Bottom_left", true);
+            setup(49, "water/Water_Bottom_Right", true);
+            setup(50, "water/Water_Top_Left_1", true);
+            setup(51, "water/Water_Top_Right_1", true);
+            setup(52, "water/Water_Bottom_Left_1", true);
+            setup(53, "water/Water_Bottom_Right_1", true);
 
             //TREES
-            tile[60] = new Tile();
-            tile[60].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/tree/Tree_1.png")));
-            tile[60].collision = true;
+            setup(60, "tree/Tree_1", true);
+            setup(61, "tree/Stump", true);
+            setup(62, "tree/Bush_1", true);
+    }
 
-            tile[61] = new Tile();
-            tile[61].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/tree/Stump.png")));
-            tile[61].collision = true;
+    public void setup(int index, String imagePath, boolean collision) {
 
-            tile[62] = new Tile();
-            tile[62].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles" +
-                    "/tree/Bush_1.png")));
-            tile[62].collision = true;
+        UtilityTool utilityTool = new UtilityTool();
+
+        try {
+
+            tile[index] = new Tile();
+            tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/" + imagePath + ".png")));
+            tile[index].image = utilityTool.scaledImage(tile[index].image, gamePanel.tileSize, gamePanel.tileSize);
+            tile[index].collision = collision;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -222,10 +128,7 @@ public class TileManager {
             int screenX = worldX - gamePanel.player.worldX + gamePanel.player.screenX;
             int screenY = worldY - gamePanel.player.worldY + gamePanel.player.screenY;
 
-            if (worldX + gamePanel.tileSize > gamePanel.player.worldX - gamePanel.player.screenX &&
-                    worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.player.screenX &&
-                    worldY + gamePanel.tileSize > gamePanel.player.worldY - gamePanel.player.screenY &&
-                    worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.player.screenY) {
+            if (worldX + gamePanel.tileSize > gamePanel.player.worldX - gamePanel.player.screenX && worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.player.screenX && worldY + gamePanel.tileSize > gamePanel.player.worldY - gamePanel.player.screenY && worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.player.screenY) {
 
                 g2.drawImage(tile[tileNum].image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
             }
