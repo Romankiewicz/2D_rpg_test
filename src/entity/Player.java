@@ -15,7 +15,6 @@ import java.util.Objects;
 
 public class Player extends Entity {
 
-    GamePanel gamePanel;
     KeyHandler keyHandler;
 
     public final int screenX;
@@ -28,13 +27,13 @@ public class Player extends Entity {
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
 
-        this.gamePanel = gamePanel;
+        super(gamePanel);
+
         this.keyHandler = keyHandler;
 
         screenX = gamePanel.screenWidth / 2 - gamePanel.tileSize / 2;
         screenY = gamePanel.screenHeight / 2 - gamePanel.tileSize / 2;
 
-        solidArea = new Rectangle();
         solidArea.x = 16;
         solidArea.y = 30;
         solidAreaDefaultX = 16;
@@ -57,51 +56,35 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
 
-        try {
-
-            standingUp = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/standing/back" +
-                    "/Link_Back.png")));
+            standingUp = setup("player/standing/back", "Link_Back");
 
             for (int i = 0; i < 10; i++) {
-                standingDown[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/standing/front/Link_Front_" +
-                        (i + 1) + ".png")));
+                standingDown[i] = setup("player/standing/front", "Link_Front_" + (i + 1));
             }
 
             for (int i = 0; i < 10; i++) {
-                standingLeft[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/standing" +
-                        "/left/Link_Left_" +
-                        (i + 1) + ".png")));
+                standingLeft[i] = setup("player/standing/left", "Link_Left_" + (i + 1));
             }
 
             for (int i = 0; i < 10; i++) {
-                standingRight[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/standing" +
-                        "/right/Link_Right_" +
-                        (i + 1) + ".png")));
+                standingRight[i] = setup("player/standing/right", "Link_Right_" + (i + 1));
             }
 
             for (int i = 0; i < 10; i++) {
-                up[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/walking/up" +
-                        "/Link_Walk_Up_" + (i + 1) + ".png")));
+                up[i] = setup("player/walking/up", "Link_Walk_Up_" + (i + 1));
             }
 
             for (int i = 0; i < 10; i++) {
-                down[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/walking/down" +
-                        "/Link_Walk_Down_" + (i + 1) + ".png")));
+                down[i] = setup("player/walking/down", "Link_Walk_Down_" + (i + 1));
             }
 
             for (int i = 0; i < 10; i++) {
-                left[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/walking/left" +
-                        "/Link_Walk_Left_" + (i + 1) + ".png")));
+                left[i] = setup("player/walking/left", "Link_Walk_Left_" + (i + 1));
             }
 
             for (int i = 0; i < 10; i++) {
-                right[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/walking/right" +
-                        "/Link_Walk_Right_" + (i + 1) + ".png")));
+                right[i] = setup("player/walking/right", "Link_Walk_Right_" + (i + 1));
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void update() {
@@ -152,6 +135,7 @@ public class Player extends Entity {
         spriteCounter++;
         if (spriteCounter > 5) {
             switch (spriteNum) {
+                case 0 -> spriteNum = 1;
                 case 1 -> spriteNum = 2;
                 case 2 -> spriteNum = 3;
                 case 3 -> spriteNum = 4;
@@ -160,8 +144,7 @@ public class Player extends Entity {
                 case 6 -> spriteNum = 7;
                 case 7 -> spriteNum = 8;
                 case 8 -> spriteNum = 9;
-                case 9 -> spriteNum = 10;
-                case 10 -> spriteNum = 1;
+                case 9 -> spriteNum = 0;
             }
             spriteCounter = 0;
         }
@@ -169,6 +152,7 @@ public class Player extends Entity {
         moveCounter++;
         if (moveCounter > 5) {
             switch (movingSpriteNum) {
+                case 0 -> movingSpriteNum = 1;
                 case 1 -> movingSpriteNum = 2;
                 case 2 -> movingSpriteNum = 3;
                 case 3 -> movingSpriteNum = 4;
@@ -177,8 +161,7 @@ public class Player extends Entity {
                 case 6 -> movingSpriteNum = 7;
                 case 7 -> movingSpriteNum = 8;
                 case 8 -> movingSpriteNum = 9;
-                case 9 -> movingSpriteNum = 10;
-                case 10 -> movingSpriteNum = 1;
+                case 9 -> movingSpriteNum = 0;
             }
             moveCounter = 0;
         }
@@ -235,18 +218,18 @@ public class Player extends Entity {
         if (direction.equals("standing")) {
             image = switch (lastDirection) {
                 case "up" -> standingUp;
-                case "down" -> standingDown[spriteNum - 1];
-                case "left" -> standingLeft[spriteNum - 1];
-                case "right" -> standingRight[spriteNum - 1];
+                case "down" -> standingDown[spriteNum];
+                case "left" -> standingLeft[spriteNum];
+                case "right" -> standingRight[spriteNum];
                 default -> image;
             };
         }
 
         image = switch (direction) {
-            case "up" -> up[movingSpriteNum - 1];
-            case "down" -> down[movingSpriteNum - 1];
-            case "left" -> left[movingSpriteNum - 1];
-            case "right" -> right[movingSpriteNum - 1];
+            case "up" -> up[movingSpriteNum];
+            case "down" -> down[movingSpriteNum];
+            case "left" -> left[movingSpriteNum];
+            case "right" -> right[movingSpriteNum];
             default -> image;
         };
 

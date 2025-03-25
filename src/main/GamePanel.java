@@ -10,7 +10,7 @@ import java.awt.*;
 public class GamePanel extends JPanel implements Runnable {
 
     //Screen settings
-    //
+
     private final int originalTileSize = 24;
     private final int scale = 3;
 
@@ -25,22 +25,34 @@ public class GamePanel extends JPanel implements Runnable {
 
     public final int fps = 60;
 
-    KeyHandler keyHandler = new KeyHandler();
-
-    Thread gameThread;
-
+    //Sound
     Sound music = new Sound();
     Sound sfx = new Sound();
 
-    public Player player = new Player(this, keyHandler);
-
-    public CollisionChecker collisionChecker = new CollisionChecker(this);
-
+    //System
     TileManager tileManager = new TileManager(this);
+
+    KeyHandler keyHandler = new KeyHandler(this);
+
+    Thread gameThread;
+
+    UI ui = new UI(this);
+
+    //Player and Objects
+    public Player player = new Player(this, keyHandler);
 
     public SuperObject[] superObject = new SuperObject[10];
 
     public AssetSetter assetSetter = new AssetSetter(this);
+
+    public CollisionChecker collisionChecker = new CollisionChecker(this);
+
+    //Game State
+    public int gameState;
+    public int playState = 1;
+    public final int pauseState = 2;
+
+
 
     public GamePanel() {
 
@@ -55,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         assetSetter.setObject();
         playMusic(0);
+        gameState = playState;
     }
 
     public void startGameThread() {
@@ -90,7 +103,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
 
-        player.update();
+        if (gameState == playState) {
+            player.update();
+        }
+        if (gameState == pauseState) {
+        }
     }
 
     public void paintComponent(Graphics g) {
@@ -109,6 +126,8 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         player.draw(g2);
+
+        ui.draw(g2);
 
         g2.dispose();
     }
