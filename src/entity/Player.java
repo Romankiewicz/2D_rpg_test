@@ -213,9 +213,13 @@ public class Player extends Entity {
     public void npcInteract(int i) {
 
         if (i != 999) {
+            if (gamePanel.keyHandler.spacePressed) {
+
                 gamePanel.gameState = gamePanel.dialogueState;
                 gamePanel.npc[i].speak();
+            }
         }
+        gamePanel.keyHandler.spacePressed = false;
     }
 
     public void draw(Graphics2D g2) {

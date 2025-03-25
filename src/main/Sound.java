@@ -17,6 +17,8 @@ public class Sound {
         soundURL[2] = getClass().getResource("/sound/sfx/Collect_1.wav");
         soundURL[3] = getClass().getResource("/sound/sfx/Collect_2.wav");
         soundURL[4] = getClass().getResource("/sound/sfx/Door_Slam.wav");
+        soundURL[5] = getClass().getResource("/sound/music/The_Legend_Of_Zelda_Title.wav");
+        soundURL[6] = getClass().getResource("/sound/music/The_Legend_Of_Zelda_Title_Piano.wav");
 
     }
 

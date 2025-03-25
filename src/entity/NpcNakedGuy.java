@@ -67,11 +67,26 @@ public class NpcNakedGuy extends Entity {
 
     public void speak() {
 
-        if (dialogueCounter < 6) {
-            gamePanel.ui.currentDialogue = dialogues[dialogueCounter];
-            dialogueCounter++;
-        }else if (dialogueCounter == 6) {
+        if (dialogues[dialogueCounter] == null) {
             dialogueCounter = 0;
+            gamePanel.gameState = gamePanel.playState;
+        }
+        gamePanel.ui.currentDialogue = dialogues[dialogueCounter];
+        dialogueCounter++;
+
+        switch (gamePanel.player.direction) {
+            case "up":
+                direction = "down";
+                break;
+            case "down":
+                direction = "up";
+                break;
+            case "left":
+                direction = "right";
+                break;
+            case "right":
+                direction = "left";
+                break;
         }
     }
 
@@ -82,6 +97,7 @@ public class NpcNakedGuy extends Entity {
         dialogues[2] = "Oh I mean it´s used to be beautiful but as you can see I´m totally naked";
         dialogues[3] = "A view years ago Underpants Gnomes come to our Land...";
         dialogues[4] = "... and as you can see they took all our clothing I mean not just the Underpants like they once used to...";
-        dialogues[5] = "can you find them and bring back at least our Panties?";;
+        dialogues[5] = "can you find them and bring back at least our Panties?";
+        ;
     }
 }

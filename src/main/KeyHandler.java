@@ -1,11 +1,15 @@
 package main;
 
+
+import entity.Entity;
+import entity.NpcNakedGuy;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed;
     public boolean upReleased, downReleased, leftReleased, rightReleased;
     GamePanel gamePanel;
 
@@ -24,6 +28,7 @@ public class KeyHandler implements KeyListener {
 
         int key = e.getKeyCode();
 
+        //Play State
         if (gamePanel.gameState == gamePanel.playState) {
 
             if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
@@ -45,14 +50,17 @@ public class KeyHandler implements KeyListener {
             if (key == KeyEvent.VK_P) {
                 gamePanel.gameState = gamePanel.pauseState;
             }
+            if (key == KeyEvent.VK_SPACE) {
+                spacePressed = true;
+            }
         }
-
+        //Pause State
         else if (gamePanel.gameState == gamePanel.pauseState) {
             if (key == KeyEvent.VK_P) {
                 gamePanel.gameState = gamePanel.playState;
             }
         }
-
+        //Dialogue State
         else if (gamePanel.gameState == gamePanel.dialogueState) {
             if (key == KeyEvent.VK_SPACE) {
                 gamePanel.gameState = gamePanel.playState;

@@ -37,13 +37,13 @@ public class Entity {
     public int npcSpriteNum = 0;
     public int npcSpriteCounter = 0;
     public int actionCounter = 0;
-    public int dialogueCounter = 0;
+    public static int dialogueCounter = 0;
 
     public Rectangle solidArea = new Rectangle(0, 0, 72, 72);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
 
-    public String[] dialogues = new String[20];
+    public static String[] dialogues = new String[20];
 
     public Entity(GamePanel gamePanel) {
 
