@@ -52,35 +52,35 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
 
-            standingUp = setup("player/standing/back", "Link_Back");
+        standingUp = setup("player/standing/back", "Link_Back");
 
-            for (int i = 0; i < 10; i++) {
-                standingDown[i] = setup("player/standing/front", "Link_Front_" + (i + 1));
-            }
+        for (int i = 0; i < 10; i++) {
+            standingDown[i] = setup("player/standing/front", "Link_Front_" + (i + 1));
+        }
 
-            for (int i = 0; i < 10; i++) {
-                standingLeft[i] = setup("player/standing/left", "Link_Left_" + (i + 1));
-            }
+        for (int i = 0; i < 10; i++) {
+            standingLeft[i] = setup("player/standing/left", "Link_Left_" + (i + 1));
+        }
 
-            for (int i = 0; i < 10; i++) {
-                standingRight[i] = setup("player/standing/right", "Link_Right_" + (i + 1));
-            }
+        for (int i = 0; i < 10; i++) {
+            standingRight[i] = setup("player/standing/right", "Link_Right_" + (i + 1));
+        }
 
-            for (int i = 0; i < 10; i++) {
-                up[i] = setup("player/walking/up", "Link_Walk_Up_" + (i + 1));
-            }
+        for (int i = 0; i < 10; i++) {
+            up[i] = setup("player/walking/up", "Link_Walk_Up_" + (i + 1));
+        }
 
-            for (int i = 0; i < 10; i++) {
-                down[i] = setup("player/walking/down", "Link_Walk_Down_" + (i + 1));
-            }
+        for (int i = 0; i < 10; i++) {
+            down[i] = setup("player/walking/down", "Link_Walk_Down_" + (i + 1));
+        }
 
-            for (int i = 0; i < 10; i++) {
-                left[i] = setup("player/walking/left", "Link_Walk_Left_" + (i + 1));
-            }
+        for (int i = 0; i < 10; i++) {
+            left[i] = setup("player/walking/left", "Link_Walk_Left_" + (i + 1));
+        }
 
-            for (int i = 0; i < 10; i++) {
-                right[i] = setup("player/walking/right", "Link_Walk_Right_" + (i + 1));
-            }
+        for (int i = 0; i < 10; i++) {
+            right[i] = setup("player/walking/right", "Link_Walk_Right_" + (i + 1));
+        }
     }
 
     public void update() {
@@ -213,7 +213,8 @@ public class Player extends Entity {
     public void npcInteract(int i) {
 
         if (i != 999) {
-            System.out.println("Hitting an NPC!!!");
+                gamePanel.gameState = gamePanel.dialogueState;
+                gamePanel.npc[i].speak();
         }
     }
 

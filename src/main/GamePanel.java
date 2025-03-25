@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     Thread gameThread;
 
-    UI ui = new UI(this);
+    public UI ui = new UI(this);
 
     //Entity and Objects
     public Player player = new Player(this, keyHandler);
@@ -54,6 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
     public int gameState;
     public int playState = 1;
     public final int pauseState = 2;
+    public final int dialogueState = 3;
 
 
     public GamePanel() {

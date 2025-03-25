@@ -19,6 +19,7 @@ public class NpcNakedGuy extends Entity {
         solidArea.width = 50;
         solidArea.height = 48;
         getNpcImage();
+        setDialogue();
     }
 
     public void getNpcImage() {
@@ -62,5 +63,25 @@ public class NpcNakedGuy extends Entity {
             }
             actionCounter = 0;
         }
+    }
+
+    public void speak() {
+
+        if (dialogueCounter < 6) {
+            gamePanel.ui.currentDialogue = dialogues[dialogueCounter];
+            dialogueCounter++;
+        }else if (dialogueCounter == 6) {
+            dialogueCounter = 0;
+        }
+    }
+
+    public void setDialogue() {
+
+        dialogues[0] = "Oh hello Adventurer!";
+        dialogues[1] = "Seems like you visiting our beautiful country";
+        dialogues[2] = "Oh I mean it´s used to be beautiful but as you can see I´m totally naked";
+        dialogues[3] = "A view years ago Underpants Gnomes come to our Land...";
+        dialogues[4] = "... and as you can see they took all our clothing I mean not just the Underpants like they once used to...";
+        dialogues[5] = "can you find them and bring back at least our Panties?";;
     }
 }

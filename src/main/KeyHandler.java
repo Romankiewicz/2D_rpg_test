@@ -24,29 +24,41 @@ public class KeyHandler implements KeyListener {
 
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
-            upPressed = true;
-            upReleased = false;
-        }
-        if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
-            downPressed = true;
-            downReleased = false;
-        }
-        if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {
-            leftPressed = true;
-            leftReleased = false;
-        }
-        if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT) {
-            rightPressed = true;
-            rightReleased = false;
-        }
-        if (key == KeyEvent.VK_P) {
-            if (gamePanel.gameState == gamePanel.playState) {
+        if (gamePanel.gameState == gamePanel.playState) {
+
+            if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
+                upPressed = true;
+                upReleased = false;
+            }
+            if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
+                downPressed = true;
+                downReleased = false;
+            }
+            if (key == KeyEvent.VK_A || key == KeyEvent.VK_LEFT) {
+                leftPressed = true;
+                leftReleased = false;
+            }
+            if (key == KeyEvent.VK_D || key == KeyEvent.VK_RIGHT) {
+                rightPressed = true;
+                rightReleased = false;
+            }
+            if (key == KeyEvent.VK_P) {
                 gamePanel.gameState = gamePanel.pauseState;
-            } else if (gamePanel.gameState == gamePanel.pauseState) {
+            }
+        }
+
+        else if (gamePanel.gameState == gamePanel.pauseState) {
+            if (key == KeyEvent.VK_P) {
                 gamePanel.gameState = gamePanel.playState;
             }
         }
+
+        else if (gamePanel.gameState == gamePanel.dialogueState) {
+            if (key == KeyEvent.VK_SPACE) {
+                gamePanel.gameState = gamePanel.playState;
+            }
+        }
+
     }
 
     @Override
