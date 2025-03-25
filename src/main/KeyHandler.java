@@ -1,9 +1,6 @@
 package main;
 
 
-import entity.Entity;
-import entity.NpcNakedGuy;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -28,8 +25,40 @@ public class KeyHandler implements KeyListener {
 
         int key = e.getKeyCode();
 
+        //Title State
+        if (gamePanel.gameState == gamePanel.titleState) {
+
+            if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
+                gamePanel.ui.commandNum--;
+                if (gamePanel.ui.commandNum < 0) {
+                    gamePanel.ui.commandNum = 3;
+                }
+            }
+            if (key == KeyEvent.VK_S || key == KeyEvent.VK_DOWN) {
+                gamePanel.ui.commandNum++;
+                if (gamePanel.ui.commandNum > 3) {
+                    gamePanel.ui.commandNum = 0;
+                }
+            }
+            if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_SPACE) {
+                if (gamePanel.ui.commandNum == 0) {
+                    gamePanel.gameState = gamePanel.playState;
+                    gamePanel.stopMusic();
+                    gamePanel.playMusic(6);
+                }
+                if (gamePanel.ui.commandNum == 1) {
+
+                }
+                if (gamePanel.ui.commandNum == 2) {
+
+                }
+                if (gamePanel.ui.commandNum == 3) {
+                    System.exit(0);
+                }
+            }
+        }
         //Play State
-        if (gamePanel.gameState == gamePanel.playState) {
+        else if (gamePanel.gameState == gamePanel.playState) {
 
             if (key == KeyEvent.VK_W || key == KeyEvent.VK_UP) {
                 upPressed = true;
@@ -49,20 +78,30 @@ public class KeyHandler implements KeyListener {
             }
             if (key == KeyEvent.VK_P) {
                 gamePanel.gameState = gamePanel.pauseState;
+                gamePanel.stopMusic();
+                gamePanel.playMusic(0);
             }
-            if (key == KeyEvent.VK_SPACE) {
+            if (key == KeyEvent.VK_SPACE || key == KeyEvent.VK_ENTER) {
                 spacePressed = true;
+            }
+            if (key == KeyEvent.VK_ESCAPE) {
+                System.exit(0);
             }
         }
         //Pause State
         else if (gamePanel.gameState == gamePanel.pauseState) {
             if (key == KeyEvent.VK_P) {
                 gamePanel.gameState = gamePanel.playState;
+                gamePanel.stopMusic();
+                gamePanel.playMusic(6);
+            }
+            if (key == KeyEvent.VK_ESCAPE) {
+                System.exit(0);
             }
         }
         //Dialogue State
         else if (gamePanel.gameState == gamePanel.dialogueState) {
-            if (key == KeyEvent.VK_SPACE) {
+            if (key == KeyEvent.VK_SPACE || key == KeyEvent.VK_ENTER) {
                 gamePanel.gameState = gamePanel.playState;
             }
         }

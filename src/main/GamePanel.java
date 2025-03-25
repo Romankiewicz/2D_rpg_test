@@ -29,6 +29,8 @@ public class GamePanel extends JPanel implements Runnable {
     //Sound
     Sound music = new Sound();
     Sound sfx = new Sound();
+    Float defaultMusicVolume = -20.0f;
+    float defaultSfxVolume = -1.0f;
 
     //System
     TileManager tileManager = new TileManager(this);
@@ -52,7 +54,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Game State
     public int gameState;
-    public int playState = 1;
+    public final int titleState = 0;
+    public final int playState = 1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
 
@@ -70,8 +73,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         assetSetter.setObject();
         assetSetter.setNpc();
-        playMusic(6);
-        gameState = playState;
+        playMusic(5);
+        gameState = titleState;
     }
 
     public void startGameThread() {
@@ -124,32 +127,39 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        tileManager.draw(g2);
+        //
+        //Title Screen
+        if (gameState == titleState) {
+            ui.draw(g2);
+        } else {
 
-        for (SuperObject object : superObject) {
+            tileManager.draw(g2);
 
-            if (object != null) {
+            for (SuperObject object : superObject) {
 
-                object.draw(g2, this);
+                if (object != null) {
+
+                    object.draw(g2, this);
+                }
             }
-        }
 
-        for (Entity entity : npc) {
-            if (entity != null) {
-                entity.draw(g2);
+            for (Entity entity : npc) {
+                if (entity != null) {
+                    entity.draw(g2);
+                }
             }
+
+            player.draw(g2);
+
+            ui.draw(g2);
+
+            g2.dispose();
         }
-
-        player.draw(g2);
-
-        ui.draw(g2);
-
-        g2.dispose();
     }
 
     public void playMusic(int i) {
 
-        music.setFile(i);
+        music.setFile(i, defaultMusicVolume);
         music.play();
         music.loop();
     }
@@ -161,7 +171,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void playSFX(int i) {
 
-        sfx.setFile(i);
+        sfx.setFile(i, defaultSfxVolume);
         sfx.play();
     }
 }

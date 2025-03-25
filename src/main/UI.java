@@ -6,45 +6,106 @@ public class UI {
 
     GamePanel gamePanel;
     Graphics2D g2;
-    Font arial_30, arial_40, arial_80;
+    Font courier_30, courier_40, courier_80, courier_30B, courier_40B, courier_80B;
 
     Color translucentBlack = new Color(0, 0, 0, 200);
     Color translucentWhite = new Color(255, 255, 255, 200);
+    Color translucentWhite_1 = new Color(255, 255, 255, 100);
+
 
     public boolean messageOn = false;
     public String message = "";
     public String currentDialogue = "";
-    public int messageCounter = 0;
-    public boolean gameOver = false;
-    public boolean gameFinished = false;
+    public int commandNum = 0;
 
     public UI(GamePanel gamePanel) {
 
         this.gamePanel = gamePanel;
-        arial_30 = new Font("Arial", Font.PLAIN, 30);
-        arial_40 = new Font("Arial", Font.PLAIN, 40);
-        arial_80 = new Font("Arial", Font.PLAIN, 80);
-    }
 
-    public void showMessage(String text) {
+        courier_30 = new Font("Courier New", Font.PLAIN, 30);
+        courier_30B = new Font("Courier New", Font.BOLD, 30);
+        courier_40 = new Font("Courier New", Font.PLAIN, 40);
+        courier_40B = new Font("Courier New", Font.BOLD, 40);
+        courier_80 = new Font("Courier New", Font.PLAIN, 80);
+        courier_80B = new Font("Courier New", Font.BOLD, 80);
 
-        message = text;
-        messageOn = true;
     }
 
     public void draw(Graphics2D g2) {
 
         this.g2 = g2;
 
-        g2.setFont(arial_40);
+        g2.setFont(courier_80);
+        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.white);
 
-        if (gamePanel.gameState == gamePanel.playState) {
+        if (gamePanel.gameState == gamePanel.titleState) {
+            drawTitleScreen();
+        } else if (gamePanel.gameState == gamePanel.playState) {
 
         } else if (gamePanel.gameState == gamePanel.pauseState) {
             drawPauseScreen();
         } else if (gamePanel.gameState == gamePanel.dialogueState) {
             drawDialogueScreen();
+        }
+    }
+
+    public void drawTitleScreen() {
+
+        //Title
+        g2.setFont(courier_30);
+        String prefix = "(a not that much)";
+        int x = getXForCenteredText(prefix);
+        int y = gamePanel.tileSize * 3;
+        g2.setColor(Color.white);
+        g2.drawString(prefix, x, y);
+
+        g2.setFont(courier_80B);
+        String title = "ZELDA-like RPG";
+        x = getXForCenteredText(title);
+        y += gamePanel.tileSize;
+        g2.setColor(translucentWhite_1);
+        g2.drawString(title, x + 5, y + 4);
+        g2.setColor(Color.white);
+        g2.drawString(title, x, y);
+
+        //Menu
+        g2.setFont(courier_40B);
+
+        String text = "New Game";
+        x = getXForCenteredText(text);
+        y += gamePanel.tileSize * 4;
+        g2.drawString(text, x, y);
+        if (commandNum == 0) {
+            g2.drawString("<", x - gamePanel.tileSize, y);
+            g2.drawString(">", getXForEndOfText(text)+ gamePanel.tileSize /2, y);
+        }
+
+        text = "Load Game";
+        x = getXForCenteredText(text);
+        y += gamePanel.tileSize;
+        g2.drawString(text, x, y);
+        if (commandNum == 1) {
+            g2.drawString("<", x - gamePanel.tileSize, y);
+            g2.drawString(">", getXForEndOfText(text)+ gamePanel.tileSize /2, y);
+        }
+
+        text = "Options";
+        x = getXForCenteredText(text);
+        y += gamePanel.tileSize;
+        g2.drawString(text, x, y);
+        if (commandNum == 2) {
+            g2.drawString("<", x - gamePanel.tileSize, y);
+            g2.drawString(">", getXForEndOfText(text)+ gamePanel.tileSize /2, y);
+        }
+
+        text = "Exit";
+        x = getXForCenteredText(text);
+        y += gamePanel.tileSize;
+        g2.drawString(text, x, y);
+        if (commandNum == 3) {
+            g2.drawString("<", x - gamePanel.tileSize, y);
+            g2.drawString(">", getXForEndOfText(text)+ gamePanel.tileSize /2, y);
         }
     }
 
@@ -68,8 +129,14 @@ public class UI {
         int textY = y + gamePanel.tileSize;
 
         drawDialogueWindow(x, y, width, height);
-        g2.setFont(arial_30);
-        g2.drawString(currentDialogue, textX, textY);
+
+        for (String line : currentDialogue.split("\n")) {
+
+            g2.setFont(courier_30);
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            g2.drawString(line, textX, textY);
+            textY += 34;
+        }
     }
 
     public void drawDialogueWindow(int x, int y, int width, int height) {
@@ -86,5 +153,11 @@ public class UI {
         int textLength = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
 
         return gamePanel.screenWidth / 2 - textLength / 2;
+    }
+
+    public int getXForEndOfText(String text) {
+
+        int textLength = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        return gamePanel.screenWidth / 2 + textLength / 2;
     }
 }

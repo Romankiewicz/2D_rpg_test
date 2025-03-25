@@ -66,7 +66,30 @@ public class Entity {
         return image;
     }
 
-    public void speak() {}
+    public void speak() {
+
+        if (dialogues[dialogueCounter] == null) {
+            gamePanel.gameState = gamePanel.playState;
+            dialogueCounter = 0;
+
+        }else if (dialogues[dialogueCounter] != null) {
+        gamePanel.ui.currentDialogue = dialogues[dialogueCounter];
+        dialogueCounter++;}
+
+        switch (gamePanel.player.direction) {
+            case "up":
+                direction = "down";
+                break;
+            case "down":
+                direction = "up";
+                break;
+            case "left":
+                direction = "right";
+                break;
+            case "right":
+                direction = "left";
+                break;
+        }}
 
     public void setAction() {}
 

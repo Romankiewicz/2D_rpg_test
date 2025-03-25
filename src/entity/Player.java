@@ -173,7 +173,7 @@ public class Player extends Entity {
             String objectName = gamePanel.superObject[i].name;
             switch (objectName) {
                 case "SilverKey":
-                    gamePanel.playSFX(2);
+                    gamePanel.playSFX(3);
                     haveSilverKey++;
                     gamePanel.superObject[i] = null;
                     System.out.println("SilverKey" + haveSilverKey);

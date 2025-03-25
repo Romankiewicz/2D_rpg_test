@@ -67,37 +67,17 @@ public class NpcNakedGuy extends Entity {
 
     public void speak() {
 
-        if (dialogues[dialogueCounter] == null) {
-            dialogueCounter = 0;
-            gamePanel.gameState = gamePanel.playState;
-        }
-        gamePanel.ui.currentDialogue = dialogues[dialogueCounter];
-        dialogueCounter++;
-
-        switch (gamePanel.player.direction) {
-            case "up":
-                direction = "down";
-                break;
-            case "down":
-                direction = "up";
-                break;
-            case "left":
-                direction = "right";
-                break;
-            case "right":
-                direction = "left";
-                break;
-        }
+        super.speak();
     }
 
     public void setDialogue() {
 
         dialogues[0] = "Oh hello Adventurer!";
-        dialogues[1] = "Seems like you visiting our beautiful country";
-        dialogues[2] = "Oh I mean it´s used to be beautiful but as you can see I´m totally naked";
-        dialogues[3] = "A view years ago Underpants Gnomes come to our Land...";
-        dialogues[4] = "... and as you can see they took all our clothing I mean not just the Underpants like they once used to...";
-        dialogues[5] = "can you find them and bring back at least our Panties?";
+        dialogues[1] = "Seems like you visiting \nour beautiful country \n\n...";
+        dialogues[2] = "...\nOh I mean it´s used to be beautiful \nbut as you can see I´m totally naked \n\n...";
+        dialogues[3] = "...\nA view years ago \nUnderpants Gnomes come \nto our Land\n\n...";
+        dialogues[4] = "...\nand as you can see \nthey took all our clothing \nI mean not just the Underpants \nlike they once used to \n...";
+        dialogues[5] = "...\ncan you find them \nand bring back at least our Panties?";
         ;
     }
 }
