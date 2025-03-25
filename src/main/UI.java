@@ -12,9 +12,6 @@ public class UI {
     Color translucentWhite = new Color(255, 255, 255, 200);
     Color translucentWhite_1 = new Color(255, 255, 255, 100);
 
-
-    public boolean messageOn = false;
-    public String message = "";
     public String currentDialogue = "";
     public int commandNum = 0;
 
@@ -42,7 +39,7 @@ public class UI {
         if (gamePanel.gameState == gamePanel.titleState) {
             drawTitleScreen();
         } else if (gamePanel.gameState == gamePanel.playState) {
-
+            //Play State UI stuff here
         } else if (gamePanel.gameState == gamePanel.pauseState) {
             drawPauseScreen();
         } else if (gamePanel.gameState == gamePanel.dialogueState) {

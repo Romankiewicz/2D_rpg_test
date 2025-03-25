@@ -78,8 +78,6 @@ public class KeyHandler implements KeyListener {
             }
             if (key == KeyEvent.VK_P) {
                 gamePanel.gameState = gamePanel.pauseState;
-                gamePanel.stopMusic();
-                gamePanel.playMusic(0);
             }
             if (key == KeyEvent.VK_SPACE || key == KeyEvent.VK_ENTER) {
                 spacePressed = true;
@@ -92,7 +90,6 @@ public class KeyHandler implements KeyListener {
         else if (gamePanel.gameState == gamePanel.pauseState) {
             if (key == KeyEvent.VK_P) {
                 gamePanel.gameState = gamePanel.playState;
-                gamePanel.stopMusic();
                 gamePanel.playMusic(6);
             }
             if (key == KeyEvent.VK_ESCAPE) {

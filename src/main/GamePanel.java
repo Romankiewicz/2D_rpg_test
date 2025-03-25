@@ -119,6 +119,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         if (gameState == pauseState) {
+            music.stop();
         }
     }
 

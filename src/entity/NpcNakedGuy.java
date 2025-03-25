@@ -2,7 +2,6 @@ package entity;
 
 import main.GamePanel;
 
-import java.awt.*;
 import java.util.Random;
 
 public class NpcNakedGuy extends Entity {
@@ -78,6 +77,5 @@ public class NpcNakedGuy extends Entity {
         dialogues[3] = "...\nA view years ago \nUnderpants Gnomes come \nto our Land\n\n...";
         dialogues[4] = "...\nand as you can see \nthey took all our clothing \nI mean not just the Underpants \nlike they once used to \n...";
         dialogues[5] = "...\ncan you find them \nand bring back at least our Panties?";
-        ;
     }
 }
