@@ -3,14 +3,10 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import object.ChestOpen;
-import object.Door;
 import object.DoorOpen;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
 
 
 public class Player extends Entity {
@@ -110,8 +106,11 @@ public class Player extends Entity {
         collisionOn = false;
         gamePanel.collisionChecker.checkTile(this);
 
-        int objecChecker = gamePanel.collisionChecker.checkObjectCollision(this, true);
-        objectInteract(objecChecker);
+        int objectIndex = gamePanel.collisionChecker.checkObjectCollision(this, true);
+        objectInteract(objectIndex);
+
+        int npcIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npc);
+        npcInteract(npcIndex);
 
         if (!collisionOn) {
             switch (direction) {
@@ -167,47 +166,54 @@ public class Player extends Entity {
         }
     }
 
-    public void objectInteract(int index) {
+    public void objectInteract(int i) {
 
-        if (index != 999) {
+        if (i != 999) {
 
-            String objectName = gamePanel.superObject[index].name;
+            String objectName = gamePanel.superObject[i].name;
             switch (objectName) {
                 case "SilverKey":
                     gamePanel.playSFX(2);
                     haveSilverKey++;
-                    gamePanel.superObject[index] = null;
+                    gamePanel.superObject[i] = null;
                     System.out.println("SilverKey" + haveSilverKey);
                     break;
                 case "BlueKey":
                     gamePanel.playSFX(3);
                     haveBlueKey++;
-                    gamePanel.superObject[index] = null;
+                    gamePanel.superObject[i] = null;
                     System.out.println("BlueKey" + haveBlueKey);
                     break;
                 case "Door":
                     if (haveSilverKey > 0) {
                         gamePanel.playSFX(4);
-                        int x = gamePanel.superObject[index].worldX;
-                        int y = gamePanel.superObject[index].worldY;
-                        gamePanel.superObject[index] = new DoorOpen();
-                        gamePanel.superObject[index].worldX = x;
-                        gamePanel.superObject[index].worldY = y;
+                        int x = gamePanel.superObject[i].worldX;
+                        int y = gamePanel.superObject[i].worldY;
+                        gamePanel.superObject[i] = new DoorOpen();
+                        gamePanel.superObject[i].worldX = x;
+                        gamePanel.superObject[i].worldY = y;
                         haveSilverKey--;
                     }
                     break;
                 case "Chest":
                     if (haveBlueKey > 0) {
                         gamePanel.playSFX(4);
-                        int x = gamePanel.superObject[index].worldX;
-                        int y = gamePanel.superObject[index].worldY;
-                        gamePanel.superObject[index] = new ChestOpen();
-                        gamePanel.superObject[index].worldX = x;
-                        gamePanel.superObject[index].worldY = y;
+                        int x = gamePanel.superObject[i].worldX;
+                        int y = gamePanel.superObject[i].worldY;
+                        gamePanel.superObject[i] = new ChestOpen();
+                        gamePanel.superObject[i].worldX = x;
+                        gamePanel.superObject[i].worldY = y;
                         haveBlueKey--;
                         break;
                     }
             }
+        }
+    }
+
+    public void npcInteract(int i) {
+
+        if (i != 999) {
+            System.out.println("Hitting an NPC!!!");
         }
     }
 

@@ -1,5 +1,6 @@
 package main;
 
+import entity.Entity;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
@@ -38,10 +39,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     UI ui = new UI(this);
 
-    //Player and Objects
+    //Entity and Objects
     public Player player = new Player(this, keyHandler);
 
     public SuperObject[] superObject = new SuperObject[10];
+
+    public Entity[] npc = new Entity[10];
 
     public AssetSetter assetSetter = new AssetSetter(this);
 
@@ -53,7 +56,6 @@ public class GamePanel extends JPanel implements Runnable {
     public final int pauseState = 2;
 
 
-
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -63,9 +65,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
-    public void setupGame(){
+    public void setupGame() {
 
         assetSetter.setObject();
+        assetSetter.setNpc();
         playMusic(0);
         gameState = playState;
     }
@@ -105,6 +108,11 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (gameState == playState) {
             player.update();
+            for (Entity entity : npc) {
+                if (entity != null) {
+                    entity.update();
+                }
+            }
         }
         if (gameState == pauseState) {
         }
@@ -122,6 +130,12 @@ public class GamePanel extends JPanel implements Runnable {
             if (object != null) {
 
                 object.draw(g2, this);
+            }
+        }
+
+        for (Entity entity : npc) {
+            if (entity != null) {
+                entity.draw(g2);
             }
         }
 
@@ -144,7 +158,7 @@ public class GamePanel extends JPanel implements Runnable {
         music.stop();
     }
 
-    public void playSFX(int i){
+    public void playSFX(int i) {
 
         sfx.setFile(i);
         sfx.play();

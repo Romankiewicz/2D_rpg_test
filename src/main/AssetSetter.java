@@ -1,5 +1,6 @@
 package main;
 
+import entity.NpcNakedGuy;
 import object.BlueKey;
 import object.ChestClosed;
 import object.Door;
@@ -32,5 +33,12 @@ public class AssetSetter {
         gamePanel.superObject[3].worldX = gamePanel.tileSize * 3;
         gamePanel.superObject[3].worldY = gamePanel.tileSize * 2;
 
+    }
+
+    public void setNpc() {
+
+        gamePanel.npc[0] = new NpcNakedGuy(gamePanel);
+        gamePanel.npc[0].worldX = gamePanel.tileSize * 11;
+        gamePanel.npc[0].worldY = gamePanel.tileSize * 16;
     }
 }
