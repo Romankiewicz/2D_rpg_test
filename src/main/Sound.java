@@ -23,15 +23,14 @@ public class Sound {
 
     }
 
-    public void setFile(int i , float volume) {
+    public void setFile(int i) {
 
         try {
 
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
             clip = AudioSystem.getClip();
             clip.open(ais);
-            FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            volumeControl.setValue(volume);
+
         } catch (Exception _) {
 
         }
@@ -50,5 +49,9 @@ public class Sound {
     public void stop() {
 
         clip.stop();
+    }
+    public void setVolume(float volume ) {
+        FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        volumeControl.setValue(volume);
     }
 }

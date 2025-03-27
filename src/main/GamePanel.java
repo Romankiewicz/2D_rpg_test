@@ -29,8 +29,8 @@ public class GamePanel extends JPanel implements Runnable {
     //Sound
     Sound music = new Sound();
     Sound sfx = new Sound();
-    Float defaultMusicVolume = -20.0f;
-    float defaultSfxVolume = -1.0f;
+    float defaultMusicVolume = 0.0f;
+    float defaultSfxVolume = 0.0f;
 
     //System
     TileManager tileManager = new TileManager(this);
@@ -160,7 +160,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void playMusic(int i) {
 
-        music.setFile(i, defaultMusicVolume);
+        music.setFile(i);
+        music.setVolume(defaultMusicVolume);
         music.play();
         music.loop();
     }
@@ -172,7 +173,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void playSFX(int i) {
 
-        sfx.setFile(i, defaultSfxVolume);
+        sfx.setFile(i);
+        sfx.setVolume(defaultSfxVolume);
         sfx.play();
     }
 }

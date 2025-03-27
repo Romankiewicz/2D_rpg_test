@@ -176,13 +176,11 @@ public class Player extends Entity {
                     gamePanel.playSFX(3);
                     haveSilverKey++;
                     gamePanel.superObject[i] = null;
-                    System.out.println("SilverKey" + haveSilverKey);
                     break;
                 case "BlueKey":
                     gamePanel.playSFX(3);
                     haveBlueKey++;
                     gamePanel.superObject[i] = null;
-                    System.out.println("BlueKey" + haveBlueKey);
                     break;
                 case "Door":
                     if (haveSilverKey > 0) {

@@ -14,6 +14,10 @@ public class UI {
 
     public String currentDialogue = "";
     public int commandNum = 0;
+    public int musicSelectorNum = 100;
+    public int sfxSelectorNum = 100;
+    public int titleScreenState = 0;
+
 
     public UI(GamePanel gamePanel) {
 
@@ -50,59 +54,107 @@ public class UI {
     public void drawTitleScreen() {
 
         //Title
-        g2.setFont(courier_30);
-        String prefix = "(a not that much)";
-        int x = getXForCenteredText(prefix);
-        int y = gamePanel.tileSize * 3;
-        g2.setColor(Color.white);
-        g2.drawString(prefix, x, y);
+        if (titleScreenState == 0) {
+            g2.setFont(courier_30);
+            String prefix = "(a not that much)";
+            int x = getXForCenteredText(prefix);
+            int y = gamePanel.tileSize * 3;
+            g2.setColor(Color.white);
+            g2.drawString(prefix, x, y);
 
-        g2.setFont(courier_80B);
-        String title = "ZELDA-like RPG";
-        x = getXForCenteredText(title);
-        y += gamePanel.tileSize;
-        g2.setColor(translucentWhite_1);
-        g2.drawString(title, x + 5, y + 4);
-        g2.setColor(Color.white);
-        g2.drawString(title, x, y);
+            g2.setFont(courier_80B);
+            String title = "ZELDA-like RPG";
+            x = getXForCenteredText(title);
+            y += gamePanel.tileSize;
+            g2.setColor(translucentWhite_1);
+            g2.drawString(title, x + 5, y + 4);
+            g2.setColor(Color.white);
+            g2.drawString(title, x, y);
 
-        //Menu
-        g2.setFont(courier_40B);
+            //Menu
+            g2.setFont(courier_40B);
 
-        String text = "New Game";
-        x = getXForCenteredText(text);
-        y += gamePanel.tileSize * 4;
-        g2.drawString(text, x, y);
-        if (commandNum == 0) {
-            g2.drawString("<", x - gamePanel.tileSize, y);
-            g2.drawString(">", getXForEndOfText(text)+ gamePanel.tileSize /2, y);
-        }
+            String text = "New Game";
+            x = getXForCenteredText(text);
+            y += gamePanel.tileSize * 4;
+            g2.drawString(text, x, y);
+            if (commandNum == 0) {
+                g2.drawString("<", x - gamePanel.tileSize, y);
+                g2.drawString(">", getXForEndOfText(text) + gamePanel.tileSize / 2, y);
+            }
 
-        text = "Load Game";
-        x = getXForCenteredText(text);
-        y += gamePanel.tileSize;
-        g2.drawString(text, x, y);
-        if (commandNum == 1) {
-            g2.drawString("<", x - gamePanel.tileSize, y);
-            g2.drawString(">", getXForEndOfText(text)+ gamePanel.tileSize /2, y);
-        }
+            text = "Load Game";
+            x = getXForCenteredText(text);
+            y += gamePanel.tileSize;
+            g2.drawString(text, x, y);
+            if (commandNum == 1) {
+                g2.drawString("<", x - gamePanel.tileSize, y);
+                g2.drawString(">", getXForEndOfText(text) + gamePanel.tileSize / 2, y);
+            }
 
-        text = "Options";
-        x = getXForCenteredText(text);
-        y += gamePanel.tileSize;
-        g2.drawString(text, x, y);
-        if (commandNum == 2) {
-            g2.drawString("<", x - gamePanel.tileSize, y);
-            g2.drawString(">", getXForEndOfText(text)+ gamePanel.tileSize /2, y);
-        }
+            text = "Options";
+            x = getXForCenteredText(text);
+            y += gamePanel.tileSize;
+            g2.drawString(text, x, y);
+            if (commandNum == 2) {
+                g2.drawString("<", x - gamePanel.tileSize, y);
+                g2.drawString(">", getXForEndOfText(text) + gamePanel.tileSize / 2, y);
+            }
 
-        text = "Exit";
-        x = getXForCenteredText(text);
-        y += gamePanel.tileSize;
-        g2.drawString(text, x, y);
-        if (commandNum == 3) {
-            g2.drawString("<", x - gamePanel.tileSize, y);
-            g2.drawString(">", getXForEndOfText(text)+ gamePanel.tileSize /2, y);
+            text = "Exit";
+            x = getXForCenteredText(text);
+            y += gamePanel.tileSize;
+            g2.drawString(text, x, y);
+            if (commandNum == 3) {
+                g2.drawString("<", x - gamePanel.tileSize, y);
+                g2.drawString(">", getXForEndOfText(text) + gamePanel.tileSize / 2, y);
+            }
+        } else if (titleScreenState == 1) {
+
+            g2.setFont(courier_80B);
+            String text = "Options";
+            int x = getXForCenteredText(text);
+            int y = gamePanel.tileSize * 3;
+            g2.setColor(Color.white);
+            g2.drawString(text, x, y);
+
+            g2.setFont(courier_40B);
+
+            text = "Music volume";
+            x = getXForCenteredText(text);
+            y += gamePanel.tileSize * 3;
+            g2.drawString(text, x, y);
+            if (commandNum == 0) {
+                g2.drawString(">", x - gamePanel.tileSize, y);
+            }
+            text = "|................|";
+            int selectorX  = getXForCenteredText(text);
+            int selectorY = y - gamePanel.tileSize;
+            g2.drawString(text, selectorX, selectorY);
+
+            g2.drawString("°", selectorX + musicSelectorNum * 4, selectorY - gamePanel.tileSize / 4);
+
+            text = "SFX volume";
+            x = getXForCenteredText(text);
+            y += gamePanel.tileSize * 3;
+            g2.drawString(text, x, y);
+            if (commandNum == 1) {
+                g2.drawString(">", x - gamePanel.tileSize, y);
+            }
+            text = "|................|";
+            selectorX  = getXForCenteredText(text);
+            selectorY = y - gamePanel.tileSize;
+            g2.drawString(text, selectorX, selectorY);
+
+            g2.drawString("°", selectorX + sfxSelectorNum * 4, selectorY - gamePanel.tileSize / 4);
+
+            text = "Go Back";
+            x = getXForCenteredText(text);
+            y += gamePanel.tileSize;
+            g2.drawString(text, x, y);
+            if (commandNum == 2) {
+                g2.drawString(">", x - gamePanel.tileSize, y);
+            }
         }
     }
 
