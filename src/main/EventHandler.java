@@ -1,68 +1,97 @@
 package main;
 
-import java.awt.*;
-
 public class EventHandler {
 
     GamePanel gamePanel;
-    Rectangle eventRect;
-    int eventRectDefaultX, eventRectDefaultY;
+    EventRect[][] eventRect;
+
+    int previousEventX, previousEventY;
+    boolean eventCoolDownDone = true;
 
     public EventHandler(GamePanel gamePanel) {
 
         this.gamePanel = gamePanel;
 
-        eventRect = new Rectangle();
-        eventRect.x = 35;
-        eventRect.y = 35;
-        eventRect.height = 2;
-        eventRect.width = 2;
-        eventRectDefaultX = eventRect.x;
-        eventRectDefaultY = eventRect.y;
+        eventRect = new EventRect[gamePanel.maxWorldCol][gamePanel.maxWorldRow];
+
+        int col = 0;
+        int row = 0;
+
+        while (col < gamePanel.maxWorldCol && row < gamePanel.maxWorldRow) {
+
+            eventRect[col][row] = new EventRect();
+            eventRect[col][row].x = 35;
+            eventRect[col][row].y = 35;
+            eventRect[col][row].height = 2;
+            eventRect[col][row].width = 2;
+            eventRect[col][row].eventRectDefaultX = eventRect[col][row].x;
+            eventRect[col][row].eventRectDefaultY = eventRect[col][row].y;
+
+            col++;
+            if (col == gamePanel.maxWorldCol) {
+                col = 0;
+                row++;
+            }
+        }
     }
 
     public void checkEvent() {
 
-        if (hit(21, 4, "right")) {
-            damage(gamePanel.dialogueState);
+        int xDistance = Math.abs(gamePanel.player.worldX - previousEventX);
+        int yDistance = Math.abs(gamePanel.player.worldY - previousEventY);
+        int distance = Math.max(xDistance, yDistance);
+
+        if(distance > gamePanel.tileSize) {
+            eventCoolDownDone = true;
         }
-        if (hit(13, 22, "standingUp")) {
-            healing(gamePanel.dialogueState);
-        }
-        if (hit(2, 2, "up")) {
-            teleport();
+
+        if(eventCoolDownDone) {
+            if (hit(21, 4, "any")) {
+                damage(21, 4, gamePanel.dialogueState);
+            }
+            if (hit(13, 22, "standingUp")) {
+                healing(gamePanel.dialogueState);
+            }
+            if (hit(2, 2, "up")) {
+                teleport();
+            }
         }
     }
 
-    public boolean hit(int eventCol, int eventRow, String reqDirection) {
+    public boolean hit(int col, int row, String reqDirection) {
 
         boolean hit = false;
 
         gamePanel.player.solidArea.x = gamePanel.player.worldX + gamePanel.player.solidArea.x;
         gamePanel.player.solidArea.y = gamePanel.player.worldY + gamePanel.player.solidArea.y;
-        eventRect.x = eventCol *gamePanel.tileSize + eventRect.x;
-        eventRect.y = eventRow *gamePanel.tileSize + eventRect.y;
+        eventRect[col][row].x = col *gamePanel.tileSize + eventRect[col][row].x;
+        eventRect[col][row].y = row *gamePanel.tileSize + eventRect[col][row].y;
 
-        if (gamePanel.player.solidArea.intersects(eventRect)) {
+        if (gamePanel.player.solidArea.intersects(eventRect[col][row]) && !eventRect[col][row].eventDone) {
             if (gamePanel.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")
             ||gamePanel.player.lastDirection.contentEquals(reqDirection) || reqDirection.contentEquals("any")) {
                 hit = true;
+
+                previousEventX = gamePanel.player.worldX;
+                previousEventY = gamePanel.player.worldY;
             }
         }
 
         gamePanel.player.solidArea.x = gamePanel.player.solidAreaDefaultX;
         gamePanel.player.solidArea.y = gamePanel.player.solidAreaDefaultY;
-        eventRect.x = eventRectDefaultX;
-        eventRect.y = eventRectDefaultY;
+        eventRect[col][row].x = eventRect[col][row].eventRectDefaultX;
+        eventRect[col][row].y = eventRect[col][row].eventRectDefaultY;
 
         return hit;
     }
 
-    public void damage(int gameState) {
+    public void damage(int col, int row, int gameState) {
 
         gamePanel.gameState = gameState;
-        gamePanel.ui.currentDialogue = "\n\nGOTCHA";
+        gamePanel.ui.currentDialogue = "\nGOTCHA\nLandmine ;)";
         gamePanel.player.hp -= 1;
+//        eventRect[col][row].eventDone = true;
+        eventCoolDownDone = false;
     }
 
     public void healing(int gameState) {
@@ -71,6 +100,7 @@ public class EventHandler {
             gamePanel.gameState = gameState;
             gamePanel.ui.currentDialogue = "\nYou take a rest\n\nYou feel refreshed";
             gamePanel.player.hp = gamePanel.player.maxHp;
+
         }
     }
 
