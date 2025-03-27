@@ -47,7 +47,7 @@ public class Player extends Entity {
         worldY = gamePanel.tileSize * 12;
         speed = 4;
         direction = "standing";
-        lastDirection = "down";
+        lastDirection = "standingDown";
         maxHp = 6;
         hp = maxHp;
     }
@@ -90,16 +90,16 @@ public class Player extends Entity {
         //MOVE PLAYER
         if (keyHandler.upPressed) {
             direction = "up";
-            lastDirection = "up";
+            lastDirection = "standingUp";
         } else if (keyHandler.downPressed) {
             direction = "down";
-            lastDirection = "down";
+            lastDirection = "standingDown";
         } else if (keyHandler.leftPressed) {
             direction = "left";
-            lastDirection = "left";
+            lastDirection = "standingLeft";
         } else if (keyHandler.rightPressed) {
             direction = "right";
-            lastDirection = "right";
+            lastDirection = "standingRight";
         } else if (keyHandler.upReleased || keyHandler.downReleased || keyHandler.leftReleased || keyHandler.rightReleased) {
             direction = "standing";
         }
@@ -113,6 +113,10 @@ public class Player extends Entity {
 
         int npcIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npc);
         npcInteract(npcIndex);
+
+        gamePanel.eventHandler.checkEvent();
+
+        gamePanel.keyHandler.spacePressed = false;
 
         if (!collisionOn) {
             switch (direction) {
@@ -214,12 +218,11 @@ public class Player extends Entity {
 
         if (i != 999) {
             if (gamePanel.keyHandler.spacePressed) {
-
                 gamePanel.gameState = gamePanel.dialogueState;
                 gamePanel.npc[i].speak();
             }
         }
-        gamePanel.keyHandler.spacePressed = false;
+
     }
 
     public void draw(Graphics2D g2) {
@@ -228,10 +231,10 @@ public class Player extends Entity {
 
         if (direction.equals("standing")) {
             image = switch (lastDirection) {
-                case "up" -> standingUp;
-                case "down" -> standingDown[spriteNum];
-                case "left" -> standingLeft[spriteNum];
-                case "right" -> standingRight[spriteNum];
+                case "standingUp" -> standingUp;
+                case "standingDown" -> standingDown[spriteNum];
+                case "standingLeft" -> standingLeft[spriteNum];
+                case "standingRight" -> standingRight[spriteNum];
                 default -> image;
             };
         }
