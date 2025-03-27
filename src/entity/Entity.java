@@ -34,10 +34,15 @@ public class Entity {
     public int spriteNum = 0;
     public int moveCounter = 0;
     public int movingSpriteNum = 0;
+
     public int npcSpriteNum = 0;
     public int npcSpriteCounter = 0;
+
     public int actionCounter = 0;
     public static int dialogueCounter = 0;
+
+    public int maxHp;
+    public int hp;
 
     public Rectangle solidArea = new Rectangle(0, 0, 72, 72);
     public int solidAreaDefaultX, solidAreaDefaultY;
@@ -58,7 +63,7 @@ public class Entity {
         try {
 
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/" + packageName + "/" + imageName + ".png")));
-            image = utilityTool.scaledImage(image, gamePanel.tileSize, gamePanel.tileSize);
+            image = utilityTool.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize);
 
         } catch (IOException e) {
             e.printStackTrace();

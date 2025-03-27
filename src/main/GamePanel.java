@@ -37,6 +37,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public KeyHandler keyHandler = new KeyHandler(this);
 
+    public EventHandler eventHandler = new EventHandler(this);
+
     Thread gameThread;
 
     public UI ui = new UI(this);

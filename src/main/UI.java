@@ -1,12 +1,19 @@
 package main;
 
+import object.Heart;
+import object.SuperObject;
+
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class UI {
 
     GamePanel gamePanel;
     Graphics2D g2;
     Font courier_30, courier_40, courier_80, courier_30B, courier_40B, courier_80B;
+
+    BufferedImage heartFull, heartHalf, heartEmpty;
 
     Color translucentBlack = new Color(0, 0, 0, 200);
     Color translucentWhite = new Color(255, 255, 255, 200);
@@ -30,6 +37,10 @@ public class UI {
         courier_80 = new Font("Courier New", Font.PLAIN, 80);
         courier_80B = new Font("Courier New", Font.BOLD, 80);
 
+        SuperObject heart = new Heart(gamePanel);
+        heartFull = heart.image;
+        heartHalf = heart.image1;
+        heartEmpty = heart.image2;
     }
 
     public void draw(Graphics2D g2) {
@@ -43,11 +54,38 @@ public class UI {
         if (gamePanel.gameState == gamePanel.titleState) {
             drawTitleScreen();
         } else if (gamePanel.gameState == gamePanel.playState) {
-            //Play State UI stuff here
+            drawPlayerHp();
         } else if (gamePanel.gameState == gamePanel.pauseState) {
+            drawPlayerHp();
             drawPauseScreen();
         } else if (gamePanel.gameState == gamePanel.dialogueState) {
+            drawPlayerHp();
             drawDialogueScreen();
+        }
+    }
+
+    public void drawPlayerHp() {
+
+        int x = gamePanel.tileSize / 2;
+        int y = gamePanel.tileSize / 2;
+        int i = 0;
+
+        while (i < gamePanel.player.maxHp / 2) {
+            g2.drawImage(heartEmpty, x, y, null);
+            i++;
+            x += gamePanel.tileSize;
+        }
+        x = gamePanel.tileSize / 2;
+        i = 0;
+
+        while (i < gamePanel.player.hp) {
+            g2.drawImage(heartHalf, x, y, null);
+            i++;
+            if (i < gamePanel.player.hp) {
+                g2.drawImage(heartFull, x, y, null);
+            }
+            i++;
+            x += gamePanel.tileSize;
         }
     }
 
@@ -128,7 +166,7 @@ public class UI {
                 g2.drawString(">", x - gamePanel.tileSize, y);
             }
             text = "|................|";
-            int selectorX  = getXForCenteredText(text);
+            int selectorX = getXForCenteredText(text);
             int selectorY = y - gamePanel.tileSize;
             g2.drawString(text, selectorX, selectorY);
 
@@ -142,7 +180,7 @@ public class UI {
                 g2.drawString(">", x - gamePanel.tileSize, y);
             }
             text = "|................|";
-            selectorX  = getXForCenteredText(text);
+            selectorX = getXForCenteredText(text);
             selectorY = y - gamePanel.tileSize;
             g2.drawString(text, selectorX, selectorY);
 

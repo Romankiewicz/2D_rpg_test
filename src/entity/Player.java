@@ -48,6 +48,8 @@ public class Player extends Entity {
         speed = 4;
         direction = "standing";
         lastDirection = "down";
+        maxHp = 6;
+        hp = maxHp;
     }
 
     public void getPlayerImage() {
