@@ -122,8 +122,10 @@ public class CollisionChecker {
                     case "right" -> entity.solidArea.x += entity.speed;
                 }
                 if (entity.solidArea.intersects(target[i].solidArea)) {
-                    entity.collisionOn = true;
-                    index = i;
+                    if (target[i] != entity) {
+                        entity.collisionOn = true;
+                        index = i;
+                    }
                 }
 
                 entity.solidArea.x = entity.solidAreaDefaultX;
@@ -135,7 +137,9 @@ public class CollisionChecker {
         return index;
     }
 
-    public void checkPlayerCollision(Entity entity) {
+    public boolean checkPlayerCollision(Entity entity) {
+
+        boolean contactsPlayer = false;
 
         entity.solidArea.x = entity.worldX + entity.solidArea.x;
         entity.solidArea.y = entity.worldY + entity.solidArea.y;
@@ -151,11 +155,14 @@ public class CollisionChecker {
         }
         if (entity.solidArea.intersects(gamePanel.player.solidArea)) {
             entity.collisionOn = true;
+            contactsPlayer = true;
         }
 
         entity.solidArea.x = entity.solidAreaDefaultX;
         entity.solidArea.y = entity.solidAreaDefaultY;
         gamePanel.player.solidArea.x = gamePanel.player.solidAreaDefaultX;
         gamePanel.player.solidArea.y = gamePanel.player.solidAreaDefaultY;
+
+        return contactsPlayer;
     }
 }

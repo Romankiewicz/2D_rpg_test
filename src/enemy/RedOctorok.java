@@ -1,9 +1,12 @@
 package enemy;
 
 import entity.Entity;
+import entity.EntityType;
 import main.GamePanel;
 
 import java.util.Random;
+
+import static entity.EntityType.ENEMY;
 
 public class RedOctorok extends Entity {
 
@@ -11,8 +14,11 @@ public class RedOctorok extends Entity {
 
         super(gamePanel);
 
+        type = ENEMY;
+        typeNum = 1;
+
         name = "RedOctorok";
-        speed = 3;
+        speed = 1;
         maxHp = 4;
         hp = maxHp;
 

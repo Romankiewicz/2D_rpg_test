@@ -5,14 +5,19 @@ import main.GamePanel;
 
 import java.util.Random;
 
+import static entity.EntityType.ENEMY;
+
 public class BlueOctorok extends Entity {
 
     public BlueOctorok(GamePanel gamePanel) {
 
         super(gamePanel);
 
+        type = ENEMY;
+        typeNum = 1;
+        
         name = "BlueOctorok";
-        speed = 3;
+        speed = 2;
         maxHp = 4;
         hp = maxHp;
 

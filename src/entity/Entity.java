@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
+import static entity.EntityType.ENEMY;
+
 public class Entity {
 
     public int worldX, worldY;
@@ -19,6 +21,8 @@ public class Entity {
     public BufferedImage image, image1, image2;
     public String name;
     public boolean collision = false;
+    public static EntityType type;
+    public int typeNum;
 
     public BufferedImage standingUp;
     public BufferedImage[] standingDown = new BufferedImage[10];
@@ -41,11 +45,14 @@ public class Entity {
 
     public int npcSpriteNum = 0;
     public int npcSpriteCounter = 0;
-    public boolean threeSprites = false;
     public boolean twoSprites = false;
+    public boolean threeSprites = false;
 
     public int actionCounter = 0;
     public static int dialogueCounter = 0;
+
+    public boolean invincible = false;
+    public int invincibleCounter = 0;
 
     public int maxHp;
     public int hp;
@@ -116,8 +123,14 @@ public class Entity {
         gamePanel.collisionChecker.checkObjectCollision(this, false);
         gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.enemies);
         gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npcs);
-        gamePanel.collisionChecker.checkPlayerCollision(this);
+        boolean contactsPlayer = gamePanel.collisionChecker.checkPlayerCollision(this);
 
+        if (type == ENEMY && contactsPlayer) {
+            if (!gamePanel.player.invincible) {
+                gamePanel.player.hp -= 1;
+                gamePanel.player.invincible = true;
+            }
+        }
         if (!collisionOn) {
             switch (direction) {
                 case "up":

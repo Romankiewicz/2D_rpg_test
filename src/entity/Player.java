@@ -114,8 +114,8 @@ public class Player extends Entity {
         int npcIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npcs);
         npcInteract(npcIndex);
 
-        int monsterIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.enemies);
-
+        int enemyIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.enemies);
+        enemyInteract(enemyIndex);
 
         gamePanel.eventHandler.checkEvent();
 
@@ -173,6 +173,14 @@ public class Player extends Entity {
             }
             moveCounter = 0;
         }
+
+        if (invincible) {
+            invincibleCounter++;
+            if (invincibleCounter > 60) {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
 
     public void objectInteract(int i) {
@@ -224,17 +232,28 @@ public class Player extends Entity {
     public void npcInteract(int i) {
 
         if (i != 999) {
-            if (gamePanel.keyHandler.spacePressed) {
-                gamePanel.gameState = gamePanel.dialogueState;
-                gamePanel.npcs[i].speak();
-            }
+//            if (gamePanel.keyHandler.spacePressed) {
+            gamePanel.gameState = gamePanel.dialogueState;
+            gamePanel.npcs[i].speak();
+//            }
         }
 
+    }
+
+    public void enemyInteract(int i) {
+
+        if (i != 999) {
+            if (!invincible) {
+                hp -= 1;
+                invincible = true;
+            }
+        }
     }
 
     public void draw(Graphics2D g2) {
 
         BufferedImage image = null;
+
 
         if (direction.equals("standing")) {
             image = switch (lastDirection) {
@@ -254,7 +273,12 @@ public class Player extends Entity {
             default -> image;
         };
 
+        if (invincible) {
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+        }
 
         g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+
     }
 }
