@@ -1,0 +1,67 @@
+package enemy;
+
+import entity.Entity;
+import main.GamePanel;
+
+import java.util.Random;
+
+public class RedOctorok extends Entity {
+
+    public RedOctorok(GamePanel gamePanel) {
+
+        super(gamePanel);
+
+        name = "RedOctorok";
+        speed = 3;
+        maxHp = 4;
+        hp = maxHp;
+
+        solidArea.x = 12;
+        solidArea.y = 18;
+        solidArea.width = 48;
+        solidArea.height = 42;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+    }
+
+    public void getImage() {
+
+        for (int i = 0; i < 2; i++) {
+            up[i] = setup("enemies/redOctorok", "Octorok_Red_Up_" + (i + 1));
+        }
+        for (int i = 0; i < 2; i++) {
+            down[i] = setup("enemies/redOctorok", "Octorok_Red_Down_" + (i + 1));
+        }
+        for (int i = 0; i < 2; i++) {
+            left[i] = setup("enemies/redOctorok", "Octorok_Red_Left_" + (i + 1));
+        }
+        for (int i = 0; i < 2; i++) {
+            right[i] = setup("enemies/redOctorok", "Octorok_Red_Right_" + (i + 1));
+        }
+    }
+
+    public void setAction() {
+
+        actionCounter++;
+
+        if (actionCounter == 120) {
+            Random random = new Random();
+            int i = random.nextInt(40) + 1;
+
+            if (i <= 10) {
+                direction = "up";
+            }
+            if (i > 10 && i <= 20) {
+                direction = "down";
+            }
+            if (i > 20 && i <= 30) {
+                direction = "left";
+            }
+            if (i > 30) {
+                direction = "right";
+            }
+            actionCounter = 0;
+        }
+    }
+
+}
