@@ -114,6 +114,9 @@ public class Player extends Entity {
         int npcIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npcs);
         npcInteract(npcIndex);
 
+        int monsterIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.enemies);
+
+
         gamePanel.eventHandler.checkEvent();
 
         gamePanel.keyHandler.spacePressed = false;

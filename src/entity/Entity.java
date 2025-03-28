@@ -31,7 +31,7 @@ public class Entity {
     public BufferedImage[] left = new BufferedImage[10];
     public BufferedImage[] right = new BufferedImage[10];
 
-    public String direction ="down";
+    public String direction = "down";
     public String lastDirection;
 
     public int spriteCounter = 0;
@@ -41,6 +41,8 @@ public class Entity {
 
     public int npcSpriteNum = 0;
     public int npcSpriteCounter = 0;
+    public boolean threeSprites = false;
+    public boolean twoSprites = false;
 
     public int actionCounter = 0;
     public static int dialogueCounter = 0;
@@ -81,9 +83,10 @@ public class Entity {
             gamePanel.gameState = gamePanel.playState;
             dialogueCounter = 0;
 
-        }else if (dialogues[dialogueCounter] != null) {
-        gamePanel.ui.currentDialogue = dialogues[dialogueCounter];
-        dialogueCounter++;}
+        } else if (dialogues[dialogueCounter] != null) {
+            gamePanel.ui.currentDialogue = dialogues[dialogueCounter];
+            dialogueCounter++;
+        }
 
         switch (gamePanel.player.direction) {
             case "up":
@@ -98,9 +101,11 @@ public class Entity {
             case "right":
                 direction = "left";
                 break;
-        }}
+        }
+    }
 
-    public void setAction() {}
+    public void setAction() {
+    }
 
     public void update() {
 
@@ -109,6 +114,8 @@ public class Entity {
         collisionOn = false;
         gamePanel.collisionChecker.checkTile(this);
         gamePanel.collisionChecker.checkObjectCollision(this, false);
+        gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.enemies);
+        gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npcs);
         gamePanel.collisionChecker.checkPlayerCollision(this);
 
         if (!collisionOn) {
@@ -127,15 +134,28 @@ public class Entity {
                     break;
             }
         }
-        npcSpriteCounter++;
-        if (npcSpriteCounter > 8) {
-            switch (npcSpriteNum) {
-                case 0 -> npcSpriteNum = 1;
-                case 1 -> npcSpriteNum = 2;
-                case 2 -> npcSpriteNum = 0;
+        if (threeSprites) {
+            npcSpriteCounter++;
+            if (npcSpriteCounter > 8) {
+                switch (npcSpriteNum) {
+                    case 0 -> npcSpriteNum = 1;
+                    case 1 -> npcSpriteNum = 2;
+                    case 2 -> npcSpriteNum = 0;
+                }
+                npcSpriteCounter = 0;
             }
-            npcSpriteCounter = 0;
         }
+        if (twoSprites) {
+            npcSpriteCounter++;
+            if (npcSpriteCounter > 15) {
+                switch (npcSpriteNum) {
+                    case 0 -> npcSpriteNum = 1;
+                    case 1 -> npcSpriteNum = 0;
+                }
+                npcSpriteCounter = 0;
+            }
+        }
+
     }
 
     public void draw(Graphics2D g2) {

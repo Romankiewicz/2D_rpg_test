@@ -22,6 +22,8 @@ public class BlueOctorok extends Entity {
         solidArea.height = 42;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        twoSprites = true;
+        getImage();
     }
 
     public void getImage() {

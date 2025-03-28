@@ -17,6 +17,7 @@ public class NpcNakedGuy extends Entity {
         solidAreaDefaultY = 10;
         solidArea.width = 50;
         solidArea.height = 48;
+        threeSprites = true;
         getNpcImage();
         setDialogue();
     }
