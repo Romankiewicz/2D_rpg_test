@@ -119,9 +119,7 @@ public class Player extends Entity {
 
         gamePanel.eventHandler.checkEvent();
 
-        gamePanel.keyHandler.spacePressed = false;
-
-        if (!collisionOn) {
+        if (!collisionOn && !keyHandler.spacePressed) {
             switch (direction) {
                 case "up":
                     worldY -= speed;
@@ -138,6 +136,7 @@ public class Player extends Entity {
             }
         }
 
+        gamePanel.keyHandler.spacePressed = false;
 
         //SPRITE CHANGER
         spriteCounter++;

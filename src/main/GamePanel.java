@@ -2,7 +2,6 @@ package main;
 
 import entity.Entity;
 import entity.Player;
-
 import tile.TileManager;
 
 import javax.swing.*;
@@ -14,6 +13,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Screen settings
 
+    private final GamePanel gamePanel;
     private final int originalTileSize = 24;
     private final int scale = 3;
 
@@ -58,7 +58,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int dialogueState = 3;
 
 
-    public GamePanel() {
+    public GamePanel(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
@@ -72,7 +73,7 @@ public class GamePanel extends JPanel implements Runnable {
         assetSetter.setObject();
         assetSetter.setNpc();
         assetSetter.setEnemies();
-        playMusic(5);
+        gamePanel.playMusic(5);
         gameState = titleState;
     }
 
@@ -169,14 +170,12 @@ public class GamePanel extends JPanel implements Runnable {
                 entity.draw(g2);
             }
 
-            for (int i = 0; i < entities.size(); i++) {
-                entities.remove(i);
-            }
-
-            ui.draw(g2);
-
-            g2.dispose();
+            entities.clear();
         }
+
+        ui.draw(g2);
+
+        g2.dispose();
     }
 
     public void playMusic(int i) {
@@ -199,3 +198,4 @@ public class GamePanel extends JPanel implements Runnable {
         sfx.play();
     }
 }
+
