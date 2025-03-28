@@ -2,11 +2,13 @@ package main;
 
 import entity.Entity;
 import entity.Player;
-import object.SuperObject;
+
 import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -34,24 +36,17 @@ public class GamePanel extends JPanel implements Runnable {
 
     //System
     TileManager tileManager = new TileManager(this);
-
     public KeyHandler keyHandler = new KeyHandler(this);
-
     public EventHandler eventHandler = new EventHandler(this);
-
     Thread gameThread;
-
     public UI ui = new UI(this);
 
     //Entity and Objects
     public Player player = new Player(this, keyHandler);
-
-    public SuperObject[] superObject = new SuperObject[10];
-
+    public Entity[] objects = new Entity[10];
     public Entity[] npc = new Entity[10];
-
+    public ArrayList<Entity> entities = new ArrayList<>();
     public AssetSetter assetSetter = new AssetSetter(this);
-
     public CollisionChecker collisionChecker = new CollisionChecker(this);
 
     //Game State
@@ -130,29 +125,40 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        //
-        //Title Screen
         if (gameState == titleState) {
             ui.draw(g2);
         } else {
 
             tileManager.draw(g2);
 
-            for (SuperObject object : superObject) {
+            entities.add(player);
 
+            for (Entity npc : npc) {
+                if (npc != null) {
+                    entities.add(npc);
+                }
+            }
+
+            for (Entity object : objects) {
                 if (object != null) {
-
-                    object.draw(g2, this);
+                    entities.add(object);
                 }
             }
 
-            for (Entity entity : npc) {
-                if (entity != null) {
-                    entity.draw(g2);
+            entities.sort(new Comparator<Entity>() {
+                @Override
+                public int compare(Entity o1, Entity o2) {
+                    return Integer.compare(o1.worldY, o2.worldY);
                 }
+            });
+
+            for (Entity entity : entities) {
+                entity.draw(g2);
             }
 
-            player.draw(g2);
+            for (int i = 0; i < entities.size(); i++) {
+                entities.remove(i);
+            }
 
             ui.draw(g2);
 

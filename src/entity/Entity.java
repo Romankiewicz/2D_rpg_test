@@ -16,6 +16,10 @@ public class Entity {
 
     GamePanel gamePanel;
 
+    public BufferedImage image, image1, image2;
+    public String name;
+    public boolean collision = false;
+
     public BufferedImage standingUp;
     public BufferedImage[] standingDown = new BufferedImage[10];
     public BufferedImage[] standingLeft = new BufferedImage[10];
@@ -27,7 +31,7 @@ public class Entity {
     public BufferedImage[] left = new BufferedImage[10];
     public BufferedImage[] right = new BufferedImage[10];
 
-    public String direction;
+    public String direction ="down";
     public String lastDirection;
 
     public int spriteCounter = 0;

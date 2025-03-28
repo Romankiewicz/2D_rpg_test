@@ -1,11 +1,10 @@
 package main;
 
+import entity.Entity;
 import object.Heart;
-import object.SuperObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class UI {
 
@@ -37,7 +36,7 @@ public class UI {
         courier_80 = new Font("Courier New", Font.PLAIN, 80);
         courier_80B = new Font("Courier New", Font.BOLD, 80);
 
-        SuperObject heart = new Heart(gamePanel);
+        Entity heart = new Heart(gamePanel);
         heartFull = heart.image;
         heartHalf = heart.image1;
         heartEmpty = heart.image2;

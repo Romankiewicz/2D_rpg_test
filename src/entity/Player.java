@@ -176,37 +176,39 @@ public class Player extends Entity {
 
         if (i != 999) {
 
-            String objectName = gamePanel.superObject[i].name;
+            String objectName = gamePanel.objects[i].name;
             switch (objectName) {
                 case "SilverKey":
                     gamePanel.playSFX(3);
                     haveSilverKey++;
-                    gamePanel.superObject[i] = null;
+                    gamePanel.entities.remove(i);
+                    gamePanel.objects[i] = null;
                     break;
                 case "BlueKey":
                     gamePanel.playSFX(3);
                     haveBlueKey++;
-                    gamePanel.superObject[i] = null;
+                    gamePanel.entities.remove(i);
+                    gamePanel.objects[i] = null;
                     break;
                 case "Door":
                     if (haveSilverKey > 0) {
                         gamePanel.playSFX(4);
-                        int x = gamePanel.superObject[i].worldX;
-                        int y = gamePanel.superObject[i].worldY;
-                        gamePanel.superObject[i] = new DoorOpen();
-                        gamePanel.superObject[i].worldX = x;
-                        gamePanel.superObject[i].worldY = y;
+                        int x = gamePanel.objects[i].worldX;
+                        int y = gamePanel.objects[i].worldY;
+                        gamePanel.objects[i] = new DoorOpen(gamePanel);
+                        gamePanel.objects[i].worldX = x;
+                        gamePanel.objects[i].worldY = y;
                         haveSilverKey--;
                     }
                     break;
                 case "Chest":
                     if (haveBlueKey > 0) {
                         gamePanel.playSFX(4);
-                        int x = gamePanel.superObject[i].worldX;
-                        int y = gamePanel.superObject[i].worldY;
-                        gamePanel.superObject[i] = new ChestOpen();
-                        gamePanel.superObject[i].worldX = x;
-                        gamePanel.superObject[i].worldY = y;
+                        int x = gamePanel.objects[i].worldX;
+                        int y = gamePanel.objects[i].worldY;
+                        gamePanel.objects[i] = new ChestOpen(gamePanel);
+                        gamePanel.objects[i].worldX = x;
+                        gamePanel.objects[i].worldY = y;
                         haveBlueKey--;
                         break;
                     }
