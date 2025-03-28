@@ -111,7 +111,7 @@ public class Player extends Entity {
         int objectIndex = gamePanel.collisionChecker.checkObjectCollision(this, true);
         objectInteract(objectIndex);
 
-        int npcIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npc);
+        int npcIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npcs);
         npcInteract(npcIndex);
 
         gamePanel.eventHandler.checkEvent();
@@ -223,7 +223,7 @@ public class Player extends Entity {
         if (i != 999) {
             if (gamePanel.keyHandler.spacePressed) {
                 gamePanel.gameState = gamePanel.dialogueState;
-                gamePanel.npc[i].speak();
+                gamePanel.npcs[i].speak();
             }
         }
 
