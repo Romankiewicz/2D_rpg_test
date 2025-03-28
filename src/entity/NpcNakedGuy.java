@@ -4,11 +4,16 @@ import main.GamePanel;
 
 import java.util.Random;
 
+import static entity.EntityType.NPC;
+
 public class NpcNakedGuy extends Entity {
 
     public NpcNakedGuy(GamePanel gamePanel) {
 
         super(gamePanel);
+
+        type = NPC;
+
         direction = "down";
         speed = 1;
         solidArea.x = 10;

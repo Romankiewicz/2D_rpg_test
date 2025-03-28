@@ -2,5 +2,5 @@ package entity;
 
 public enum EntityType {
 
-    ENEMY, NPC, PLAYER
+    NPC, ENEMY, PLAYER
 }

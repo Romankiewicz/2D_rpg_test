@@ -7,6 +7,7 @@ import object.DoorOpen;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 
 public class Player extends Entity {
@@ -46,7 +47,7 @@ public class Player extends Entity {
         worldX = gamePanel.tileSize * 10;
         worldY = gamePanel.tileSize * 12;
         speed = 4;
-        direction = "standing";
+        direction = "standingDown";
         lastDirection = "standingDown";
         maxHp = 6;
         hp = maxHp;
@@ -101,7 +102,7 @@ public class Player extends Entity {
             direction = "right";
             lastDirection = "standingRight";
         } else if (keyHandler.upReleased || keyHandler.downReleased || keyHandler.leftReleased || keyHandler.rightReleased) {
-            direction = "standing";
+            direction = lastDirection;
         }
 
         //COLLISION CHECKING
@@ -119,7 +120,7 @@ public class Player extends Entity {
 
         gamePanel.eventHandler.checkEvent();
 
-        if (!collisionOn && !keyHandler.spacePressed) {
+        if (!collisionOn && !keyHandler.spacePressed && !keyHandler.enterPressed) {
             switch (direction) {
                 case "up":
                     worldY -= speed;
@@ -231,10 +232,10 @@ public class Player extends Entity {
     public void npcInteract(int i) {
 
         if (i != 999) {
-//            if (gamePanel.keyHandler.spacePressed) {
+            if (gamePanel.keyHandler.spacePressed || keyHandler.enterPressed) {
             gamePanel.gameState = gamePanel.dialogueState;
             gamePanel.npcs[i].speak();
-//            }
+            }
         }
 
     }
@@ -254,7 +255,7 @@ public class Player extends Entity {
         BufferedImage image = null;
 
 
-        if (direction.equals("standing")) {
+        if (Objects.equals(direction, lastDirection)) {
             image = switch (lastDirection) {
                 case "standingUp" -> standingUp;
                 case "standingDown" -> standingDown[spriteNum];
@@ -277,6 +278,7 @@ public class Player extends Entity {
         }
 
         g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 
     }

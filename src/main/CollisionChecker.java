@@ -116,10 +116,10 @@ public class CollisionChecker {
                 target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;
 
                 switch (entity.direction) {
-                    case "up" -> entity.solidArea.y -= entity.speed;
-                    case "down" -> entity.solidArea.y += entity.speed;
-                    case "left" -> entity.solidArea.x -= entity.speed;
-                    case "right" -> entity.solidArea.x += entity.speed;
+                    case "up", "standingUp" -> entity.solidArea.y -= entity.speed;
+                    case "down", "standingDown" -> entity.solidArea.y += entity.speed;
+                    case "left", "standingLeft" -> entity.solidArea.x -= entity.speed;
+                    case "right", "standingRight" -> entity.solidArea.x += entity.speed;
                 }
                 if (entity.solidArea.intersects(target[i].solidArea)) {
                     if (target[i] != entity) {

@@ -21,7 +21,7 @@ public class Entity {
     public BufferedImage image, image1, image2;
     public String name;
     public boolean collision = false;
-    public static EntityType type;
+    public EntityType type;
     public int typeNum;
 
     public BufferedImage standingUp;
@@ -96,18 +96,10 @@ public class Entity {
         }
 
         switch (gamePanel.player.direction) {
-            case "up":
-                direction = "down";
-                break;
-            case "down":
-                direction = "up";
-                break;
-            case "left":
-                direction = "right";
-                break;
-            case "right":
-                direction = "left";
-                break;
+            case "up", "standingUp" -> direction = "down";
+            case "down", "standingDown" -> direction = "up";
+            case "left", "standingLeft" -> direction = "right";
+            case "right", "standingRight" -> direction = "left";
         }
     }
 
@@ -125,7 +117,7 @@ public class Entity {
         gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npcs);
         boolean contactsPlayer = gamePanel.collisionChecker.checkPlayerCollision(this);
 
-        if (type == ENEMY && contactsPlayer) {
+        if (type == ENEMY && contactsPlayer && typeNum == 2) {
             if (!gamePanel.player.invincible) {
                 gamePanel.player.hp -= 1;
                 gamePanel.player.invincible = true;

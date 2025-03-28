@@ -14,7 +14,7 @@ public class BlueOctorok extends Entity {
         super(gamePanel);
 
         type = ENEMY;
-        typeNum = 1;
+        typeNum = 2;
         
         name = "BlueOctorok";
         speed = 2;

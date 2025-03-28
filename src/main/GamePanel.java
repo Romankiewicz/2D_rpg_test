@@ -13,7 +13,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Screen settings
 
-    private final GamePanel gamePanel;
     private final int originalTileSize = 24;
     private final int scale = 3;
 
@@ -58,8 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int dialogueState = 3;
 
 
-    public GamePanel(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+    public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
@@ -73,7 +71,7 @@ public class GamePanel extends JPanel implements Runnable {
         assetSetter.setObject();
         assetSetter.setNpc();
         assetSetter.setEnemies();
-        gamePanel.playMusic(5);
+        playMusic(5);
         gameState = titleState;
     }
 
