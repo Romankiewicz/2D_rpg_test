@@ -47,7 +47,7 @@ public class EventHandler {
 
         if(eventCoolDownDone) {
             if (hit(21, 4, "any")) {
-                damage(21, 4, gamePanel.dialogueState);
+                damage(gamePanel.dialogueState);
             }
             if (hit(13, 22, "standingUp")) {
                 healing(gamePanel.dialogueState);
@@ -85,7 +85,7 @@ public class EventHandler {
         return hit;
     }
 
-    public void damage(int col, int row, int gameState) {
+    public void damage(int gameState) {
 
         gamePanel.gameState = gameState;
         gamePanel.ui.currentDialogue = "\nGOTCHA\nLandmine ;)";

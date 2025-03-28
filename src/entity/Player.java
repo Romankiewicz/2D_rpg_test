@@ -181,13 +181,15 @@ public class Player extends Entity {
                 case "SilverKey":
                     gamePanel.playSFX(3);
                     haveSilverKey++;
-                    gamePanel.entities.remove(i);
+                    gamePanel.objects[i].worldX = gamePanel.tileSize * 30;
+                    gamePanel.objects[i].worldY = gamePanel.tileSize * 30;
                     gamePanel.objects[i] = null;
                     break;
                 case "BlueKey":
                     gamePanel.playSFX(3);
                     haveBlueKey++;
-                    gamePanel.entities.remove(i);
+                    gamePanel.objects[i].worldX = gamePanel.tileSize * 30;
+                    gamePanel.objects[i].worldY = gamePanel.tileSize * 30;
                     gamePanel.objects[i] = null;
                     break;
                 case "Door":

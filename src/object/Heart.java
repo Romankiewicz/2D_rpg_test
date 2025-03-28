@@ -2,11 +2,7 @@ package object;
 
 import entity.Entity;
 import main.GamePanel;
-import main.UtilityTool;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.util.Objects;
 
 public class Heart extends Entity {
 
