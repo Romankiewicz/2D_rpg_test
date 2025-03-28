@@ -1,5 +1,7 @@
 package main;
 
+import enemy.BlueOctorok;
+import enemy.RedOctorok;
 import entity.NpcNakedGuy;
 import object.BlueKey;
 import object.ChestClosed;
@@ -32,21 +34,35 @@ public class AssetSetter {
         gamePanel.objects[3] = new ChestClosed(gamePanel);
         gamePanel.objects[3].worldX = gamePanel.tileSize * 3;
         gamePanel.objects[3].worldY = gamePanel.tileSize * 2;
-
     }
 
     public void setNpc() {
 
-        gamePanel.npc[0] = new NpcNakedGuy(gamePanel);
-        gamePanel.npc[0].worldX = gamePanel.tileSize * 11;
-        gamePanel.npc[0].worldY = gamePanel.tileSize * 16;
+        gamePanel.npcs[0] = new NpcNakedGuy(gamePanel);
+        gamePanel.npcs[0].worldX = gamePanel.tileSize * 11;
+        gamePanel.npcs[0].worldY = gamePanel.tileSize * 16;
 
-        gamePanel.npc[1] = new NpcNakedGuy(gamePanel);
-        gamePanel.npc[1].worldX = gamePanel.tileSize * 15;
-        gamePanel.npc[1].worldY = gamePanel.tileSize * 12;
+        gamePanel.npcs[1] = new NpcNakedGuy(gamePanel);
+        gamePanel.npcs[1].worldX = gamePanel.tileSize * 15;
+        gamePanel.npcs[1].worldY = gamePanel.tileSize * 12;
+    }
 
-        gamePanel.npc[2] = new NpcNakedGuy(gamePanel);
-        gamePanel.npc[2].worldX = gamePanel.tileSize * 20;
-        gamePanel.npc[2].worldY = gamePanel.tileSize * 18;
+    public void setEnemies() {
+
+        gamePanel.enemies[0] = new BlueOctorok(gamePanel);
+        gamePanel.enemies[0].worldX = gamePanel.tileSize * 3;
+        gamePanel.enemies[0].worldY = gamePanel.tileSize * 4;
+
+        gamePanel.enemies[1] = new BlueOctorok(gamePanel);
+        gamePanel.enemies[1].worldX = gamePanel.tileSize * 5;
+        gamePanel.enemies[1].worldY = gamePanel.tileSize * 23;
+
+        gamePanel.enemies[2] = new RedOctorok(gamePanel);
+        gamePanel.enemies[2].worldX = gamePanel.tileSize * 4;
+        gamePanel.enemies[2].worldY = gamePanel.tileSize * 4;
+
+        gamePanel.enemies[3] = new RedOctorok(gamePanel);
+        gamePanel.enemies[3].worldX = gamePanel.tileSize * 21;
+        gamePanel.enemies[3].worldY = gamePanel.tileSize * 12;
     }
 }
