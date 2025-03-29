@@ -97,6 +97,7 @@ public class EventHandler {
     public void healing(int gameState) {
 
         if (gamePanel.keyHandler.spacePressed) {
+            gamePanel.player.attacking = false;
             gamePanel.gameState = gameState;
             gamePanel.ui.currentDialogue = "\nYou take a rest\n\nYou feel refreshed";
             gamePanel.player.hp = gamePanel.player.maxHp;

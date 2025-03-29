@@ -60,7 +60,7 @@ public class Entity {
 
     public boolean invincible = false;
     public int invincibleCounter = 0;
-    boolean attacking = false;
+    public boolean attacking = false;
 
     public int maxHp;
     public int hp;
@@ -68,6 +68,8 @@ public class Entity {
     public Rectangle solidArea = new Rectangle(0, 0, 72, 72);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
+
+    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
 
     public static String[] dialogues = new String[20];
 

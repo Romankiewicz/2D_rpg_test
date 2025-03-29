@@ -20,7 +20,7 @@ public class BlueOctorok extends Entity {
         typeNum = 2;
         
         name = "BlueOctorok";
-        speed = 2;
+        speed = 1;
         maxHp = 4;
         hp = maxHp;
 

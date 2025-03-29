@@ -19,8 +19,8 @@ public class Player extends Entity {
 
     int haveSilverKey = 0;
     int haveBlueKey = 0;
-    int haveSword = 0;
-    int haveShield = 0;
+    boolean haveSword = false;
+    boolean haveShield = false;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
 
@@ -37,6 +37,9 @@ public class Player extends Entity {
         solidAreaDefaultY = 30;
         solidArea.width = 40;
         solidArea.height = 40;
+
+        attackArea.width = 42;
+        attackArea.height = 42;
 
         setDefaultValues();
         getPlayerImage();
@@ -91,7 +94,7 @@ public class Player extends Entity {
 
         for (int i = 0; i < 5; i++) {
             attackUp[i] = setup("player/attacking/swordAttack", "SwordAttack_Up_" + (i + 1), gamePanel.tileSize,
-                    gamePanel.tileSize *2);
+                    gamePanel.tileSize * 2);
         }
         for (int i = 0; i < 5; i++) {
             attackDown[i] = setup("player/attacking/swordAttack", "SwordAttack_Down_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize * 2);
@@ -223,6 +226,37 @@ public class Player extends Entity {
         }
         if (attackSpriteCounter > 12 && attackSpriteCounter <= 20) {
             attackSpriteNum = 4;
+
+            int currentWorldX = worldX;
+            int currentWorldY = worldY;
+            int solidAreaWidth = solidArea.width;
+            int solidAreaHeight = solidArea.height;
+
+            switch (lastDirection) {
+                case "standingUp":
+                    worldY -= attackArea.height;
+                    break;
+                case "standingDown":
+                    worldY += attackArea.height;
+                    break;
+                case "standingLeft":
+                    worldX -= attackArea.width;
+                    break;
+                case "standingRight":
+                    worldX += attackArea.width;
+                    break;
+            }
+
+            solidArea.width = attackArea.width;
+            solidArea.height = attackArea.height;
+
+            int enemyIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.enemies);
+            damageEnemy(enemyIndex);
+
+            worldX = currentWorldX;
+            worldY = currentWorldY;
+            solidArea.width = solidAreaWidth;
+            solidArea.height = solidAreaHeight;
         }
         if (attackSpriteCounter > 20) {
             attackSpriteNum = 0;
@@ -240,15 +274,11 @@ public class Player extends Entity {
                 case "SilverKey":
                     gamePanel.playSFX(3);
                     haveSilverKey++;
-                    gamePanel.objects[i].worldX = gamePanel.tileSize * 30;
-                    gamePanel.objects[i].worldY = gamePanel.tileSize * 30;
                     gamePanel.objects[i] = null;
                     break;
                 case "BlueKey":
                     gamePanel.playSFX(3);
                     haveBlueKey++;
-                    gamePanel.objects[i].worldX = gamePanel.tileSize * 30;
-                    gamePanel.objects[i].worldY = gamePanel.tileSize * 30;
                     gamePanel.objects[i] = null;
                     break;
                 case "Door":
@@ -273,6 +303,11 @@ public class Player extends Entity {
                         haveBlueKey--;
                         break;
                     }
+                case "Sword":
+                    gamePanel.playSFX(3);
+                    haveSword = true;
+                    gamePanel.objects[i] = null;
+                    break;
             }
         }
     }
@@ -298,6 +333,15 @@ public class Player extends Entity {
                 hp -= 1;
                 invincible = true;
             }
+        }
+    }
+
+    public void damageEnemy(int i) {
+
+        if (i != 999) {
+            System.out.println("Hit an Enemy!!!");
+        } else {
+            System.out.println("Miss!!!");
         }
     }
 
@@ -340,7 +384,6 @@ public class Player extends Entity {
                 case "standingRight" -> attackRight[attackSpriteNum];
                 default -> image;
             };
-            ;
         }
 
         if (invincible) {
