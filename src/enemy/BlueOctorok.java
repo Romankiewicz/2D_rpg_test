@@ -9,9 +9,12 @@ import static entity.EntityType.ENEMY;
 
 public class BlueOctorok extends Entity {
 
+    GamePanel gamePanel;
+
     public BlueOctorok(GamePanel gamePanel) {
 
         super(gamePanel);
+        this.gamePanel = gamePanel;
 
         type = ENEMY;
         typeNum = 2;
@@ -34,16 +37,16 @@ public class BlueOctorok extends Entity {
     public void getImage() {
 
         for (int i = 0; i < 2; i++) {
-            up[i] = setup("enemies/blueOctorok", "Octorok_Blue_Up_" + (i + 1));
+            up[i] = setup("enemies/blueOctorok", "Octorok_Blue_Up_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize);
         }
         for (int i = 0; i < 2; i++) {
-            down[i] = setup("enemies/blueOctorok", "Octorok_Blue_Down_" + (i + 1));
+            down[i] = setup("enemies/blueOctorok", "Octorok_Blue_Down_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize);
         }
         for (int i = 0; i < 2; i++) {
-            left[i] = setup("enemies/blueOctorok", "Octorok_Blue_Left_" + (i + 1));
+            left[i] = setup("enemies/blueOctorok", "Octorok_Blue_Left_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize);
         }
         for (int i = 0; i < 2; i++) {
-            right[i] = setup("enemies/blueOctorok", "Octorok_Blue_Right_" + (i + 1));
+            right[i] = setup("enemies/blueOctorok", "Octorok_Blue_Right_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize);
         }
     }
 

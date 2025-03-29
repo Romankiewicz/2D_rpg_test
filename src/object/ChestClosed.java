@@ -11,7 +11,7 @@ public class ChestClosed extends Entity {
         super(gamePanel);
 
         name = "Chest";
-        down[0] = setup("objects", "Chest");
+        down[0] = setup("objects", "Chest", gamePanel.tileSize, gamePanel.tileSize);
         collision = true;
     }
 }

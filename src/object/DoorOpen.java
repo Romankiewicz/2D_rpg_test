@@ -12,7 +12,7 @@ public class DoorOpen extends Entity {
         super(gamePanel);
 
         name = "DoorOpen";
-        down[0] = setup("objects", "Door_Open");
+        down[0] = setup("objects", "Door_Open", gamePanel.tileSize, gamePanel.tileSize);
         collision = false;
     }
 

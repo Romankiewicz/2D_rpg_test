@@ -35,6 +35,11 @@ public class Entity {
     public BufferedImage[] left = new BufferedImage[10];
     public BufferedImage[] right = new BufferedImage[10];
 
+    public BufferedImage[] attackUp = new BufferedImage[5];
+    public BufferedImage[] attackDown = new BufferedImage[5];
+    public BufferedImage[] attackLeft = new BufferedImage[5];
+    public BufferedImage[] attackRight = new BufferedImage[5];
+
     public String direction = "down";
     public String lastDirection;
 
@@ -42,6 +47,8 @@ public class Entity {
     public int spriteNum = 0;
     public int moveCounter = 0;
     public int movingSpriteNum = 0;
+    public int attackSpriteNum = 0;
+    public int attackSpriteCounter = 0;
 
     public int npcSpriteNum = 0;
     public int npcSpriteCounter = 0;
@@ -53,6 +60,7 @@ public class Entity {
 
     public boolean invincible = false;
     public int invincibleCounter = 0;
+    boolean attacking = false;
 
     public int maxHp;
     public int hp;
@@ -68,7 +76,7 @@ public class Entity {
         this.gamePanel = gamePanel;
     }
 
-    public BufferedImage setup(String packageName, String imageName) {
+    public BufferedImage setup(String packageName, String imageName, int width, int height) {
 
         UtilityTool utilityTool = new UtilityTool();
         BufferedImage image = null;
@@ -76,7 +84,7 @@ public class Entity {
         try {
 
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/" + packageName + "/" + imageName + ".png")));
-            image = utilityTool.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize);
+            image = utilityTool.scaleImage(image, width, height);
 
         } catch (IOException e) {
             e.printStackTrace();

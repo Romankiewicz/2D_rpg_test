@@ -11,6 +11,6 @@ public class SilverKey extends Entity {
         super(gamePanel);
 
         name = "SilverKey";
-        down[0] = setup("objects", "Key_Silver");
+        down[0] = setup("objects", "Key_Silver", gamePanel.tileSize, gamePanel.tileSize);
     }
 }

@@ -12,7 +12,7 @@ public class ChestOpen extends Entity {
         super(gamePanel);
 
         name = "OpenChest";
-        down[0] = setup("objects", "Chest_Open");
+        down[0] = setup("objects", "Chest_Open", gamePanel.tileSize, gamePanel.tileSize);
         collision = true;
     }
 }
