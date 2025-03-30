@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
+import static entity.EntityType.OBJECT;
+
 
 public class Player extends Entity {
 
@@ -301,8 +303,8 @@ public class Player extends Entity {
                         gamePanel.objects[i].worldX = x;
                         gamePanel.objects[i].worldY = y;
                         haveBlueKey--;
-                        break;
                     }
+                    break;
                 case "Sword":
                     gamePanel.playSFX(3);
                     haveSword = true;
@@ -339,9 +341,15 @@ public class Player extends Entity {
     public void damageEnemy(int i) {
 
         if (i != 999) {
-            System.out.println("Hit an Enemy!!!");
-        } else {
-            System.out.println("Miss!!!");
+
+            if (!gamePanel.enemies[i].invincible) {
+
+                gamePanel.enemies[i].hp -= 1;
+                gamePanel.enemies[i].invincible = true;
+            }
+            if (gamePanel.enemies[i].hp <= 0) {
+                gamePanel.enemies[i].isDying = true;
+            }
         }
     }
 

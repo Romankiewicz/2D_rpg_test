@@ -61,6 +61,9 @@ public class Entity {
     public boolean invincible = false;
     public int invincibleCounter = 0;
     public boolean attacking = false;
+    public boolean isAlive = true;
+    public boolean isDying = false;
+    public int dyingCounter = 0;
 
     public int maxHp;
     public int hp;
@@ -114,6 +117,46 @@ public class Entity {
     }
 
     public void setAction() {
+    }
+
+    public void dyingAnimation(Graphics2D g2) {
+
+        dyingCounter++;
+
+        int i = 5;
+
+        if (dyingCounter <= i) {
+            changeAlpha(g2, 0.1f);
+        }
+        if (dyingCounter > i && dyingCounter <= i * 2) {
+            changeAlpha(g2, 0.8f);
+        }
+        if (dyingCounter > i * 2 && dyingCounter <= i * 3) {
+            changeAlpha(g2, 0.1f);
+        }
+        if (dyingCounter > i * 3 && dyingCounter <= i * 4) {
+            changeAlpha(g2, 0.8f);
+        }
+        if (dyingCounter > i * 4 && dyingCounter <= i * 5) {
+            changeAlpha(g2, 0.1f);
+        }
+        if (dyingCounter > i * 5 && dyingCounter <= i * 6) {
+            changeAlpha(g2, 0.8f);
+        }
+        if (dyingCounter > i * 6 && dyingCounter <= i * 7) {
+            changeAlpha(g2, 0.1f);
+        }
+        if (dyingCounter > i * 7 && dyingCounter <= i * 8) {
+            changeAlpha(g2, 0.8f);
+        }
+        if (dyingCounter > i * 8) {
+            isDying = false;
+            isAlive = false;
+        }
+    }
+
+    public void changeAlpha(Graphics2D g2, float alpha) {
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
     }
 
     public void update() {
@@ -171,6 +214,14 @@ public class Entity {
             }
         }
 
+        if (invincible) {
+            invincibleCounter++;
+            if (invincibleCounter > 40) {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
+
     }
 
     public void draw(Graphics2D g2) {
@@ -193,8 +244,17 @@ public class Entity {
                 default -> null;
             };
 
+            if (invincible) {
+                changeAlpha(g2, 0.4f);
+            }
+
+            if (isDying) {
+                dyingAnimation(g2);
+            }
 
             g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+
+            changeAlpha(g2, 1f);
         }
     }
 }
