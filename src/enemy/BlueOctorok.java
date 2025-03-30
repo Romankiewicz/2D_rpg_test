@@ -21,7 +21,7 @@ public class BlueOctorok extends Entity {
         
         name = "BlueOctorok";
         speed = 1;
-        maxHp = 4;
+        maxHp = 10;
         hp = maxHp;
 
         solidArea.x = 12;

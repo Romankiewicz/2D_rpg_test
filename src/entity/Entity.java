@@ -64,6 +64,8 @@ public class Entity {
     public boolean isAlive = true;
     public boolean isDying = false;
     public int dyingCounter = 0;
+    public boolean hpBarOn = false;
+    public int hpBarCounter = 0;
 
     public int maxHp;
     public int hp;
@@ -246,7 +248,7 @@ public class Entity {
                 default -> null;
             };
 
-            if (type == ENEMY) {
+            if (type == ENEMY && hpBarOn) {
                 double scale = (double) gamePanel.tileSize / maxHp;
                 double hpValue = scale * hp;
 
@@ -254,10 +256,19 @@ public class Entity {
                 g2.fillRect(screenX - 2, screenY - 14, gamePanel.tileSize + 4, 14);
                 g2.setColor(new Color(255, 0, 100, 255));
                 g2.fillRect(screenX, screenY - 12, (int)hpValue, 10);
+
+                hpBarCounter++;
+
+                if (hpBarCounter > 300) {
+                    hpBarCounter = 0;
+                    hpBarOn = false;
+                }
             }
 
             if (invincible) {
                 changeAlpha(g2, 0.4f);
+                hpBarCounter = 0;
+                hpBarOn = true;
             }
 
             if (isDying) {

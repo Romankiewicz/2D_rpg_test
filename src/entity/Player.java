@@ -164,6 +164,7 @@ public class Player extends Entity {
             }
 
             gamePanel.keyHandler.spacePressed = false;
+            gamePanel.keyHandler.enterPressed = false;
 
             //SPRITE CHANGER
             spriteCounter++;
@@ -265,6 +266,7 @@ public class Player extends Entity {
             attackSpriteCounter = 0;
             attacking = false;
         }
+
     }
 
     public void objectInteract(int i) {
@@ -316,12 +318,12 @@ public class Player extends Entity {
 
     public void npcInteract(int i) {
 
-        if (gamePanel.keyHandler.spacePressed || keyHandler.enterPressed) {
+        if (gamePanel.keyHandler.spacePressed) {
             if (i != 999) {
 
                 gamePanel.gameState = gamePanel.dialogueState;
                 gamePanel.npcs[i].speak();
-            } else {
+            } else if (haveSword){
                 attacking = true;
                 gamePanel.playSFX(10);
             }
@@ -348,7 +350,7 @@ public class Player extends Entity {
 
                 gamePanel.enemies[i].hp -= 1;
                 gamePanel.enemies[i].invincible = true;
-                gamePanel.playSFX(11);
+                gamePanel.playSFX(8);
             }
             if (gamePanel.enemies[i].hp <= 0) {
                 gamePanel.enemies[i].isDying = true;
@@ -362,40 +364,41 @@ public class Player extends Entity {
         int tempScreenX = screenX;
         int tempScreenY = screenY;
 
-        if (!attacking) {
-            if (Objects.equals(direction, lastDirection)) {
-                image = switch (lastDirection) {
-                    case "standingUp" -> standingUp;
-                    case "standingDown" -> standingDown[spriteNum];
-                    case "standingLeft" -> standingLeft[spriteNum];
-                    case "standingRight" -> standingRight[spriteNum];
+            if (!attacking) {
+                if (Objects.equals(direction, lastDirection)) {
+                    image = switch (lastDirection) {
+                        case "standingUp" -> standingUp;
+                        case "standingDown" -> standingDown[spriteNum];
+                        case "standingLeft" -> standingLeft[spriteNum];
+                        case "standingRight" -> standingRight[spriteNum];
+                        default -> image;
+                    };
+                }
+
+                image = switch (direction) {
+                    case "up" -> up[movingSpriteNum];
+                    case "down" -> down[movingSpriteNum];
+                    case "left" -> left[movingSpriteNum];
+                    case "right" -> right[movingSpriteNum];
                     default -> image;
                 };
             }
 
-            image = switch (direction) {
-                case "up" -> up[movingSpriteNum];
-                case "down" -> down[movingSpriteNum];
-                case "left" -> left[movingSpriteNum];
-                case "right" -> right[movingSpriteNum];
-                default -> image;
-            };
-        }
-        if (attacking) {
-            image = switch (lastDirection) {
-                case "standingUp" -> {
-                    tempScreenY = screenY - gamePanel.tileSize;
-                    yield attackUp[attackSpriteNum];
-                }
-                case "standingDown" -> attackDown[attackSpriteNum];
-                case "standingLeft" -> {
-                    tempScreenX = screenX - gamePanel.tileSize;
-                    yield attackLeft[attackSpriteNum];
-                }
-                case "standingRight" -> attackRight[attackSpriteNum];
-                default -> image;
-            };
-        }
+            if (attacking) {
+                image = switch (lastDirection) {
+                    case "standingUp" -> {
+                        tempScreenY = screenY - gamePanel.tileSize;
+                        yield attackUp[attackSpriteNum];
+                    }
+                    case "standingDown" -> attackDown[attackSpriteNum];
+                    case "standingLeft" -> {
+                        tempScreenX = screenX - gamePanel.tileSize;
+                        yield attackLeft[attackSpriteNum];
+                    }
+                    case "standingRight" -> attackRight[attackSpriteNum];
+                    default -> image;
+                };
+            }
 
         if (invincible) {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));

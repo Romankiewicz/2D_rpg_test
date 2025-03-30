@@ -22,7 +22,7 @@ public class RedOctorok extends Entity {
 
         name = "RedOctorok";
         speed = 1;
-        maxHp = 4;
+        maxHp = 6;
         hp = maxHp;
 
         solidArea.x = 12;
