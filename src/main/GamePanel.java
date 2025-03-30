@@ -2,7 +2,6 @@ package main;
 
 import entity.Entity;
 import entity.Player;
-
 import tile.TileManager;
 
 import javax.swing.*;
@@ -44,7 +43,8 @@ public class GamePanel extends JPanel implements Runnable {
     //Entity and Objects
     public Player player = new Player(this, keyHandler);
     public Entity[] objects = new Entity[10];
-    public Entity[] npc = new Entity[10];
+    public Entity[] npcs = new Entity[10];
+    public Entity[] enemies = new Entity[10];
     public ArrayList<Entity> entities = new ArrayList<>();
     public AssetSetter assetSetter = new AssetSetter(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this);
@@ -70,6 +70,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         assetSetter.setObject();
         assetSetter.setNpc();
+        assetSetter.setEnemies();
         playMusic(5);
         gameState = titleState;
     }
@@ -109,9 +110,14 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (gameState == playState) {
             player.update();
-            for (Entity entity : npc) {
-                if (entity != null) {
-                    entity.update();
+            for (Entity npc : npcs) {
+                if (npc != null) {
+                    npc.update();
+                }
+            }
+            for (Entity enemy : enemies) {
+                if (enemy != null) {
+                    enemy.update();
                 }
             }
         }
@@ -133,7 +139,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             entities.add(player);
 
-            for (Entity npc : npc) {
+            for (Entity npc : npcs) {
                 if (npc != null) {
                     entities.add(npc);
                 }
@@ -142,6 +148,12 @@ public class GamePanel extends JPanel implements Runnable {
             for (Entity object : objects) {
                 if (object != null) {
                     entities.add(object);
+                }
+            }
+
+            for (Entity enemy : enemies) {
+                if (enemy != null) {
+                    entities.add(enemy);
                 }
             }
 
@@ -156,14 +168,12 @@ public class GamePanel extends JPanel implements Runnable {
                 entity.draw(g2);
             }
 
-            for (int i = 0; i < entities.size(); i++) {
-                entities.remove(i);
-            }
-
-            ui.draw(g2);
-
-            g2.dispose();
+            entities.clear();
         }
+
+        ui.draw(g2);
+
+        g2.dispose();
     }
 
     public void playMusic(int i) {
@@ -186,3 +196,4 @@ public class GamePanel extends JPanel implements Runnable {
         sfx.play();
     }
 }
+

@@ -7,6 +7,7 @@ import object.DoorOpen;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 
 public class Player extends Entity {
@@ -46,7 +47,7 @@ public class Player extends Entity {
         worldX = gamePanel.tileSize * 10;
         worldY = gamePanel.tileSize * 12;
         speed = 4;
-        direction = "standing";
+        direction = "standingDown";
         lastDirection = "standingDown";
         maxHp = 6;
         hp = maxHp;
@@ -101,7 +102,7 @@ public class Player extends Entity {
             direction = "right";
             lastDirection = "standingRight";
         } else if (keyHandler.upReleased || keyHandler.downReleased || keyHandler.leftReleased || keyHandler.rightReleased) {
-            direction = "standing";
+            direction = lastDirection;
         }
 
         //COLLISION CHECKING
@@ -111,14 +112,15 @@ public class Player extends Entity {
         int objectIndex = gamePanel.collisionChecker.checkObjectCollision(this, true);
         objectInteract(objectIndex);
 
-        int npcIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npc);
+        int npcIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npcs);
         npcInteract(npcIndex);
+
+        int enemyIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.enemies);
+        enemyInteract(enemyIndex);
 
         gamePanel.eventHandler.checkEvent();
 
-        gamePanel.keyHandler.spacePressed = false;
-
-        if (!collisionOn) {
+        if (!collisionOn && !keyHandler.spacePressed && !keyHandler.enterPressed) {
             switch (direction) {
                 case "up":
                     worldY -= speed;
@@ -135,6 +137,7 @@ public class Player extends Entity {
             }
         }
 
+        gamePanel.keyHandler.spacePressed = false;
 
         //SPRITE CHANGER
         spriteCounter++;
@@ -169,6 +172,14 @@ public class Player extends Entity {
                 case 9 -> movingSpriteNum = 0;
             }
             moveCounter = 0;
+        }
+
+        if (invincible) {
+            invincibleCounter++;
+            if (invincibleCounter > 60) {
+                invincible = false;
+                invincibleCounter = 0;
+            }
         }
     }
 
@@ -221,19 +232,30 @@ public class Player extends Entity {
     public void npcInteract(int i) {
 
         if (i != 999) {
-            if (gamePanel.keyHandler.spacePressed) {
-                gamePanel.gameState = gamePanel.dialogueState;
-                gamePanel.npc[i].speak();
+            if (gamePanel.keyHandler.spacePressed || keyHandler.enterPressed) {
+            gamePanel.gameState = gamePanel.dialogueState;
+            gamePanel.npcs[i].speak();
             }
         }
 
+    }
+
+    public void enemyInteract(int i) {
+
+        if (i != 999) {
+            if (!invincible) {
+                hp -= 1;
+                invincible = true;
+            }
+        }
     }
 
     public void draw(Graphics2D g2) {
 
         BufferedImage image = null;
 
-        if (direction.equals("standing")) {
+
+        if (Objects.equals(direction, lastDirection)) {
             image = switch (lastDirection) {
                 case "standingUp" -> standingUp;
                 case "standingDown" -> standingDown[spriteNum];
@@ -251,7 +273,13 @@ public class Player extends Entity {
             default -> image;
         };
 
+        if (invincible) {
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+        }
 
         g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+
     }
 }
