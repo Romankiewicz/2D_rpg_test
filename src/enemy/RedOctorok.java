@@ -74,5 +74,14 @@ public class RedOctorok extends Entity {
             actionCounter = 0;
         }
     }
+    public void damageReaction() {
 
+        actionCounter = 0;
+        switch (gamePanel.player.direction) {
+            case "up", "standingUp" -> direction = "up";
+            case "down", "standingDown" -> direction = "down";
+            case "left", "standingLeft" -> direction = "left";
+            case "right", "standingRight" -> direction = "right";
+        }
+    }
 }

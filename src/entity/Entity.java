@@ -118,8 +118,9 @@ public class Entity {
         }
     }
 
-    public void setAction() {
-    }
+    public void setAction() {}
+
+    public void damageReaction(){}
 
     public void dyingAnimation(Graphics2D g2) {
 

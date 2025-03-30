@@ -73,4 +73,14 @@ public class BlueOctorok extends Entity {
             actionCounter = 0;
         }
     }
+    public void damageReaction() {
+
+        actionCounter = 0;
+        switch (gamePanel.player.direction) {
+            case "up", "standingUp" -> direction = "down";
+            case "down", "standingDown" -> direction = "up";
+            case "left", "standingLeft" -> direction = "right";
+            case "right", "standingRight" -> direction = "left";
+        }
+    }
 }

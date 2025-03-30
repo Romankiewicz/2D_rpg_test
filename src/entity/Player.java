@@ -40,8 +40,8 @@ public class Player extends Entity {
         solidArea.width = 40;
         solidArea.height = 40;
 
-        attackArea.width = 42;
-        attackArea.height = 42;
+        attackArea.width = 45;
+        attackArea.height = 45;
 
         setDefaultValues();
         getPlayerImage();
@@ -351,6 +351,7 @@ public class Player extends Entity {
                 gamePanel.enemies[i].hp -= 1;
                 gamePanel.enemies[i].invincible = true;
                 gamePanel.playSFX(8);
+                gamePanel.enemies[i].damageReaction();
             }
             if (gamePanel.enemies[i].hp <= 0) {
                 gamePanel.enemies[i].isDying = true;
