@@ -30,19 +30,19 @@ public class NpcNakedGuy extends Entity {
     public void getNpcImage() {
 
         for (int i = 0; i < 3; i++) {
-            up[i] = setup("npc/nakedGuy", "Naked_Guy_Up_" + (i + 1));
+            up[i] = setup("npc/nakedGuy", "Naked_Guy_Up_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize);
         }
 
         for (int i = 0; i < 3; i++) {
-            down[i] = setup("npc/nakedGuy", "Naked_Guy_Down_" + (i + 1));
+            down[i] = setup("npc/nakedGuy", "Naked_Guy_Down_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize);
         }
 
         for (int i = 0; i < 3; i++) {
-            left[i] = setup("npc/nakedGuy", "Naked_Guy_Left_" + (i + 1));
+            left[i] = setup("npc/nakedGuy", "Naked_Guy_Left_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize);
         }
 
         for (int i = 0; i < 3; i++) {
-            right[i] = setup("npc/nakedGuy", "Naked_Guy_Right_" + (i + 1));
+            right[i] = setup("npc/nakedGuy", "Naked_Guy_Right_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize);
         }
     }
 

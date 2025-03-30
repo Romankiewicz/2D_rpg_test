@@ -3,6 +3,8 @@ package object;
 import entity.Entity;
 import main.GamePanel;
 
+import static entity.EntityType.OBJECT;
+
 
 public class Door extends Entity {
 
@@ -10,8 +12,10 @@ public class Door extends Entity {
 
         super(gamePanel);
 
+        type = OBJECT;
+
         name = "Door";
-        down[0] = setup("objects", "Door");
+        down[0] = setup("objects", "Door", gamePanel.tileSize, gamePanel.tileSize);
         collision = true;
     }
 }

@@ -3,10 +3,7 @@ package main;
 import enemy.BlueOctorok;
 import enemy.RedOctorok;
 import entity.NpcNakedGuy;
-import object.BlueKey;
-import object.ChestClosed;
-import object.Door;
-import object.SilverKey;
+import object.*;
 
 public class AssetSetter {
 
@@ -34,6 +31,14 @@ public class AssetSetter {
         gamePanel.objects[3] = new ChestClosed(gamePanel);
         gamePanel.objects[3].worldX = gamePanel.tileSize * 3;
         gamePanel.objects[3].worldY = gamePanel.tileSize * 2;
+
+        gamePanel.objects[4] = new Sword(gamePanel);
+        gamePanel.objects[4].worldX = gamePanel.tileSize * 23;
+        gamePanel.objects[4].worldY = gamePanel.tileSize * 23;
+
+        gamePanel.objects[5] = new ChestClosed(gamePanel);
+        gamePanel.objects[5].worldX = gamePanel.tileSize * 10;
+        gamePanel.objects[5].worldY = gamePanel.tileSize * 10;
     }
 
     public void setNpc() {

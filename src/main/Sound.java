@@ -9,7 +9,7 @@ import java.net.URL;
 public class Sound {
 
     Clip clip;
-    URL[] soundURL = new URL[10];
+    URL[] soundURL = new URL[20];
 
     public Sound() {
 
@@ -20,6 +20,11 @@ public class Sound {
         soundURL[4] = getClass().getResource("/sound/sfx/Door_Slam.wav");
         soundURL[5] = getClass().getResource("/sound/music/The_Legend_Of_Zelda_Title.wav");
         soundURL[6] = getClass().getResource("/sound/music/The_Legend_Of_Zelda_Title_Piano.wav");
+        soundURL[7] = getClass().getResource("/sound/sfx/Dying.wav");
+        soundURL[8] = getClass().getResource("/sound/sfx/Hit_Enemy_1.wav");
+        soundURL[9] = getClass().getResource("/sound/sfx/Receive_Life.wav");
+        soundURL[10] = getClass().getResource("/sound/sfx/Sword_Swing.wav");
+        soundURL[11] = getClass().getResource("/sound/sfx/Hit_Enemy.wav");
 
     }
 

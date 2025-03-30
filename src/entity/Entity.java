@@ -35,6 +35,11 @@ public class Entity {
     public BufferedImage[] left = new BufferedImage[10];
     public BufferedImage[] right = new BufferedImage[10];
 
+    public BufferedImage[] attackUp = new BufferedImage[5];
+    public BufferedImage[] attackDown = new BufferedImage[5];
+    public BufferedImage[] attackLeft = new BufferedImage[5];
+    public BufferedImage[] attackRight = new BufferedImage[5];
+
     public String direction = "down";
     public String lastDirection;
 
@@ -42,6 +47,8 @@ public class Entity {
     public int spriteNum = 0;
     public int moveCounter = 0;
     public int movingSpriteNum = 0;
+    public int attackSpriteNum = 0;
+    public int attackSpriteCounter = 0;
 
     public int npcSpriteNum = 0;
     public int npcSpriteCounter = 0;
@@ -53,6 +60,12 @@ public class Entity {
 
     public boolean invincible = false;
     public int invincibleCounter = 0;
+    public boolean attacking = false;
+    public boolean isAlive = true;
+    public boolean isDying = false;
+    public int dyingCounter = 0;
+    public boolean hpBarOn = false;
+    public int hpBarCounter = 0;
 
     public int maxHp;
     public int hp;
@@ -61,6 +74,8 @@ public class Entity {
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
 
+    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
+
     public static String[] dialogues = new String[20];
 
     public Entity(GamePanel gamePanel) {
@@ -68,7 +83,7 @@ public class Entity {
         this.gamePanel = gamePanel;
     }
 
-    public BufferedImage setup(String packageName, String imageName) {
+    public BufferedImage setup(String packageName, String imageName, int width, int height) {
 
         UtilityTool utilityTool = new UtilityTool();
         BufferedImage image = null;
@@ -76,7 +91,7 @@ public class Entity {
         try {
 
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/" + packageName + "/" + imageName + ".png")));
-            image = utilityTool.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize);
+            image = utilityTool.scaleImage(image, width, height);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -104,6 +119,48 @@ public class Entity {
     }
 
     public void setAction() {
+    }
+
+    public void dyingAnimation(Graphics2D g2) {
+
+        dyingCounter++;
+
+        int i = 5;
+
+        if (dyingCounter <= i) {
+            changeAlpha(g2, 0.1f);
+            gamePanel.playSFX(7);
+        }
+        if (dyingCounter > i && dyingCounter <= i * 2) {
+            changeAlpha(g2, 0.8f);
+        }
+        if (dyingCounter > i * 2 && dyingCounter <= i * 3) {
+            changeAlpha(g2, 0.1f);
+        }
+        if (dyingCounter > i * 3 && dyingCounter <= i * 4) {
+            changeAlpha(g2, 0.8f);
+        }
+        if (dyingCounter > i * 4 && dyingCounter <= i * 5) {
+            changeAlpha(g2, 0.1f);
+        }
+        if (dyingCounter > i * 5 && dyingCounter <= i * 6) {
+            changeAlpha(g2, 0.8f);
+        }
+        if (dyingCounter > i * 6 && dyingCounter <= i * 7) {
+            changeAlpha(g2, 0.1f);
+        }
+        if (dyingCounter > i * 7 && dyingCounter <= i * 8) {
+            changeAlpha(g2, 0.8f);
+        }
+        if (dyingCounter > i * 8) {
+            isDying = false;
+            isAlive = false;
+
+        }
+    }
+
+    public void changeAlpha(Graphics2D g2, float alpha) {
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
     }
 
     public void update() {
@@ -161,6 +218,14 @@ public class Entity {
             }
         }
 
+        if (invincible) {
+            invincibleCounter++;
+            if (invincibleCounter > 40) {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
+
     }
 
     public void draw(Graphics2D g2) {
@@ -183,8 +248,36 @@ public class Entity {
                 default -> null;
             };
 
+            if (type == ENEMY && hpBarOn) {
+                double scale = (double) gamePanel.tileSize / maxHp;
+                double hpValue = scale * hp;
+
+                g2.setColor(new Color(0, 0, 0, 180));
+                g2.fillRect(screenX - 2, screenY - 14, gamePanel.tileSize + 4, 14);
+                g2.setColor(new Color(255, 0, 100, 255));
+                g2.fillRect(screenX, screenY - 12, (int)hpValue, 10);
+
+                hpBarCounter++;
+
+                if (hpBarCounter > 300) {
+                    hpBarCounter = 0;
+                    hpBarOn = false;
+                }
+            }
+
+            if (invincible) {
+                changeAlpha(g2, 0.4f);
+                hpBarCounter = 0;
+                hpBarOn = true;
+            }
+
+            if (isDying) {
+                dyingAnimation(g2);
+            }
 
             g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+
+            changeAlpha(g2, 1f);
         }
     }
 }

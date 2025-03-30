@@ -14,9 +14,9 @@ public class UI {
 
     BufferedImage heartFull, heartHalf, heartEmpty;
 
-    Color translucentBlack = new Color(0, 0, 0, 200);
-    Color translucentWhite = new Color(255, 255, 255, 200);
-    Color translucentWhite_1 = new Color(255, 255, 255, 100);
+    public Color translucentBlack = new Color(0, 0, 0, 200);
+    public Color translucentWhite = new Color(255, 255, 255, 200);
+    public Color translucentWhite_1 = new Color(255, 255, 255, 100);
 
     public String currentDialogue = "";
     public int commandNum = 0;
