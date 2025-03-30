@@ -323,6 +323,7 @@ public class Player extends Entity {
                 gamePanel.npcs[i].speak();
             } else {
                 attacking = true;
+                gamePanel.playSFX(10);
             }
         }
 
@@ -334,6 +335,7 @@ public class Player extends Entity {
             if (!invincible) {
                 hp -= 1;
                 invincible = true;
+                gamePanel.playSFX(8);
             }
         }
     }
@@ -346,6 +348,7 @@ public class Player extends Entity {
 
                 gamePanel.enemies[i].hp -= 1;
                 gamePanel.enemies[i].invincible = true;
+                gamePanel.playSFX(11);
             }
             if (gamePanel.enemies[i].hp <= 0) {
                 gamePanel.enemies[i].isDying = true;

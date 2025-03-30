@@ -90,8 +90,8 @@ public class EventHandler {
         gamePanel.gameState = gameState;
         gamePanel.ui.currentDialogue = "\nGOTCHA\nLandmine ;)";
         gamePanel.player.hp -= 1;
-//        eventRect[col][row].eventDone = true;
         eventCoolDownDone = false;
+        gamePanel.playSFX(11);
     }
 
     public void healing(int gameState) {
@@ -101,6 +101,7 @@ public class EventHandler {
             gamePanel.gameState = gameState;
             gamePanel.ui.currentDialogue = "\nYou take a rest\n\nYou feel refreshed";
             gamePanel.player.hp = gamePanel.player.maxHp;
+            gamePanel.playSFX(9);
 
         }
     }
