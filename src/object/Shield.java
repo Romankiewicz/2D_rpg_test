@@ -17,7 +17,7 @@ public class Shield extends Entity {
 
         down[0] = setup("objects", "Shield_1", gamePanel.tileSize, gamePanel.tileSize);
 
-        defenseValue = 1;
+        defenseValue = 2;
     }
 
 }

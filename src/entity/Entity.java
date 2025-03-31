@@ -193,7 +193,17 @@ public class Entity {
 
         if (type == ENEMY && contactsPlayer && typeNum == 2) {
             if (!gamePanel.player.invincible) {
-                gamePanel.player.hp -= 1;
+
+                int damage = attack - gamePanel.player.defense;
+
+                if (damage<0){
+                    damage = 0;
+                }
+
+                gamePanel.player.hp -= damage;
+
+                gamePanel.playSFX(8);
+
                 gamePanel.player.invincible = true;
             }
         }

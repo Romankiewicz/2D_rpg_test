@@ -358,11 +358,13 @@ public class Player extends Entity {
                     gamePanel.playSFX(3);
                     haveSword = true;
                     currentWeapon = gamePanel.objects[i];
+                    attack = getAttack();
                     gamePanel.objects[i] = null;
                     break;
                 case "Shield":
                     gamePanel.playSFX(3);
                     currentShield = gamePanel.objects[i];
+                    defense = getDefense();
                     gamePanel.objects[i] = null;
                     break;
             }
@@ -388,7 +390,15 @@ public class Player extends Entity {
 
         if (i != 999) {
             if (!invincible) {
-                hp -= 1;
+
+                int damage = gamePanel.enemies[i].attack - defense;
+
+                if (damage < 0) {
+                    damage = 0;
+                }
+
+                hp -= damage;
+
                 invincible = true;
                 gamePanel.playSFX(8);
             }
@@ -401,7 +411,13 @@ public class Player extends Entity {
 
             if (!gamePanel.enemies[i].invincible) {
 
-                gamePanel.enemies[i].hp -= getAttack();
+                int damage = attack - gamePanel.enemies[i].defense;
+
+                if (damage < 0) {
+                    damage = 0;
+                }
+
+                gamePanel.enemies[i].hp -= damage;
 
                 gamePanel.enemies[i].invincible = true;
                 gamePanel.playSFX(8);
