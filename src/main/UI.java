@@ -5,6 +5,7 @@ import object.Heart;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class UI {
 
@@ -13,6 +14,9 @@ public class UI {
     Font courier_30, courier_40, courier_80, courier_30B, courier_40B, courier_80B;
 
     BufferedImage heartFull, heartHalf, heartEmpty;
+
+    ArrayList<String> message = new ArrayList<>();
+    ArrayList<Integer> messageCounter = new ArrayList<>();
 
     public Color translucentBlack = new Color(0, 0, 0, 200);
     public Color translucentWhite = new Color(255, 255, 255, 200);
@@ -54,6 +58,7 @@ public class UI {
             drawTitleScreen();
         } else if (gamePanel.gameState == gamePanel.playState) {
             drawPlayerHp();
+            drawMessage();
         } else if (gamePanel.gameState == gamePanel.pauseState) {
             drawPlayerHp();
             drawPauseScreen();
@@ -63,6 +68,38 @@ public class UI {
         } else if (gamePanel.gameState == gamePanel.statsState) {
             drawPlayerHp();
             drawStatsScreen();
+        }
+    }
+
+    public void addMessage(String text) {
+
+        message.add(text);
+        messageCounter.add(0);
+    }
+
+    public void drawMessage() {
+
+        int messageX = gamePanel.tileSize * 13;
+        int messageY = gamePanel.tileSize * 10;
+
+        g2.setFont(courier_30B);
+
+        for (int i = 0; i < message.size(); i++) {
+            if (message.get(i) != null) {
+                g2.setColor(translucentBlack);
+                g2.drawString(message.get(i), messageX + 2, messageY + 2);
+                g2.setColor(translucentWhite);
+                g2.drawString(message.get(i), messageX, messageY);
+
+                int counter = messageCounter.get(i) + 1;
+                messageCounter.set(i, counter);
+                messageY += 40;
+
+                if (messageCounter.get(i) > 180) {
+                    message.remove(i);
+                    messageCounter.remove(i);
+                }
+            }
         }
     }
 
@@ -291,7 +328,7 @@ public class UI {
             g2.drawImage(gamePanel.player.currentWeapon.down[0], (rightX - 50), textY - gamePanel.tileSize / 2, null);
         }
         if (gamePanel.player.currentWeapon == null) {
-            g2.drawRect(rightX-50, textY - gamePanel.tileSize / 2, 50, 50);
+            g2.drawRect(rightX - 50, textY - gamePanel.tileSize / 2, 50, 50);
         }
         textY += gamePanel.tileSize;
 
@@ -300,7 +337,7 @@ public class UI {
                     textY - gamePanel.tileSize / 2, null);
         }
         if (gamePanel.player.currentShield == null) {
-            g2.drawRect(rightX -50, textY - gamePanel.tileSize / 2, 50, 50);
+            g2.drawRect(rightX - 50, textY - gamePanel.tileSize / 2, 50, 50);
         }
     }
 

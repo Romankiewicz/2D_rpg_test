@@ -170,9 +170,8 @@ public class Entity {
             changeAlpha(g2, 0.8f);
         }
         if (dyingCounter > i * 8) {
-            isDying = false;
             isAlive = false;
-
+            isDying = false;
         }
     }
 
@@ -275,7 +274,7 @@ public class Entity {
                 default -> null;
             };
 
-            if (type == ENEMY && hpBarOn) {
+            if (type == ENEMY && hpBarOn && isAlive) {
                 double scale = (double) gamePanel.tileSize / maxHp;
                 double hpValue = scale * hp;
 

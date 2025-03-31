@@ -4,10 +4,12 @@ import main.GamePanel;
 import main.KeyHandler;
 import object.ChestOpen;
 import object.DoorOpen;
+import object.Sword;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
+import java.util.Random;
 
 
 public class Player extends Entity {
@@ -351,6 +353,12 @@ public class Player extends Entity {
                         gamePanel.objects[i] = new ChestOpen(gamePanel);
                         gamePanel.objects[i].worldX = x;
                         gamePanel.objects[i].worldY = y;
+                        Random random = new Random();
+                        int reward = random.nextInt(100) +1;
+                        coin += reward;
+                        gamePanel.ui.addMessage("You found");
+                        gamePanel.ui.addMessage("" + reward);
+                        gamePanel.ui.addMessage("coins.");
                         haveBlueKey--;
                     }
                     break;
@@ -422,11 +430,36 @@ public class Player extends Entity {
                 gamePanel.enemies[i].invincible = true;
                 gamePanel.playSFX(8);
                 gamePanel.enemies[i].damageReaction();
-            }
-            if (gamePanel.enemies[i].hp <= 0) {
-                gamePanel.enemies[i].isDying = true;
+
+                if (gamePanel.enemies[i].hp <= 0) {
+                    gamePanel.enemies[i].isDying = true;
+
+                    xp += getEnemiesXp(i);
+                    gamePanel.ui.addMessage("+ " + getEnemiesXp(i) + " XP");
+                    checkLevelUp();
+                }
             }
         }
+    }
+
+    public void checkLevelUp() {
+
+        if (xp >= nextLevelXp) {
+            level++;
+            nextLevelXp = nextLevelXp + 4 * level;
+            maxHp += 2;
+            strength++;
+            dexterity++;
+            getAttack();
+            getDefense();
+            gamePanel.gameState = gamePanel.dialogueState;
+            gamePanel.ui.currentDialogue = "\n\nCongratulations!\nyou reached level " + level;
+            gamePanel.playSFX(1);
+        }
+    }
+
+    private int getEnemiesXp(int i) {
+        return gamePanel.enemies[i].xp;
     }
 
     public void draw(Graphics2D g2) {

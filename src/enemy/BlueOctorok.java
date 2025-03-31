@@ -25,6 +25,7 @@ public class BlueOctorok extends Entity {
         hp = maxHp;
         attack = 6;
         defense = 1;
+        xp = 4;
 
         solidArea.x = 12;
         solidArea.y = 18;

@@ -16,62 +16,81 @@ public class AssetSetter {
 
     public void setObject() {
 
-        gamePanel.objects[0] = new SilverKey(gamePanel);
-        gamePanel.objects[0].worldX = gamePanel.tileSize * 13;
-        gamePanel.objects[0].worldY = gamePanel.tileSize * 23;
+        int i = 0;
+        gamePanel.objects[i] = new SilverKey(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize * 13;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 23;
+        i++;
 
-        gamePanel.objects[1] = new BlueKey(gamePanel);
-        gamePanel.objects[1].worldX = gamePanel.tileSize * 13;
-        gamePanel.objects[1].worldY = gamePanel.tileSize * 4;
+        gamePanel.objects[i] = new BlueKey(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize * 13;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 4;
+        i++;
 
-        gamePanel.objects[2] = new Door(gamePanel);
-        gamePanel.objects[2].worldX = gamePanel.tileSize * 3;
-        gamePanel.objects[2].worldY = gamePanel.tileSize * 5;
+        gamePanel.objects[i] = new Door(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize * 3;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 5;
+        i++;
 
-        gamePanel.objects[3] = new ChestClosed(gamePanel);
-        gamePanel.objects[3].worldX = gamePanel.tileSize * 3;
-        gamePanel.objects[3].worldY = gamePanel.tileSize * 2;
+        gamePanel.objects[i] = new ChestClosed(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize * 3;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 2;
+        i++;
 
-        gamePanel.objects[4] = new Sword(gamePanel);
-        gamePanel.objects[4].worldX = gamePanel.tileSize * 23;
-        gamePanel.objects[4].worldY = gamePanel.tileSize * 23;
+        gamePanel.objects[i] = new Sword(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize * 23;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 23;
+        i++;
 
-        gamePanel.objects[5] = new ChestClosed(gamePanel);
-        gamePanel.objects[5].worldX = gamePanel.tileSize * 10;
-        gamePanel.objects[5].worldY = gamePanel.tileSize * 10;
-
-        gamePanel.objects[6] = new Shield(gamePanel);
-        gamePanel.objects[6].worldX = gamePanel.tileSize * 23;
-        gamePanel.objects[6].worldY = gamePanel.tileSize;
+        gamePanel.objects[i] = new Shield(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize * 23;
+        gamePanel.objects[i].worldY = gamePanel.tileSize;
     }
 
     public void setNpc() {
 
-        gamePanel.npcs[0] = new NpcNakedGuy(gamePanel);
-        gamePanel.npcs[0].worldX = gamePanel.tileSize * 11;
-        gamePanel.npcs[0].worldY = gamePanel.tileSize * 16;
+        int i = 0;
+        gamePanel.npcs[i] = new NpcNakedGuy(gamePanel);
+        gamePanel.npcs[i].worldX = gamePanel.tileSize * 11;
+        gamePanel.npcs[i].worldY = gamePanel.tileSize * 16;
+        i++;
 
-        gamePanel.npcs[1] = new NpcNakedGuy(gamePanel);
-        gamePanel.npcs[1].worldX = gamePanel.tileSize * 15;
-        gamePanel.npcs[1].worldY = gamePanel.tileSize * 12;
+        gamePanel.npcs[i] = new NpcNakedGuy(gamePanel);
+        gamePanel.npcs[i].worldX = gamePanel.tileSize * 15;
+        gamePanel.npcs[i].worldY = gamePanel.tileSize * 12;
     }
 
     public void setEnemies() {
 
-        gamePanel.enemies[0] = new BlueOctorok(gamePanel);
-        gamePanel.enemies[0].worldX = gamePanel.tileSize * 3;
-        gamePanel.enemies[0].worldY = gamePanel.tileSize * 4;
+        int i = 0;
 
-        gamePanel.enemies[1] = new BlueOctorok(gamePanel);
-        gamePanel.enemies[1].worldX = gamePanel.tileSize * 5;
-        gamePanel.enemies[1].worldY = gamePanel.tileSize * 23;
+        gamePanel.enemies[i] = new BlueOctorok(gamePanel);
+        gamePanel.enemies[i].worldX = gamePanel.tileSize * 3;
+        gamePanel.enemies[i].worldY = gamePanel.tileSize * 4;
+        i++;
 
-        gamePanel.enemies[2] = new RedOctorok(gamePanel);
-        gamePanel.enemies[2].worldX = gamePanel.tileSize * 4;
-        gamePanel.enemies[2].worldY = gamePanel.tileSize * 4;
+        gamePanel.enemies[i] = new BlueOctorok(gamePanel);
+        gamePanel.enemies[i].worldX = gamePanel.tileSize * 5;
+        gamePanel.enemies[i].worldY = gamePanel.tileSize * 23;
+        i++;
 
-        gamePanel.enemies[3] = new RedOctorok(gamePanel);
-        gamePanel.enemies[3].worldX = gamePanel.tileSize * 21;
-        gamePanel.enemies[3].worldY = gamePanel.tileSize * 12;
+        gamePanel.enemies[i] = new BlueOctorok(gamePanel);
+        gamePanel.enemies[i].worldX = gamePanel.tileSize * 21;
+        gamePanel.enemies[i].worldY = gamePanel.tileSize * 5;
+        i++;
+
+        gamePanel.enemies[i] = new RedOctorok(gamePanel);
+        gamePanel.enemies[i].worldX = gamePanel.tileSize * 4;
+        gamePanel.enemies[i].worldY = gamePanel.tileSize * 4;
+        i++;
+
+        gamePanel.enemies[i] = new RedOctorok(gamePanel);
+        gamePanel.enemies[i].worldX = gamePanel.tileSize * 21;
+        gamePanel.enemies[i].worldY = gamePanel.tileSize * 12;
+        i++;
+
+        gamePanel.enemies[i] = new RedOctorok(gamePanel);
+        gamePanel.enemies[i].worldX = gamePanel.tileSize * 5;
+        gamePanel.enemies[i].worldY = gamePanel.tileSize * 21;
     }
 }

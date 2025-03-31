@@ -43,8 +43,8 @@ public class GamePanel extends JPanel implements Runnable {
     //Entity and Objects
     public Player player = new Player(this, keyHandler);
     public Entity[] objects = new Entity[20];
-    public Entity[] npcs = new Entity[10];
-    public Entity[] enemies = new Entity[10];
+    public Entity[] npcs = new Entity[15];
+    public Entity[] enemies = new Entity[20];
     public ArrayList<Entity> entities = new ArrayList<>();
     public AssetSetter assetSetter = new AssetSetter(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this);
