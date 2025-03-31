@@ -15,6 +15,18 @@ public class Entity {
 
     public int worldX, worldY;
     public int speed;
+    public int maxHp;
+    public int hp;
+    public int level;
+    public int strength;
+    public int dexterity;
+    public int attack;
+    public int defense;
+    public int xp;
+    public int nextLevelXp;
+    public int coin;
+    public Entity currentWeapon;
+    public Entity currentShield;
 
     GamePanel gamePanel;
 
@@ -23,6 +35,8 @@ public class Entity {
     public boolean collision = false;
     public EntityType type;
     public int typeNum;
+    public int attackValue;
+    public int defenseValue;
 
     public BufferedImage standingUp;
     public BufferedImage[] standingDown = new BufferedImage[10];
@@ -35,10 +49,15 @@ public class Entity {
     public BufferedImage[] left = new BufferedImage[10];
     public BufferedImage[] right = new BufferedImage[10];
 
-    public BufferedImage[] attackUp = new BufferedImage[5];
-    public BufferedImage[] attackDown = new BufferedImage[5];
-    public BufferedImage[] attackLeft = new BufferedImage[5];
-    public BufferedImage[] attackRight = new BufferedImage[5];
+    public BufferedImage[] handAttackUp = new BufferedImage[5];
+    public BufferedImage[] handAttackDown = new BufferedImage[5];
+    public BufferedImage[] handAttackLeft = new BufferedImage[5];
+    public BufferedImage[] handAttackRight = new BufferedImage[5];
+
+    public BufferedImage[] swordAttackUp = new BufferedImage[5];
+    public BufferedImage[] swordAttackDown = new BufferedImage[5];
+    public BufferedImage[] swordAttackLeft = new BufferedImage[5];
+    public BufferedImage[] swordAttackRight = new BufferedImage[5];
 
     public String direction = "down";
     public String lastDirection;
@@ -66,9 +85,6 @@ public class Entity {
     public int dyingCounter = 0;
     public boolean hpBarOn = false;
     public int hpBarCounter = 0;
-
-    public int maxHp;
-    public int hp;
 
     public Rectangle solidArea = new Rectangle(0, 0, 72, 72);
     public int solidAreaDefaultX, solidAreaDefaultY;

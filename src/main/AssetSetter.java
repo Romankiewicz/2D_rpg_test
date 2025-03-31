@@ -39,6 +39,10 @@ public class AssetSetter {
         gamePanel.objects[5] = new ChestClosed(gamePanel);
         gamePanel.objects[5].worldX = gamePanel.tileSize * 10;
         gamePanel.objects[5].worldY = gamePanel.tileSize * 10;
+
+        gamePanel.objects[6] = new Shield(gamePanel);
+        gamePanel.objects[6].worldX = gamePanel.tileSize * 23;
+        gamePanel.objects[6].worldY = gamePanel.tileSize;
     }
 
     public void setNpc() {

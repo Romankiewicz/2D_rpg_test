@@ -9,8 +9,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-import static entity.EntityType.OBJECT;
-
 
 public class Player extends Entity {
 
@@ -22,7 +20,6 @@ public class Player extends Entity {
     int haveSilverKey = 0;
     int haveBlueKey = 0;
     boolean haveSword = false;
-    boolean haveShield = false;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
 
@@ -45,6 +42,7 @@ public class Player extends Entity {
 
         setDefaultValues();
         getPlayerImage();
+        getPlayerHandAttackImage();
         getPlayerSwordAttackImage();
     }
 
@@ -57,6 +55,17 @@ public class Player extends Entity {
         lastDirection = "standingDown";
         maxHp = 6;
         hp = maxHp;
+
+        level = 1;
+        strength = 1;
+        dexterity = 1;
+        xp = 0;
+        nextLevelXp = 5;
+        coin = 0;
+        currentWeapon = null;
+        currentShield = null;
+        attack = getAttack();
+        defense = getDefense();
     }
 
     public void getPlayerImage() {
@@ -92,20 +101,52 @@ public class Player extends Entity {
         }
     }
 
+    public void getPlayerHandAttackImage() {
+
+        for (int i = 0; i < 5; i++) {
+            handAttackUp[i] = setup("player/attacking/handAttack", "HandAttack_Up_" + (i + 1), gamePanel.tileSize,
+                    gamePanel.tileSize);
+        }
+        for (int i = 0; i < 5; i++) {
+            handAttackDown[i] = setup("player/attacking/handAttack", "HandAttack_Down_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize);
+        }
+        for (int i = 0; i < 5; i++) {
+            handAttackLeft[i] = setup("player/attacking/handAttack", "HandAttack_Left_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize);
+        }
+        for (int i = 0; i < 5; i++) {
+            handAttackRight[i] = setup("player/attacking/handAttack", "HandAttack_Right_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize);
+        }
+    }
+
     public void getPlayerSwordAttackImage() {
 
         for (int i = 0; i < 5; i++) {
-            attackUp[i] = setup("player/attacking/swordAttack", "SwordAttack_Up_" + (i + 1), gamePanel.tileSize,
-                    gamePanel.tileSize * 2);
+            swordAttackUp[i] = setup("player/attacking/swordAttack", "SwordAttack_Up_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize * 2);
         }
         for (int i = 0; i < 5; i++) {
-            attackDown[i] = setup("player/attacking/swordAttack", "SwordAttack_Down_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize * 2);
+            swordAttackDown[i] = setup("player/attacking/swordAttack", "SwordAttack_Down_" + (i + 1), gamePanel.tileSize, gamePanel.tileSize * 2);
         }
         for (int i = 0; i < 5; i++) {
-            attackLeft[i] = setup("player/attacking/swordAttack", "SwordAttack_Left_" + (i + 1), gamePanel.tileSize * 2, gamePanel.tileSize);
+            swordAttackLeft[i] = setup("player/attacking/swordAttack", "SwordAttack_Left_" + (i + 1), gamePanel.tileSize * 2, gamePanel.tileSize);
         }
         for (int i = 0; i < 5; i++) {
-            attackRight[i] = setup("player/attacking/swordAttack", "SwordAttack_Right_" + (i + 1), gamePanel.tileSize * 2, gamePanel.tileSize);
+            swordAttackRight[i] = setup("player/attacking/swordAttack", "SwordAttack_Right_" + (i + 1), gamePanel.tileSize * 2, gamePanel.tileSize);
+        }
+    }
+
+    public int getAttack() {
+        if (currentWeapon == null) {
+            return attack = strength;
+        } else {
+            return attack = strength * currentWeapon.attackValue;
+        }
+    }
+
+    public int getDefense() {
+        if (currentShield == null) {
+            return defense = dexterity;
+        } else {
+            return defense = dexterity * currentShield.defenseValue;
         }
     }
 
@@ -249,9 +290,15 @@ public class Player extends Entity {
                     worldX += attackArea.width;
                     break;
             }
+            if (!haveSword) {
+                solidArea.width = attackArea.width - 20;
+                solidArea.height = attackArea.height - 20;
+            }
 
-            solidArea.width = attackArea.width;
-            solidArea.height = attackArea.height;
+            if (haveSword) {
+                solidArea.width = attackArea.width;
+                solidArea.height = attackArea.height;
+            }
 
             int enemyIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.enemies);
             damageEnemy(enemyIndex);
@@ -310,6 +357,12 @@ public class Player extends Entity {
                 case "Sword":
                     gamePanel.playSFX(3);
                     haveSword = true;
+                    currentWeapon = gamePanel.objects[i];
+                    gamePanel.objects[i] = null;
+                    break;
+                case "Shield":
+                    gamePanel.playSFX(3);
+                    currentShield = gamePanel.objects[i];
                     gamePanel.objects[i] = null;
                     break;
             }
@@ -323,7 +376,7 @@ public class Player extends Entity {
 
                 gamePanel.gameState = gamePanel.dialogueState;
                 gamePanel.npcs[i].speak();
-            } else if (haveSword){
+            } else {
                 attacking = true;
                 gamePanel.playSFX(10);
             }
@@ -348,7 +401,8 @@ public class Player extends Entity {
 
             if (!gamePanel.enemies[i].invincible) {
 
-                gamePanel.enemies[i].hp -= 1;
+                gamePanel.enemies[i].hp -= getAttack();
+
                 gamePanel.enemies[i].invincible = true;
                 gamePanel.playSFX(8);
                 gamePanel.enemies[i].damageReaction();
@@ -365,41 +419,53 @@ public class Player extends Entity {
         int tempScreenX = screenX;
         int tempScreenY = screenY;
 
-            if (!attacking) {
-                if (Objects.equals(direction, lastDirection)) {
-                    image = switch (lastDirection) {
-                        case "standingUp" -> standingUp;
-                        case "standingDown" -> standingDown[spriteNum];
-                        case "standingLeft" -> standingLeft[spriteNum];
-                        case "standingRight" -> standingRight[spriteNum];
-                        default -> image;
-                    };
-                }
-
-                image = switch (direction) {
-                    case "up" -> up[movingSpriteNum];
-                    case "down" -> down[movingSpriteNum];
-                    case "left" -> left[movingSpriteNum];
-                    case "right" -> right[movingSpriteNum];
+        if (!attacking) {
+            if (Objects.equals(direction, lastDirection)) {
+                image = switch (lastDirection) {
+                    case "standingUp" -> standingUp;
+                    case "standingDown" -> standingDown[spriteNum];
+                    case "standingLeft" -> standingLeft[spriteNum];
+                    case "standingRight" -> standingRight[spriteNum];
                     default -> image;
                 };
             }
 
-            if (attacking) {
+            image = switch (direction) {
+                case "up" -> up[movingSpriteNum];
+                case "down" -> down[movingSpriteNum];
+                case "left" -> left[movingSpriteNum];
+                case "right" -> right[movingSpriteNum];
+                default -> image;
+            };
+        }
+
+        if (attacking) {
+            if (haveSword) {
                 image = switch (lastDirection) {
                     case "standingUp" -> {
                         tempScreenY = screenY - gamePanel.tileSize;
-                        yield attackUp[attackSpriteNum];
+                        yield swordAttackUp[attackSpriteNum];
                     }
-                    case "standingDown" -> attackDown[attackSpriteNum];
+                    case "standingDown" -> swordAttackDown[attackSpriteNum];
                     case "standingLeft" -> {
                         tempScreenX = screenX - gamePanel.tileSize;
-                        yield attackLeft[attackSpriteNum];
+                        yield swordAttackLeft[attackSpriteNum];
                     }
-                    case "standingRight" -> attackRight[attackSpriteNum];
+                    case "standingRight" -> swordAttackRight[attackSpriteNum];
                     default -> image;
                 };
             }
+
+            if (!haveSword) {
+                image = switch (lastDirection) {
+                    case "standingUp" -> handAttackUp[attackSpriteNum];
+                    case "standingDown" -> handAttackDown[attackSpriteNum];
+                    case "standingLeft" -> handAttackLeft[attackSpriteNum];
+                    case "standingRight" -> handAttackRight[attackSpriteNum];
+                    default -> image;
+                };
+            }
+        }
 
         if (invincible) {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));

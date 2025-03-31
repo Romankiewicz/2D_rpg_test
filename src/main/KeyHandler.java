@@ -140,6 +140,9 @@ public class KeyHandler implements KeyListener {
             if (key == KeyEvent.VK_ENTER) {
                 enterPressed = true;
             }
+            if ( key == KeyEvent.VK_C) {
+                gamePanel.gameState = gamePanel.statsState;
+            }
             if (key == KeyEvent.VK_ESCAPE) {
                 System.exit(0);
             }
@@ -157,6 +160,13 @@ public class KeyHandler implements KeyListener {
         //Dialogue State
         else if (gamePanel.gameState == gamePanel.dialogueState) {
             if (key == KeyEvent.VK_SPACE || key == KeyEvent.VK_ENTER) {
+                gamePanel.gameState = gamePanel.playState;
+            }
+        }
+
+        //Stats State
+        else if (gamePanel.gameState == gamePanel.statsState) {
+            if (key == KeyEvent.VK_C) {
                 gamePanel.gameState = gamePanel.playState;
             }
         }
