@@ -117,7 +117,7 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
 
-            for (int i = 0; i<enemies.length; i++) {
+            for (int i = 0; i < enemies.length; i++) {
                 if (enemies[i] != null) {
                     if (enemies[i].isAlive && !enemies[i].isDying) {
                         enemies[i].update();
@@ -137,6 +137,11 @@ public class GamePanel extends JPanel implements Runnable {
 
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
+        long drawStart = 0;
+        if (keyHandler.showDebugText) {
+            drawStart = System.nanoTime();
+        }
 
         if (gameState == titleState) {
             ui.draw(g2);
@@ -179,6 +184,27 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         ui.draw(g2);
+
+        if (keyHandler.showDebugText) {
+            long drawEnd = System.nanoTime();
+            long deltaTime = drawEnd - drawStart;
+            int x = 10;
+            int y = tileSize * 10;
+            int lineHeight = 20;
+
+
+            g2.setColor(Color.orange);
+            g2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+            g2.drawString("WorldX: " + player.worldX, x, y);
+            y += lineHeight;
+            g2.drawString("WorldY: " + player.worldY, x, y);
+            y += lineHeight;
+            g2.drawString("Col: " + (player.worldX + player.solidArea.x) / tileSize, x, y);
+            y += lineHeight;
+            g2.drawString("Row: " + (player.worldY + player.solidArea.y) / tileSize, x, y);
+            y += lineHeight;
+            g2.drawString("Draw Time: " + deltaTime, x, y);
+        }
 
         g2.dispose();
     }

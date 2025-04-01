@@ -25,7 +25,7 @@ public class RedOctorok extends Entity {
         maxHp = 6;
         hp = maxHp;
         attack = 4;
-        defense = 2;
+        defense = 4;
         xp = 2;
 
         solidArea.x = 12;

@@ -8,6 +8,8 @@ public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed, enterPressed;
     public boolean upReleased, downReleased, leftReleased, rightReleased;
+    public boolean showDebugText;
+
     GamePanel gamePanel;
 
 
@@ -159,6 +161,14 @@ public class KeyHandler implements KeyListener {
         }
         if ( key == KeyEvent.VK_C) {
             gamePanel.gameState = gamePanel.statsState;
+        }
+        if (key == KeyEvent.VK_PLUS){
+            if (!showDebugText) {
+                showDebugText = true;
+            } else if (showDebugText) {
+                showDebugText = false;
+
+            }
         }
         if (key == KeyEvent.VK_ESCAPE) {
             System.exit(0);
