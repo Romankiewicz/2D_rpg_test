@@ -68,7 +68,7 @@ public class Player extends Entity {
         strength = 1;
         dexterity = 1;
         xp = 0;
-        nextLevelXp = 5;
+        nextLevelXp = 10;
         coin = 0;
         currentWeapon = null;
         currentShield = null;
@@ -340,13 +340,13 @@ public class Player extends Entity {
 
             String objectName = gamePanel.objects[i].name;
             switch (objectName) {
-                case "SilverKey":
+                case "Silver Key":
                     gamePanel.playSFX(3);
                     haveSilverKey++;
                     inventory.add(gamePanel.objects[i]);
                     gamePanel.objects[i] = null;
                     break;
-                case "BlueKey":
+                case "Blue Key":
                     gamePanel.playSFX(3);
                     haveBlueKey++;
                     inventory.add(gamePanel.objects[i]);
@@ -380,7 +380,7 @@ public class Player extends Entity {
                         haveBlueKey--;
                     }
                     break;
-                case "Sword":
+                case "Normal Sword":
                     gamePanel.playSFX(3);
                     haveSword = true;
                     currentWeapon = gamePanel.objects[i];
@@ -388,7 +388,7 @@ public class Player extends Entity {
                     inventory.add(gamePanel.objects[i]);
                     gamePanel.objects[i] = null;
                     break;
-                case "Shield":
+                case "Wooden Shield":
                     gamePanel.playSFX(3);
                     currentShield = gamePanel.objects[i];
                     defense = getDefense();
@@ -466,7 +466,7 @@ public class Player extends Entity {
 
         if (xp >= nextLevelXp) {
             level++;
-            nextLevelXp = nextLevelXp + 4 * level;
+            nextLevelXp = (nextLevelXp + 6) * level;
             maxHp += 2;
             strength++;
             dexterity++;

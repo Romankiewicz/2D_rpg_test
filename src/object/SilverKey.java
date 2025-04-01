@@ -14,7 +14,9 @@ public class SilverKey extends Entity {
 
         type = OBJECT;
 
-        name = "SilverKey";
+        name = "Silver Key";
         down[0] = setup("objects", "Key_Silver", gamePanel.tileSize, gamePanel.tileSize);
+
+        description = "[" + name + "]\n\nA Silver Key";
     }
 }

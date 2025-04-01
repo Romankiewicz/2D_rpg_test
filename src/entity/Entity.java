@@ -35,8 +35,10 @@ public class Entity {
     public boolean collision = false;
     public EntityType type;
     public int typeNum;
+
     public int attackValue;
     public int defenseValue;
+    public String description = "";
 
     public BufferedImage standingUp;
     public BufferedImage[] standingDown = new BufferedImage[10];

@@ -13,10 +13,12 @@ public class Sword extends Entity {
 
         type = OBJECT;
 
-        name = "Sword";
+        name = "Normal Sword";
 
         down[0] = setup("objects", "Sword_1", gamePanel.tileSize, gamePanel.tileSize);
 
         attackValue = 3;
+
+        description = "[" + name + "]\n\nATK: " + attackValue;
     }
 }

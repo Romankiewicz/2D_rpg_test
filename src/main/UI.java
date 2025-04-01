@@ -378,6 +378,28 @@ public class UI {
         g2.setStroke(new BasicStroke(2));
         g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
 
+        int dFrameY = frameY + frameHeight;
+        int dFrameHeight = gamePanel.tileSize*3;
+
+        int textX = frameX + 35;
+        int textY = dFrameY + gamePanel.tileSize;
+        g2.setColor(translucentWhite);
+        g2.setFont(courier_30);
+
+        int itemIndex = getItemIndex();
+
+        if (itemIndex < gamePanel.player.inventory.size()) {
+            drawSubWindow(frameX, dFrameY, frameWidth, dFrameHeight);
+            for (String line : gamePanel.player.inventory.get(itemIndex).description.split("\n")){
+                g2.drawString(line, textX, textY);
+                textY += 34;
+            }
+        }
+    }
+
+    public int getItemIndex() {
+
+        return slotCol + (slotRow * 5);
     }
 
     public void drawDialogueScreen() {
