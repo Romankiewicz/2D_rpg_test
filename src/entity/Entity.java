@@ -34,7 +34,6 @@ public class Entity {
     public String name;
     public boolean collision = false;
     public EntityType type;
-    public int typeNum;
 
     public int attackValue;
     public int defenseValue;
@@ -60,6 +59,11 @@ public class Entity {
     public BufferedImage[] swordAttackDown = new BufferedImage[5];
     public BufferedImage[] swordAttackLeft = new BufferedImage[5];
     public BufferedImage[] swordAttackRight = new BufferedImage[5];
+
+    public BufferedImage[] axeAttackUp = new BufferedImage[5];
+    public BufferedImage[] axeAttackDown = new BufferedImage[5];
+    public BufferedImage[] axeAttackLeft = new BufferedImage[5];
+    public BufferedImage[] axeAttackRight = new BufferedImage[5];
 
     public String direction = "down";
     public String lastDirection;
@@ -192,7 +196,7 @@ public class Entity {
         gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npcs);
         boolean contactsPlayer = gamePanel.collisionChecker.checkPlayerCollision(this);
 
-        if (type == ENEMY && contactsPlayer && typeNum == 2) {
+        if (type == ENEMY && contactsPlayer) {
             if (!gamePanel.player.invincible) {
 
                 int damage = attack - gamePanel.player.defense;

@@ -216,6 +216,9 @@ public class KeyHandler implements KeyListener {
             gamePanel.ui.slotCol++;
             gamePanel.playSFX(12);}
         }
+        if (key == KeyEvent.VK_SPACE) {
+            gamePanel.player.selectItem();
+        }
     }
 
     @Override

@@ -45,6 +45,18 @@ public class AssetSetter {
         gamePanel.objects[i] = new Shield(gamePanel);
         gamePanel.objects[i].worldX = gamePanel.tileSize * 23;
         gamePanel.objects[i].worldY = gamePanel.tileSize;
+        i++;
+
+        gamePanel.objects[i] = new WoodcutterAxe(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 10;
+        i++;
+
+        gamePanel.objects[i] = new BarbarianAxe(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 23;
+
+
     }
 
     public void setNpc() {

@@ -17,7 +17,6 @@ public class BlueOctorok extends Entity {
         this.gamePanel = gamePanel;
 
         type = ENEMY;
-        typeNum = 2;
         
         name = "BlueOctorok";
         speed = 1;

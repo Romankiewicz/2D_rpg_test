@@ -3,7 +3,7 @@ package object;
 import entity.Entity;
 import main.GamePanel;
 
-import static entity.EntityType.OBJECT;
+import static entity.EntityType.BLUE_KEY;
 
 
 public class BlueKey extends Entity {
@@ -13,7 +13,7 @@ public class BlueKey extends Entity {
 
         super(gamePanel);
 
-        type = OBJECT;
+        type = BLUE_KEY;
 
         name = "Blue Key";
         down[0] = setup("objects", "Key_Blue", gamePanel.tileSize, gamePanel.tileSize);

@@ -3,7 +3,7 @@ package object;
 import entity.Entity;
 import main.GamePanel;
 
-import static entity.EntityType.OBJECT;
+import static entity.EntityType.DOOR;
 
 
 public class Door extends Entity {
@@ -12,7 +12,7 @@ public class Door extends Entity {
 
         super(gamePanel);
 
-        type = OBJECT;
+        type = DOOR;
 
         name = "Door";
         down[0] = setup("objects", "Door", gamePanel.tileSize, gamePanel.tileSize);

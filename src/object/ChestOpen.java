@@ -1,10 +1,10 @@
 package object;
 
 import entity.Entity;
-import entity.EntityType;
 import main.GamePanel;
 
-import static entity.EntityType.OBJECT;
+import static entity.EntityType.CHEST;
+
 
 
 public class ChestOpen extends Entity {
@@ -13,7 +13,7 @@ public class ChestOpen extends Entity {
 
         super(gamePanel);
 
-        type = OBJECT;
+        type = CHEST;
 
         name = "OpenChest";
         down[0] = setup("objects", "Chest_Open", gamePanel.tileSize, gamePanel.tileSize);

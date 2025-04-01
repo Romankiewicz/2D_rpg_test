@@ -2,16 +2,13 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
-import object.BlueKey;
-import object.ChestOpen;
-import object.DoorOpen;
-import object.SilverKey;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Random;
+
+import static entity.EntityType.*;
 
 
 public class Player extends Entity {
@@ -24,13 +21,16 @@ public class Player extends Entity {
     int haveSilverKey = 0;
     int haveBlueKey = 0;
     boolean haveSword = false;
+    boolean haveAxe = false;
 
     public ArrayList<Entity> inventory = new ArrayList<>();
-    public final int inventorySize = 20;
+    public final int maxInventorySize = 20;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
 
         super(gamePanel);
+
+        type = PLAYER;
 
         this.keyHandler = keyHandler;
 
@@ -44,13 +44,14 @@ public class Player extends Entity {
         solidArea.width = 40;
         solidArea.height = 40;
 
-        attackArea.width = 45;
-        attackArea.height = 45;
+        attackArea.width = 24;
+        attackArea.height = 24;
 
         setDefaultValues();
         getPlayerImage();
         getPlayerHandAttackImage();
         getPlayerSwordAttackImage();
+        getPlayerAxeAttackImage();
         setItem();
     }
 
@@ -142,6 +143,26 @@ public class Player extends Entity {
         }
     }
 
+    public void getPlayerAxeAttackImage() {
+
+        for (int i = 0; i < 5; i++) {
+            axeAttackUp[i] = setup("player/attacking/axeAttack", "AxeAttack_Up_" + (i + 1), gamePanel.tileSize,
+                    gamePanel.tileSize * 2);
+        }
+        for (int i = 0; i < 5; i++) {
+            axeAttackDown[i] = setup("player/attacking/axeAttack", "AxeAttack_Down_" + (i + 1), gamePanel.tileSize,
+                    gamePanel.tileSize * 2);
+        }
+        for (int i = 0; i < 5; i++) {
+            axeAttackLeft[i] = setup("player/attacking/axeAttack", "AxeAttack_Left_" + (i + 1),
+                    gamePanel.tileSize * 2, gamePanel.tileSize);
+        }
+        for (int i = 0; i < 5; i++) {
+            axeAttackRight[i] = setup("player/attacking/axeAttack", "AxeAttack_Right_" + (i + 1),
+                    gamePanel.tileSize * 2, gamePanel.tileSize);
+        }
+    }
+
     public void setItem() {
 
         if (currentWeapon != null) {
@@ -153,11 +174,20 @@ public class Player extends Entity {
     }
 
     public int getAttack() {
+
         if (currentWeapon == null) {
+            haveSword = false;
+            haveAxe = false;
             return attack = strength;
         } else {
-            return attack = strength * currentWeapon.attackValue;
+            if (currentWeapon.type == SWORD) {
+                haveSword = true;
+            }
+            if (currentWeapon.type == AXE) {
+                haveAxe = true;
+            }
         }
+        return attack = strength * currentWeapon.attackValue;
     }
 
     public int getDefense() {
@@ -309,8 +339,8 @@ public class Player extends Entity {
                     break;
             }
             if (!haveSword) {
-                solidArea.width = attackArea.width - 20;
-                solidArea.height = attackArea.height - 20;
+                solidArea.width = attackArea.width;
+                solidArea.height = attackArea.height;
             }
 
             if (haveSword) {
@@ -338,64 +368,73 @@ public class Player extends Entity {
 
         if (i != 999) {
 
-            String objectName = gamePanel.objects[i].name;
-            switch (objectName) {
-                case "Silver Key":
-                    gamePanel.playSFX(3);
-                    haveSilverKey++;
-                    inventory.add(gamePanel.objects[i]);
-                    gamePanel.objects[i] = null;
-                    break;
-                case "Blue Key":
-                    gamePanel.playSFX(3);
-                    haveBlueKey++;
-                    inventory.add(gamePanel.objects[i]);
-                    gamePanel.objects[i] = null;
-                    break;
-                case "Door":
-                    if (haveSilverKey > 0) {
-                        gamePanel.playSFX(4);
-                        int x = gamePanel.objects[i].worldX;
-                        int y = gamePanel.objects[i].worldY;
-                        gamePanel.objects[i] = new DoorOpen(gamePanel);
-                        gamePanel.objects[i].worldX = x;
-                        gamePanel.objects[i].worldY = y;
-                        haveSilverKey--;
-                    }
-                    break;
-                case "Chest":
-                    if (haveBlueKey > 0) {
-                        gamePanel.playSFX(4);
-                        int x = gamePanel.objects[i].worldX;
-                        int y = gamePanel.objects[i].worldY;
-                        gamePanel.objects[i] = new ChestOpen(gamePanel);
-                        gamePanel.objects[i].worldX = x;
-                        gamePanel.objects[i].worldY = y;
-                        Random random = new Random();
-                        int reward = random.nextInt(100) + 1;
-                        coin += reward;
-                        gamePanel.ui.addMessage("You found");
-                        gamePanel.ui.addMessage("" + reward);
-                        gamePanel.ui.addMessage("coins.");
-                        haveBlueKey--;
-                    }
-                    break;
-                case "Normal Sword":
-                    gamePanel.playSFX(3);
-                    haveSword = true;
-                    currentWeapon = gamePanel.objects[i];
-                    attack = getAttack();
-                    inventory.add(gamePanel.objects[i]);
-                    gamePanel.objects[i] = null;
-                    break;
-                case "Wooden Shield":
-                    gamePanel.playSFX(3);
-                    currentShield = gamePanel.objects[i];
-                    defense = getDefense();
-                    inventory.add(gamePanel.objects[i]);
-                    gamePanel.objects[i] = null;
-                    break;
+            String text = "";
+            if (inventory.size() != maxInventorySize) {
+                inventory.add(gamePanel.objects[i]);
+                gamePanel.playSFX(3);
+            } else {
+                text = "Inventory Full!";
             }
+            gamePanel.ui.addMessage(text);
+            gamePanel.objects[i] = null;
+//            String objectName = gamePanel.objects[i].name;
+//            switch (objectName) {
+//                case "Silver Key":
+//                    gamePanel.playSFX(3);
+//                    haveSilverKey++;
+//                    inventory.add(gamePanel.objects[i]);
+//                    gamePanel.objects[i] = null;
+//                    break;
+//                case "Blue Key":
+//                    gamePanel.playSFX(3);
+//                    haveBlueKey++;
+//                    inventory.add(gamePanel.objects[i]);
+//                    gamePanel.objects[i] = null;
+//                    break;
+//                case "Door":
+//                    if (haveSilverKey > 0) {
+//                        gamePanel.playSFX(4);
+//                        int x = gamePanel.objects[i].worldX;
+//                        int y = gamePanel.objects[i].worldY;
+//                        gamePanel.objects[i] = new DoorOpen(gamePanel);
+//                        gamePanel.objects[i].worldX = x;
+//                        gamePanel.objects[i].worldY = y;
+//                        haveSilverKey--;
+//                    }
+//                    break;
+//                case "Chest":
+//                    if (haveBlueKey > 0) {
+//                        gamePanel.playSFX(4);
+//                        int x = gamePanel.objects[i].worldX;
+//                        int y = gamePanel.objects[i].worldY;
+//                        gamePanel.objects[i] = new ChestOpen(gamePanel);
+//                        gamePanel.objects[i].worldX = x;
+//                        gamePanel.objects[i].worldY = y;
+//                        Random random = new Random();
+//                        int reward = random.nextInt(100) + 1;
+//                        coin += reward;
+//                        gamePanel.ui.addMessage("You found");
+//                        gamePanel.ui.addMessage("" + reward);
+//                        gamePanel.ui.addMessage("coins.");
+//                        haveBlueKey--;
+//                    }
+//                    break;
+//                case "Normal Sword":
+//                    gamePanel.playSFX(3);
+//                    haveSword = true;
+//                    currentWeapon = gamePanel.objects[i];
+//                    attack = getAttack();
+//                    inventory.add(gamePanel.objects[i]);
+//                    gamePanel.objects[i] = null;
+//                    break;
+//                case "Wooden Shield":
+//                    gamePanel.playSFX(3);
+//                    currentShield = gamePanel.objects[i];
+//                    defense = getDefense();
+//                    inventory.add(gamePanel.objects[i]);
+//                    gamePanel.objects[i] = null;
+//                    break;
+//            }
         }
     }
 
@@ -478,6 +517,57 @@ public class Player extends Entity {
         }
     }
 
+    public void selectItem() {
+
+        int itemIndex = gamePanel.ui.getItemIndex();
+        if (itemIndex < inventory.size()) {
+
+            Entity selectedItem = inventory.get(itemIndex);
+
+            if (selectedItem.type == SWORD) {
+                if (selectedItem == currentWeapon) {
+                    currentWeapon = null;
+                    attackArea.width = 24;
+                    attackArea.height = 24;
+                    haveSword = false;
+                    getAttack();
+                } else {
+                    currentWeapon = selectedItem;
+                    attackArea.width = selectedItem.attackArea.width;
+                    attackArea.height = selectedItem.attackArea.height;
+                    haveSword = true;
+                    haveAxe = false;
+                    getAttack();
+                }
+            }
+            if (selectedItem.type == AXE) {
+                if (selectedItem == currentWeapon) {
+                    currentWeapon = null;
+                    attackArea.width = 24;
+                    attackArea.height = 24;
+                    haveAxe = false;
+                    getAttack();
+                } else {
+                    currentWeapon = selectedItem;
+                    attackArea.width = selectedItem.attackArea.width;
+                    attackArea.height = selectedItem.attackArea.height;
+                    haveAxe = true;
+                    haveSword = false;
+                    getAttack();
+                }
+            }
+            if (selectedItem.type == SHIELD) {
+                if (selectedItem == currentShield) {
+                    currentShield = null;
+                    getDefense();
+                } else {
+                    currentShield = selectedItem;
+                    getDefense();
+                }
+            }
+        }
+    }
+
     private int getEnemiesXp(int i) {
         return gamePanel.enemies[i].xp;
     }
@@ -524,8 +614,22 @@ public class Player extends Entity {
                     default -> image;
                 };
             }
-
-            if (!haveSword) {
+            if (haveAxe) {
+                image = switch (lastDirection) {
+                    case "standingUp" -> {
+                        tempScreenY = screenY - gamePanel.tileSize;
+                        yield axeAttackUp[attackSpriteNum];
+                    }
+                    case "standingDown" -> axeAttackDown[attackSpriteNum];
+                    case "standingLeft" -> {
+                        tempScreenX = screenX - gamePanel.tileSize;
+                        yield axeAttackLeft[attackSpriteNum];
+                    }
+                    case "standingRight" -> axeAttackRight[attackSpriteNum];
+                    default -> image;
+                };
+            }
+            if (!haveAxe && !haveSword) {
                 image = switch (lastDirection) {
                     case "standingUp" -> handAttackUp[attackSpriteNum];
                     case "standingDown" -> handAttackDown[attackSpriteNum];

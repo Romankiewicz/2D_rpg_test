@@ -3,7 +3,8 @@ package object;
 import entity.Entity;
 import main.GamePanel;
 
-import static entity.EntityType.OBJECT;
+import static entity.EntityType.SHIELD;
+
 
 public class Shield extends Entity {
 
@@ -11,7 +12,7 @@ public class Shield extends Entity {
 
         super(gamePanel);
 
-        type = OBJECT;
+        type = SHIELD;
 
         name = "Wooden Shield";
 

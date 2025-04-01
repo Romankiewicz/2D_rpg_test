@@ -18,7 +18,6 @@ public class RedOctorok extends Entity {
         this.gamePanel = gamePanel;
 
         type = ENEMY;
-        typeNum = 2;
 
         name = "RedOctorok";
         speed = 1;

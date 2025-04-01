@@ -21,6 +21,8 @@ public class UI {
     public Color translucentBlack = new Color(0, 0, 0, 200);
     public Color translucentWhite = new Color(255, 255, 255, 200);
     public Color translucentWhite_1 = new Color(255, 255, 255, 100);
+    public Color translucentOrange = new Color(220, 150, 40, 150);
+
 
     public String currentDialogue = "";
     public int commandNum = 0;
@@ -361,6 +363,12 @@ public class UI {
         int slotSize = gamePanel.tileSize + 2;
 
         for (int i = 0; i < gamePanel.player.inventory.size(); i++) {
+
+            if (gamePanel.player.inventory.get(i) == gamePanel.player.currentWeapon ||
+            gamePanel.player.inventory.get(i) == gamePanel.player.currentShield) {
+                g2.setColor(translucentOrange);
+                g2.fillRoundRect(slotX, slotY, gamePanel.tileSize, gamePanel.tileSize, 10, 10);
+            }
             g2.drawImage(gamePanel.player.inventory.get(i).down[0], slotX, slotY, null);
             slotX += slotSize;
             if (i == 4 || i == 9 || i == 14) {
