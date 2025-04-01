@@ -13,6 +13,7 @@ public class Sound {
 
     public Sound() {
 
+
         soundURL[0] = getClass().getResource("/sound/music/Final_Fantasy_Theme_Harp.wav");
         soundURL[1] = getClass().getResource("/sound/sfx/Fanfare.wav");
         soundURL[2] = getClass().getResource("/sound/sfx/Collect_1.wav");
@@ -25,7 +26,7 @@ public class Sound {
         soundURL[9] = getClass().getResource("/sound/sfx/Receive_Life.wav");
         soundURL[10] = getClass().getResource("/sound/sfx/Sword_Swing.wav");
         soundURL[11] = getClass().getResource("/sound/sfx/Hit_Enemy.wav");
-
+        soundURL[12] = getClass().getResource("/sound/sfx/Cursor.wav");
     }
 
     public void setFile(int i) {

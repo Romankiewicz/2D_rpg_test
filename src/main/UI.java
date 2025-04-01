@@ -27,6 +27,8 @@ public class UI {
     public int musicSelectorNum = 100;
     public int sfxSelectorNum = 100;
     public int titleScreenState = 0;
+    public int slotCol = 0;
+    public int slotRow = 0;
 
 
     public UI(GamePanel gamePanel) {
@@ -68,6 +70,7 @@ public class UI {
         } else if (gamePanel.gameState == gamePanel.statsState) {
             drawPlayerHp();
             drawStatsScreen();
+            drawInventory();
         }
     }
 
@@ -328,7 +331,8 @@ public class UI {
             g2.drawImage(gamePanel.player.currentWeapon.down[0], (rightX - 50), textY - gamePanel.tileSize / 2, null);
         }
         if (gamePanel.player.currentWeapon == null) {
-            g2.drawRect(rightX - 50, textY - gamePanel.tileSize / 2, 50, 50);
+            g2.setStroke(new BasicStroke(1));
+            g2.drawRoundRect(rightX - 50, textY - gamePanel.tileSize / 2, 50, 50, 10, 10);
         }
         textY += gamePanel.tileSize;
 
@@ -337,8 +341,33 @@ public class UI {
                     textY - gamePanel.tileSize / 2, null);
         }
         if (gamePanel.player.currentShield == null) {
-            g2.drawRect(rightX - 50, textY - gamePanel.tileSize / 2, 50, 50);
+            g2.setStroke(new BasicStroke(1));
+            g2.drawRoundRect(rightX - 50, textY - gamePanel.tileSize / 2, 50, 50, 10, 10);
         }
+    }
+
+    public void drawInventory(){
+
+        final int frameX = gamePanel.tileSize*9;
+        final int frameY = gamePanel.tileSize * 2;
+        final int frameWidth = gamePanel.tileSize * 6;
+        final int frameHeight = gamePanel.tileSize * 5;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        final int slotXStart = frameX + 35;
+        final int slotYStart = frameY + 35;
+        int slotX = slotXStart;
+        int slotY = slotYStart;
+
+        int cursorX = slotXStart +(gamePanel.tileSize*slotCol);
+        int cursorY = slotYStart +(gamePanel.tileSize*slotRow);
+        int cursorWidth = gamePanel.tileSize;
+        int cursorHeight = gamePanel.tileSize;
+
+        g2.setColor(translucentWhite);
+        g2.setStroke(new BasicStroke(2));
+        g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
+
     }
 
     public void drawDialogueScreen() {

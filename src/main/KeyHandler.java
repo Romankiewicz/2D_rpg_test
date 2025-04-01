@@ -29,17 +29,13 @@ public class KeyHandler implements KeyListener {
 
         if (gamePanel.gameState == gamePanel.titleState) {
             titleState(key);
-        }
-        else if (gamePanel.gameState == gamePanel.playState) {
+        } else if (gamePanel.gameState == gamePanel.playState) {
             playState(key);
-        }
-        else if (gamePanel.gameState == gamePanel.pauseState) {
-           pauseState(key);
-        }
-        else if (gamePanel.gameState == gamePanel.dialogueState) {
+        } else if (gamePanel.gameState == gamePanel.pauseState) {
+            pauseState(key);
+        } else if (gamePanel.gameState == gamePanel.dialogueState) {
             dialogueState(key);
-        }
-        else if (gamePanel.gameState == gamePanel.statsState) {
+        } else if (gamePanel.gameState == gamePanel.statsState) {
             statsState(key);
         }
 
@@ -159,10 +155,10 @@ public class KeyHandler implements KeyListener {
         if (key == KeyEvent.VK_ENTER) {
             enterPressed = true;
         }
-        if ( key == KeyEvent.VK_C) {
+        if (key == KeyEvent.VK_C) {
             gamePanel.gameState = gamePanel.statsState;
         }
-        if (key == KeyEvent.VK_PLUS){
+        if (key == KeyEvent.VK_PLUS) {
             if (!showDebugText) {
                 showDebugText = true;
             } else if (showDebugText) {
@@ -197,6 +193,28 @@ public class KeyHandler implements KeyListener {
 
         if (key == KeyEvent.VK_C) {
             gamePanel.gameState = gamePanel.playState;
+        }
+        if (key == KeyEvent.VK_UP) {
+            if (gamePanel.ui.slotRow != 0) {
+                gamePanel.ui.slotRow--;
+                gamePanel.playSFX(12);
+            }
+        }
+        if (key == KeyEvent.VK_DOWN) {
+            if (gamePanel.ui.slotRow < 3) {
+            gamePanel.ui.slotRow++;
+            gamePanel.playSFX(12);}
+        }
+        if (key == KeyEvent.VK_LEFT) {
+            if (gamePanel.ui.slotCol != 0) {
+                gamePanel.ui.slotCol--;
+                gamePanel.playSFX(12);
+            }
+        }
+        if (key == KeyEvent.VK_RIGHT) {
+            if (gamePanel.ui.slotCol < 4) {
+            gamePanel.ui.slotCol++;
+            gamePanel.playSFX(12);}
         }
     }
 
