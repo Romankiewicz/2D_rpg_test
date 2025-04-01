@@ -2,12 +2,14 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.BlueKey;
 import object.ChestOpen;
 import object.DoorOpen;
-import object.Sword;
+import object.SilverKey;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
@@ -22,6 +24,9 @@ public class Player extends Entity {
     int haveSilverKey = 0;
     int haveBlueKey = 0;
     boolean haveSword = false;
+
+    public ArrayList<Entity> inventory = new ArrayList<>();
+    public final int inventorySize = 20;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
 
@@ -46,6 +51,7 @@ public class Player extends Entity {
         getPlayerImage();
         getPlayerHandAttackImage();
         getPlayerSwordAttackImage();
+        setItem();
     }
 
     public void setDefaultValues() {
@@ -133,6 +139,16 @@ public class Player extends Entity {
         }
         for (int i = 0; i < 5; i++) {
             swordAttackRight[i] = setup("player/attacking/swordAttack", "SwordAttack_Right_" + (i + 1), gamePanel.tileSize * 2, gamePanel.tileSize);
+        }
+    }
+
+    public void setItem() {
+
+        if (currentWeapon != null) {
+            inventory.add(currentWeapon);
+        }
+        if (currentShield != null) {
+            inventory.add(currentShield);
         }
     }
 
@@ -327,11 +343,13 @@ public class Player extends Entity {
                 case "SilverKey":
                     gamePanel.playSFX(3);
                     haveSilverKey++;
+                    inventory.add(gamePanel.objects[i]);
                     gamePanel.objects[i] = null;
                     break;
                 case "BlueKey":
                     gamePanel.playSFX(3);
                     haveBlueKey++;
+                    inventory.add(gamePanel.objects[i]);
                     gamePanel.objects[i] = null;
                     break;
                 case "Door":
@@ -354,7 +372,7 @@ public class Player extends Entity {
                         gamePanel.objects[i].worldX = x;
                         gamePanel.objects[i].worldY = y;
                         Random random = new Random();
-                        int reward = random.nextInt(100) +1;
+                        int reward = random.nextInt(100) + 1;
                         coin += reward;
                         gamePanel.ui.addMessage("You found");
                         gamePanel.ui.addMessage("" + reward);
@@ -367,12 +385,14 @@ public class Player extends Entity {
                     haveSword = true;
                     currentWeapon = gamePanel.objects[i];
                     attack = getAttack();
+                    inventory.add(gamePanel.objects[i]);
                     gamePanel.objects[i] = null;
                     break;
                 case "Shield":
                     gamePanel.playSFX(3);
                     currentShield = gamePanel.objects[i];
                     defense = getDefense();
+                    inventory.add(gamePanel.objects[i]);
                     gamePanel.objects[i] = null;
                     break;
             }

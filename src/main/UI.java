@@ -346,9 +346,9 @@ public class UI {
         }
     }
 
-    public void drawInventory(){
+    public void drawInventory() {
 
-        final int frameX = gamePanel.tileSize*9;
+        final int frameX = gamePanel.tileSize * 9;
         final int frameY = gamePanel.tileSize * 2;
         final int frameWidth = gamePanel.tileSize * 6;
         final int frameHeight = gamePanel.tileSize * 5;
@@ -358,9 +358,19 @@ public class UI {
         final int slotYStart = frameY + 35;
         int slotX = slotXStart;
         int slotY = slotYStart;
+        int slotSize = gamePanel.tileSize + 2;
 
-        int cursorX = slotXStart +(gamePanel.tileSize*slotCol);
-        int cursorY = slotYStart +(gamePanel.tileSize*slotRow);
+        for (int i = 0; i < gamePanel.player.inventory.size(); i++) {
+            g2.drawImage(gamePanel.player.inventory.get(i).down[0], slotX, slotY, null);
+            slotX += slotSize;
+            if (i == 4 || i == 9 || i == 14) {
+                slotX = slotXStart;
+                slotY += slotSize;
+            }
+        }
+
+        int cursorX = slotXStart + (slotSize * slotCol);
+        int cursorY = slotYStart + (slotSize * slotRow);
         int cursorWidth = gamePanel.tileSize;
         int cursorHeight = gamePanel.tileSize;
 
