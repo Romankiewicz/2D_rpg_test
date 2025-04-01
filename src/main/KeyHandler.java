@@ -159,12 +159,7 @@ public class KeyHandler implements KeyListener {
             gamePanel.gameState = gamePanel.statsState;
         }
         if (key == KeyEvent.VK_PLUS) {
-            if (!showDebugText) {
-                showDebugText = true;
-            } else if (showDebugText) {
-                showDebugText = false;
-
-            }
+            showDebugText = !showDebugText;
         }
         if (key == KeyEvent.VK_ESCAPE) {
             System.exit(0);

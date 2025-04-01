@@ -1,7 +1,6 @@
 package enemy;
 
 import entity.Entity;
-import entity.EntityType;
 import main.GamePanel;
 
 import java.util.Random;

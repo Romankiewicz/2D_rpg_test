@@ -169,12 +169,7 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
 
-            entities.sort(new Comparator<Entity>() {
-                @Override
-                public int compare(Entity o1, Entity o2) {
-                    return Integer.compare(o1.worldY, o2.worldY);
-                }
-            });
+            entities.sort(Comparator.comparingInt(o -> o.worldY));
 
             for (Entity entity : entities) {
                 entity.draw(g2);
