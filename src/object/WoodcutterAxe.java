@@ -21,6 +21,7 @@ public class WoodcutterAxe extends Entity {
         attackArea.width = 50;
         attackArea.height = 50;
 
-        description = "[" + name + "]\n\nATK: " + attackValue;
+        description = "[" + name + "]\nA Axe to cut trees.\nATK: +" + attackValue +
+                "\nScale STR";
     }
 }

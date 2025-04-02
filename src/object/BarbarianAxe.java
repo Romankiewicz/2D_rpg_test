@@ -21,6 +21,7 @@ public class BarbarianAxe extends Entity {
         attackArea.width = 50;
         attackArea.height = 50;
 
-        description = "[" + name + "]\n\nATK: " + attackValue;
+        description = "[" + name + "]\nA Axe that look like \nit´s been used in \nbattle.\nATK:" + attackValue +
+                "\nScale STR";
     }
 }

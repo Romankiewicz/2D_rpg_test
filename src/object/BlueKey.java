@@ -18,7 +18,7 @@ public class BlueKey extends Entity {
         name = "Blue Key";
         down[0] = setup("objects", "Key_Blue", gamePanel.tileSize, gamePanel.tileSize);
 
-        description = "[" + name + "]\n\nA Blue Key";
+        description = "[" + name + "]\nA Blue Key\nwonder what this does.";
     }
 
 }

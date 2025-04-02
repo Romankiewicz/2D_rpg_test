@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 
 import static entity.EntityType.*;
 
@@ -304,19 +305,19 @@ public class Player extends Entity {
 
         attackSpriteCounter++;
 
-        if (attackSpriteCounter <= 3) {
+        if (attackSpriteCounter <= 2) {
             attackSpriteNum = 0;
         }
-        if (attackSpriteCounter > 3 && attackSpriteCounter <= 6) {
+        if (attackSpriteCounter > 2 && attackSpriteCounter <= 4) {
             attackSpriteNum = 1;
         }
-        if (attackSpriteCounter > 6 && attackSpriteCounter <= 9) {
+        if (attackSpriteCounter > 4 && attackSpriteCounter <= 6) {
             attackSpriteNum = 2;
         }
-        if (attackSpriteCounter > 9 && attackSpriteCounter <= 12) {
+        if (attackSpriteCounter > 6 && attackSpriteCounter <= 8) {
             attackSpriteNum = 3;
         }
-        if (attackSpriteCounter > 12 && attackSpriteCounter <= 20) {
+        if (attackSpriteCounter > 8 && attackSpriteCounter <= 10) {
             attackSpriteNum = 4;
 
             int currentWorldX = worldX;
@@ -356,7 +357,7 @@ public class Player extends Entity {
             solidArea.width = solidAreaWidth;
             solidArea.height = solidAreaHeight;
         }
-        if (attackSpriteCounter > 20) {
+        if (attackSpriteCounter > 15) {
             attackSpriteNum = 0;
             attackSpriteCounter = 0;
             attacking = false;
@@ -460,8 +461,8 @@ public class Player extends Entity {
 
                 int damage = gamePanel.enemies[i].attack - defense;
 
-                if (damage < 0) {
-                    damage = 0;
+                if (damage <= 0) {
+                    damage = 1;
                 }
 
                 hp -= damage;
@@ -480,8 +481,8 @@ public class Player extends Entity {
 
                 int damage = attack - gamePanel.enemies[i].defense;
 
-                if (damage < 0) {
-                    damage = 0;
+                if (damage <= 0) {
+                    damage = 1;
                 }
 
                 gamePanel.enemies[i].hp -= damage;
@@ -504,15 +505,30 @@ public class Player extends Entity {
     public void checkLevelUp() {
 
         if (xp >= nextLevelXp) {
+
+            Random rand = new Random();
+
+            int i = 2;
+            if(level % 2 == 0) {
+                i += 1;
+            }
+            int strengthIncrease = rand.nextInt(i) + 1;
+            int dexterityIncrease = rand.nextInt(i) + 1;
+            int maxHpIncrease = 1;
             level++;
             nextLevelXp = (nextLevelXp + 6) * level;
-            maxHp += 2;
-            strength++;
-            dexterity++;
+            maxHp += maxHpIncrease;
+            hp = maxHp;
+            strength += strengthIncrease;
+            dexterity += dexterityIncrease;
             getAttack();
             getDefense();
+
             gamePanel.gameState = gamePanel.dialogueState;
-            gamePanel.ui.currentDialogue = "\n\nCongratulations!\nyou reached level " + level;
+            gamePanel.ui.currentDialogue = "Congratulations!\n\nYou reached level " + level +
+                    "\n\nStrength +" + strengthIncrease +
+                    "\nDexterity +" + dexterityIncrease +
+                    "\nMax Health +" + maxHpIncrease;
             gamePanel.playSFX(1);
         }
     }
@@ -564,6 +580,10 @@ public class Player extends Entity {
                     currentShield = selectedItem;
                     getDefense();
                 }
+            }
+            if (selectedItem.type == CONSUMABLE) {
+                selectedItem.use(this);
+                inventory.remove(selectedItem);
             }
         }
     }

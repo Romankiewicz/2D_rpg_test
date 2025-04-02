@@ -20,10 +20,10 @@ public class RedOctorok extends Entity {
 
         name = "RedOctorok";
         speed = 1;
-        maxHp = 6;
+        maxHp = 10;
         hp = maxHp;
         attack = 4;
-        defense = 4;
+        defense = 14;
         xp = 2;
 
         solidArea.x = 12;

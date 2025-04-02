@@ -37,12 +37,12 @@ public class AssetSetter {
         gamePanel.objects[i].worldY = gamePanel.tileSize * 2;
         i++;
 
-        gamePanel.objects[i] = new Sword(gamePanel);
+        gamePanel.objects[i] = new OldSword(gamePanel);
         gamePanel.objects[i].worldX = gamePanel.tileSize * 23;
         gamePanel.objects[i].worldY = gamePanel.tileSize * 23;
         i++;
 
-        gamePanel.objects[i] = new Shield(gamePanel);
+        gamePanel.objects[i] = new WoodenShield(gamePanel);
         gamePanel.objects[i].worldX = gamePanel.tileSize * 23;
         gamePanel.objects[i].worldY = gamePanel.tileSize;
         i++;
@@ -55,8 +55,21 @@ public class AssetSetter {
         gamePanel.objects[i] = new BarbarianAxe(gamePanel);
         gamePanel.objects[i].worldX = gamePanel.tileSize;
         gamePanel.objects[i].worldY = gamePanel.tileSize * 23;
+        i++;
 
+        gamePanel.objects[i] = new BlueShield(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize * 7;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 2;
+        i++;
 
+        gamePanel.objects[i] = new HealthPotion(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize * 12;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 2;
+        i++;
+
+        gamePanel.objects[i] = new HealthPotion(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 15;
     }
 
     public void setNpc() {

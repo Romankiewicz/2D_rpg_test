@@ -387,7 +387,7 @@ public class UI {
         g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
 
         int dFrameY = frameY + frameHeight;
-        int dFrameHeight = gamePanel.tileSize*3;
+        int dFrameHeight = gamePanel.tileSize*4;
 
         int textX = frameX + 35;
         int textY = dFrameY + gamePanel.tileSize;

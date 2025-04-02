@@ -65,7 +65,7 @@ public class TileManager {
 
             //TREES
             setup(60, "tree/Tree_1", true);
-            setup(61, "tree/Stump", true);
+            setup(61, "tree/Stump", false);
             setup(62, "tree/Bush_1", true);
     }
 
