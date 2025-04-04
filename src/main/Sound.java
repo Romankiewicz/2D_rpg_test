@@ -27,6 +27,8 @@ public class Sound {
         soundURL[10] = getClass().getResource("/sound/sfx/Sword_Swing.wav");
         soundURL[11] = getClass().getResource("/sound/sfx/Hit_Enemy.wav");
         soundURL[12] = getClass().getResource("/sound/sfx/Cursor.wav");
+        soundURL[13] = getClass().getResource("/sound/sfx/Burning.wav");
+
     }
 
     public void setFile(int i) {

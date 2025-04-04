@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.Fireball;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -76,6 +77,7 @@ public class Player extends Entity {
         coin = 0;
         currentWeapon = null;
         currentShield = null;
+        currentProjectile =  new Fireball(gamePanel);
         attack = getAttack();
         defense = getDefense();
     }
@@ -319,6 +321,12 @@ public class Player extends Entity {
                     invincible = false;
                     invincibleCounter = 0;
                 }
+            }
+            if (gamePanel.keyHandler.shotPressed && !currentProjectile.isAlive) {
+
+                currentProjectile.set(worldX, worldY, direction, true, this);
+                gamePanel.projectiles.add(currentProjectile);
+                gamePanel.playSFX(13);
             }
         }
     }

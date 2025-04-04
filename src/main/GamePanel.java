@@ -45,7 +45,9 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity[] objects = new Entity[20];
     public Entity[] npcs = new Entity[15];
     public Entity[] enemies = new Entity[20];
+//    public Entity[] projectiles = new Entity[20];
     public ArrayList<Entity> entities = new ArrayList<>();
+    public ArrayList<Entity> projectiles = new ArrayList<>();
     public AssetSetter assetSetter = new AssetSetter(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this);
 
@@ -59,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public GamePanel() {
+
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
@@ -127,6 +130,17 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
+
+            for (int i = 0; i < projectiles.size(); i++) {
+                if (projectiles.get(i) != null) {
+                    if (projectiles.get(i).isAlive) {
+                        projectiles.get(i).update();
+                    }
+                }
+                if (!projectiles.get(i).isAlive) {
+                    projectiles.remove(i);
+                }
+            }
         }
         if (gameState == pauseState) {
             music.stop();
@@ -169,14 +183,21 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
 
-            entities.sort(Comparator.comparingInt(o -> o.worldY));
-
-            for (Entity entity : entities) {
-                entity.draw(g2);
+            for (Entity projectile : projectiles) {
+                if (projectile != null) {
+                    entities.add(projectile);
+                }
             }
-
-            entities.clear();
         }
+
+        entities.sort(Comparator.comparingInt(o -> o.worldY));
+
+        for (Entity entity : entities) {
+            entity.draw(g2);
+        }
+
+        entities.clear();
+
 
         ui.draw(g2);
 
@@ -199,6 +220,10 @@ public class GamePanel extends JPanel implements Runnable {
             g2.drawString("Row: " + (player.worldY + player.solidArea.y) / tileSize, x, y);
             y += lineHeight;
             g2.drawString("Draw Time: " + deltaTime, x, y);
+            y += lineHeight;
+            g2.drawString("Direction: " + player.direction, x, y);
+            y += lineHeight;
+            g2.drawString("Last Direction: " + player.lastDirection, x, y);
         }
 
         g2.dispose();

@@ -17,6 +17,8 @@ public class Entity {
     public int speed;
     public int maxHp;
     public int hp;
+    public int maxMp;
+    public int mp;
     public int level;
     public int strength;
     public int dexterity;
@@ -27,6 +29,7 @@ public class Entity {
     public int coin;
     public Entity currentWeapon;
     public Entity currentShield;
+    public Projectile currentProjectile;
 
     GamePanel gamePanel;
 
@@ -38,6 +41,7 @@ public class Entity {
     public int attackValue;
     public int defenseValue;
     public String description = "";
+    public int useCost;
 
     public BufferedImage standingUp;
     public BufferedImage[] standingDown = new BufferedImage[10];
@@ -79,6 +83,8 @@ public class Entity {
     public int movingSpriteNum = 0;
     public int attackSpriteNum = 0;
     public int attackSpriteCounter = 0;
+    public int projectileSpriteNum = 0;
+    public int projectileSpriteCounter = 0;
 
     public int npcSpriteNum = 0;
     public int npcSpriteCounter = 0;
