@@ -23,6 +23,7 @@ public class Player extends Entity {
     int haveBlueKey = 0;
     boolean haveSword = false;
     boolean haveAxe = false;
+    boolean haveBow = false;
 
     public ArrayList<Entity> inventory = new ArrayList<>();
     public final int maxInventorySize = 20;
@@ -53,6 +54,7 @@ public class Player extends Entity {
         getPlayerHandAttackImage();
         getPlayerSwordAttackImage();
         getPlayerAxeAttackImage();
+        getPlayerBowAttackImage();
         setItem();
     }
 
@@ -161,6 +163,26 @@ public class Player extends Entity {
         for (int i = 0; i < 5; i++) {
             axeAttackRight[i] = setup("player/attacking/axeAttack", "AxeAttack_Right_" + (i + 1),
                     gamePanel.tileSize * 2, gamePanel.tileSize);
+        }
+    }
+
+    public void getPlayerBowAttackImage() {
+
+        for (int i = 0; i < 5; i++) {
+            bowAttackUp[i] = setup("player/attacking/bowAttack", "BowAttack_Up_" + (i + 1), gamePanel.tileSize,
+                    gamePanel.tileSize);
+        }
+        for (int i = 0; i < 5; i++) {
+            bowAttackDown[i] = setup("player/attacking/bowAttack", "BowAttack_Down_" + (i + 1), gamePanel.tileSize,
+                    gamePanel.tileSize);
+        }
+        for (int i = 0; i < 5; i++) {
+            bowAttackLeft[i] = setup("player/attacking/bowAttack", "BowAttack_Left_" + (i + 1),
+                    gamePanel.tileSize, gamePanel.tileSize);
+        }
+        for (int i = 0; i < 5; i++) {
+            bowAttackRight[i] = setup("player/attacking/bowAttack", "BowAttack_Right_" + (i + 1),
+                    gamePanel.tileSize, gamePanel.tileSize);
         }
     }
 
@@ -344,7 +366,7 @@ public class Player extends Entity {
                 solidArea.height = attackArea.height;
             }
 
-            if (haveSword) {
+            if (haveSword || haveAxe) {
                 solidArea.width = attackArea.width;
                 solidArea.height = attackArea.height;
             }
@@ -457,7 +479,7 @@ public class Player extends Entity {
     public void enemyInteract(int i) {
 
         if (i != 999) {
-            if (!invincible) {
+            if (!invincible && !gamePanel.enemies[i].isDying) {
 
                 int damage = gamePanel.enemies[i].attack - defense;
 
@@ -481,8 +503,12 @@ public class Player extends Entity {
 
                 int damage = attack - gamePanel.enemies[i].defense;
 
-                if (damage <= 0) {
-                    damage = 1;
+                if (!haveBow) {
+                    if (damage <= 0) {
+                        damage = 1;
+                    }
+                } if (haveBow) {
+                    damage = 0;
                 }
 
                 gamePanel.enemies[i].hp -= damage;
@@ -509,7 +535,7 @@ public class Player extends Entity {
             Random rand = new Random();
 
             int i = 2;
-            if(level % 2 == 0) {
+            if (level % 2 == 0) {
                 i += 1;
             }
             int strengthIncrease = rand.nextInt(i) + 1;
@@ -553,6 +579,7 @@ public class Player extends Entity {
                     attackArea.height = selectedItem.attackArea.height;
                     haveSword = true;
                     haveAxe = false;
+                    haveBow = false;
                     getAttack();
                 }
             }
@@ -569,6 +596,24 @@ public class Player extends Entity {
                     attackArea.height = selectedItem.attackArea.height;
                     haveAxe = true;
                     haveSword = false;
+                    haveBow = false;
+                    getAttack();
+                }
+            }
+            if (selectedItem.type == BOW) {
+                if (selectedItem == currentWeapon) {
+                    currentWeapon = null;
+                    attackArea.width = 24;
+                    attackArea.height = 24;
+                    haveBow = false;
+                    getAttack();
+                } else {
+                    currentWeapon = selectedItem;
+                    attackArea.width = selectedItem.attackArea.width;
+                    attackArea.height = selectedItem.attackArea.height;
+                    haveBow = true;
+                    haveSword = false;
+                    haveAxe = false;
                     getAttack();
                 }
             }
@@ -649,7 +694,16 @@ public class Player extends Entity {
                     default -> image;
                 };
             }
-            if (!haveAxe && !haveSword) {
+            if (haveBow) {
+                image = switch (lastDirection) {
+                    case "standingUp" -> bowAttackUp[attackSpriteNum];
+                    case "standingDown" -> bowAttackDown[attackSpriteNum];
+                    case "standingLeft" -> bowAttackLeft[attackSpriteNum];
+                    case "standingRight" -> bowAttackRight[attackSpriteNum];
+                    default -> image;
+                };
+            }
+            if (!haveAxe && !haveSword && !haveBow) {
                 image = switch (lastDirection) {
                     case "standingUp" -> handAttackUp[attackSpriteNum];
                     case "standingDown" -> handAttackDown[attackSpriteNum];

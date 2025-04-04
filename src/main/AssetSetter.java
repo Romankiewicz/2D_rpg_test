@@ -70,6 +70,11 @@ public class AssetSetter {
         gamePanel.objects[i] = new HealthPotion(gamePanel);
         gamePanel.objects[i].worldX = gamePanel.tileSize;
         gamePanel.objects[i].worldY = gamePanel.tileSize * 15;
+        i++;
+
+        gamePanel.objects[i] = new WoodenBow(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 19;
     }
 
     public void setNpc() {

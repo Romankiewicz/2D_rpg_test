@@ -15,7 +15,7 @@ public class BlueShield extends Entity {
 
         name = "Blue Shield";
 
-        down[0] = setup("objects", "Blue_Shield", gamePanel.tileSize, gamePanel.tileSize);
+        down[0] = setup("objects/shields", "Blue_Shield", gamePanel.tileSize, gamePanel.tileSize);
 
         defenseValue = 3;
 

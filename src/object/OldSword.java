@@ -15,7 +15,7 @@ public class OldSword extends Entity {
 
         name = "Old Sword";
 
-        down[0] = setup("objects", "Old_Sword", gamePanel.tileSize, gamePanel.tileSize);
+        down[0] = setup("objects/weapons", "Old_Sword", gamePanel.tileSize, gamePanel.tileSize);
 
         attackValue = 3;
         attackArea.width = 43;

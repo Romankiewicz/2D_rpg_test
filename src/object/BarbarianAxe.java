@@ -15,7 +15,7 @@ public class BarbarianAxe extends Entity {
 
         name = "Barbarian Axe";
 
-        down[0] = setup("objects", "Barbarian_Axe", gamePanel.tileSize, gamePanel.tileSize);
+        down[0] = setup("objects/weapons", "Barbarian_Axe", gamePanel.tileSize, gamePanel.tileSize);
 
         attackValue = 4;
         attackArea.width = 50;

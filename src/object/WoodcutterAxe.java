@@ -15,7 +15,7 @@ public class WoodcutterAxe extends Entity {
 
         name = "Woodcutter Axe";
 
-        down[0] = setup("objects", "Woodcutter_Axe", gamePanel.tileSize, gamePanel.tileSize);
+        down[0] = setup("objects/weapons", "Woodcutter_Axe", gamePanel.tileSize, gamePanel.tileSize);
 
         attackValue = 2;
         attackArea.width = 50;

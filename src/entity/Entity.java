@@ -65,6 +65,11 @@ public class Entity {
     public BufferedImage[] axeAttackLeft = new BufferedImage[5];
     public BufferedImage[] axeAttackRight = new BufferedImage[5];
 
+    public BufferedImage[] bowAttackUp = new BufferedImage[5];
+    public BufferedImage[] bowAttackDown = new BufferedImage[5];
+    public BufferedImage[] bowAttackLeft = new BufferedImage[5];
+    public BufferedImage[] bowAttackRight = new BufferedImage[5];
+
     public String direction = "down";
     public String lastDirection;
 
@@ -179,7 +184,6 @@ public class Entity {
         }
         if (dyingCounter > i * 8) {
             isAlive = false;
-            isDying = false;
         }
     }
 
