@@ -2,6 +2,7 @@ package enemy;
 
 import entity.Entity;
 import main.GamePanel;
+import object.Pebble;
 
 import java.util.Random;
 
@@ -25,6 +26,7 @@ public class BlueOctorok extends Entity {
         attack = 6;
         defense = 10;
         xp = 4;
+        currentProjectile = new Pebble(gamePanel);
 
         solidArea.x = 12;
         solidArea.y = 18;
@@ -73,6 +75,11 @@ public class BlueOctorok extends Entity {
                 direction = "right";
             }
             actionCounter = 0;
+        }
+        int i = new Random().nextInt(500);
+        if (i > 498 && !currentProjectile.isAlive) {
+            currentProjectile.set(worldX, worldY, direction, true, this);
+            gamePanel.projectiles.add(currentProjectile);
         }
     }
     public void damageReaction() {

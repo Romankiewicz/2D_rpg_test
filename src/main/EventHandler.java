@@ -101,6 +101,7 @@ public class EventHandler {
             gamePanel.gameState = gameState;
             gamePanel.ui.currentDialogue = "\nYou take a rest\n\nYou feel refreshed";
             gamePanel.player.hp = gamePanel.player.maxHp;
+            gamePanel.player.mp = gamePanel.player.maxMp;
             gamePanel.playSFX(9);
             gamePanel.assetSetter.setEnemies();
         }

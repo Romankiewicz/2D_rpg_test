@@ -92,16 +92,18 @@ public class Entity {
     public boolean threeSprites = false;
 
     public int actionCounter = 0;
+    public int shotAvailableCounter = 0;
     public static int dialogueCounter = 0;
+    public int hpBarCounter = 0;
+    public int invincibleCounter = 0;
+    public int dyingCounter = 0;
+
 
     public boolean invincible = false;
-    public int invincibleCounter = 0;
     public boolean attacking = false;
     public boolean isAlive = true;
     public boolean isDying = false;
-    public int dyingCounter = 0;
     public boolean hpBarOn = false;
-    public int hpBarCounter = 0;
 
     public Rectangle solidArea = new Rectangle(0, 0, 72, 72);
     public int solidAreaDefaultX, solidAreaDefaultY;
@@ -209,20 +211,7 @@ public class Entity {
         boolean contactsPlayer = gamePanel.collisionChecker.checkPlayerCollision(this);
 
         if (type == ENEMY && contactsPlayer) {
-            if (!gamePanel.player.invincible) {
-
-                int damage = attack - gamePanel.player.defense;
-
-                if (damage<0){
-                    damage = 0;
-                }
-
-                gamePanel.player.hp -= damage;
-
-                gamePanel.playSFX(8);
-
-                gamePanel.player.invincible = true;
-            }
+            damagePlayer(attack);
         }
         if (!collisionOn) {
             switch (direction) {
@@ -269,7 +258,28 @@ public class Entity {
                 invincibleCounter = 0;
             }
         }
+        if (shotAvailableCounter == 50) {
+            shotAvailableCounter ++;
+        }
 
+    }
+
+    public void damagePlayer(int attack) {
+
+        if (!gamePanel.player.invincible) {
+
+            int damage = attack - gamePanel.player.defense;
+
+            if (damage<0){
+                damage = 0;
+            }
+
+            gamePanel.player.hp -= damage;
+
+            gamePanel.playSFX(8);
+
+            gamePanel.player.invincible = true;
+        }
     }
 
     public void draw(Graphics2D g2) {
@@ -317,7 +327,7 @@ public class Entity {
                 dyingAnimation(g2);
             }
 
-            g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+            g2.drawImage(image, screenX, screenY,null);
 
             changeAlpha(g2, 1f);
         }

@@ -75,6 +75,11 @@ public class AssetSetter {
         gamePanel.objects[i] = new WoodenBow(gamePanel);
         gamePanel.objects[i].worldX = gamePanel.tileSize;
         gamePanel.objects[i].worldY = gamePanel.tileSize * 19;
+        i++;
+
+        gamePanel.objects[i] = new Ether(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 9;
     }
 
     public void setNpc() {

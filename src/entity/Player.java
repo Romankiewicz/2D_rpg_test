@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.Arrow;
 import object.Fireball;
 
 import java.awt.*;
@@ -61,23 +62,27 @@ public class Player extends Entity {
 
     public void setDefaultValues() {
 
-        worldX = gamePanel.tileSize * 10;
-        worldY = gamePanel.tileSize * 12;
-        speed = 4;
         direction = "standingDown";
         lastDirection = "standingDown";
-        maxHp = 6;
-        hp = maxHp;
+        worldX = gamePanel.tileSize * 10;
+        worldY = gamePanel.tileSize * 12;
+
+        speed = 4;
 
         level = 1;
-        strength = 1;
-        dexterity = 1;
         xp = 0;
         nextLevelXp = 10;
+        maxHp = 6;
+        hp = maxHp;
+        maxMp = 4;
+        mp = maxMp;
+        strength = 1;
+        dexterity = 1;
         coin = 0;
+
         currentWeapon = null;
         currentShield = null;
-        currentProjectile =  new Fireball(gamePanel);
+        currentProjectile = null;
         attack = getAttack();
         defense = getDefense();
     }
@@ -211,6 +216,9 @@ public class Player extends Entity {
             if (currentWeapon.type == AXE) {
                 haveAxe = true;
             }
+            if (currentWeapon.type == BOW) {
+                haveBow = true;
+            }
         }
         return attack = strength * currentWeapon.attackValue;
     }
@@ -322,12 +330,29 @@ public class Player extends Entity {
                     invincibleCounter = 0;
                 }
             }
-            if (gamePanel.keyHandler.shotPressed && !currentProjectile.isAlive) {
-
-                currentProjectile.set(worldX, worldY, direction, true, this);
-                gamePanel.projectiles.add(currentProjectile);
-                gamePanel.playSFX(13);
+            if (gamePanel.keyHandler.shotPressed && shotAvailableCounter == 50) {
+                currentProjectile = new Fireball(gamePanel);
+                if (!currentProjectile.isAlive && currentProjectile.haveResource(this)) {
+                    currentProjectile.set(worldX, worldY, direction, true, this);
+                    currentProjectile.useResource(this);
+                    gamePanel.projectiles.add(currentProjectile);
+                    shotAvailableCounter = 0;
+                    gamePanel.playSFX(13);
+                }
             }
+
+            if (haveBow && attacking && shotAvailableCounter == 50) {
+                currentProjectile = new Arrow(gamePanel);
+                if (!currentProjectile.isAlive) {
+                    currentProjectile.set(worldX, worldY, direction, true, this);
+                    gamePanel.projectiles.add(currentProjectile);
+                    shotAvailableCounter = 0;
+                }
+            }
+
+        }
+        if (shotAvailableCounter < 50) {
+            shotAvailableCounter++;
         }
     }
 
@@ -380,7 +405,7 @@ public class Player extends Entity {
             }
 
             int enemyIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.enemies);
-            damageEnemy(enemyIndex);
+            damageEnemy(enemyIndex, attack);
 
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -503,20 +528,18 @@ public class Player extends Entity {
         }
     }
 
-    public void damageEnemy(int i) {
+    public void damageEnemy(int i, int attack) {
 
         if (i != 999) {
 
             if (!gamePanel.enemies[i].invincible) {
 
                 int damage = attack - gamePanel.enemies[i].defense;
-
-                if (!haveBow) {
-                    if (damage <= 0) {
-                        damage = 1;
-                    }
-                } if (haveBow) {
-                    damage = 0;
+                if (haveBow) {
+                    this.attack = attack;
+                }
+                if (damage <= 0) {
+                    damage = 1;
                 }
 
                 gamePanel.enemies[i].hp -= damage;
@@ -658,7 +681,7 @@ public class Player extends Entity {
                     case "standingDown" -> standingDown[spriteNum];
                     case "standingLeft" -> standingLeft[spriteNum];
                     case "standingRight" -> standingRight[spriteNum];
-                    default -> image;
+                    default -> null;
                 };
             }
 
@@ -684,7 +707,7 @@ public class Player extends Entity {
                         yield swordAttackLeft[attackSpriteNum];
                     }
                     case "standingRight" -> swordAttackRight[attackSpriteNum];
-                    default -> image;
+                    default -> null;
                 };
             }
             if (haveAxe) {
@@ -699,7 +722,7 @@ public class Player extends Entity {
                         yield axeAttackLeft[attackSpriteNum];
                     }
                     case "standingRight" -> axeAttackRight[attackSpriteNum];
-                    default -> image;
+                    default -> null;
                 };
             }
             if (haveBow) {
@@ -708,7 +731,7 @@ public class Player extends Entity {
                     case "standingDown" -> bowAttackDown[attackSpriteNum];
                     case "standingLeft" -> bowAttackLeft[attackSpriteNum];
                     case "standingRight" -> bowAttackRight[attackSpriteNum];
-                    default -> image;
+                    default -> null;
                 };
             }
             if (!haveAxe && !haveSword && !haveBow) {
@@ -717,7 +740,7 @@ public class Player extends Entity {
                     case "standingDown" -> handAttackDown[attackSpriteNum];
                     case "standingLeft" -> handAttackLeft[attackSpriteNum];
                     case "standingRight" -> handAttackRight[attackSpriteNum];
-                    default -> image;
+                    default -> null;
                 };
             }
         }

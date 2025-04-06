@@ -4,7 +4,6 @@ import main.GamePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Objects;
 
 public class Projectile extends Entity {
 
@@ -27,6 +26,28 @@ public class Projectile extends Entity {
 
     public void update() {
 
+        if (user == gamePanel.player) {
+
+            int enemyIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.enemies);
+            int npcIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npcs);
+
+            if (enemyIndex != 999) {
+                gamePanel.player.damageEnemy(enemyIndex, this.attack);
+                isAlive = false;
+            }
+            if (npcIndex != 999) {
+                isAlive = false;
+            }
+        }
+        if (user != gamePanel.player) {
+
+            boolean contactPlayer = gamePanel.collisionChecker.checkPlayerCollision(this);
+            if (contactPlayer && !gamePanel.player.invincible) {
+                damagePlayer(attack);
+                isAlive = false;
+            }
+        }
+
         switch (direction) {
             case "up", "standingUp" -> worldY -= speed;
             case "down", "standingDown" -> worldY += speed;
@@ -38,6 +59,7 @@ public class Projectile extends Entity {
         if (hp <= 0) {
             isAlive = false;
         }
+
         projectileSpriteCounter++;
         if (projectileSpriteCounter > 6) {
             switch (projectileSpriteNum) {
@@ -45,12 +67,14 @@ public class Projectile extends Entity {
                 case 1 -> projectileSpriteNum = 2;
                 case 2 -> projectileSpriteNum = 0;
             }
+            projectileSpriteCounter = 0;
+
         }
     }
 
     public void draw(Graphics2D g2) {
 
-        BufferedImage image = null;
+        BufferedImage image;
 
         int screenX = worldX - gamePanel.player.worldX + gamePanel.player.screenX;
         int screenY = worldY - gamePanel.player.worldY + gamePanel.player.screenY;
@@ -60,15 +84,31 @@ public class Projectile extends Entity {
                 worldY + gamePanel.tileSize > gamePanel.player.worldY - gamePanel.player.screenY &&
                 worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.player.screenY) {
 
-            image = switch (direction) {
-                case "up", "standingUp" -> up[projectileSpriteNum];
-                case "down", "standingDown" -> down[projectileSpriteNum];
-                case "left", "standingLeft" -> left[projectileSpriteNum];
-                case "right", "standingRight" -> right[projectileSpriteNum];
-                default -> image;
-            };
+            if (threeSprites) {
+                image = switch (direction) {
+                    case "up", "standingUp" -> up[projectileSpriteNum];
+                    case "down", "standingDown" -> down[projectileSpriteNum];
+                    case "left", "standingLeft" -> left[projectileSpriteNum];
+                    case "right", "standingRight" -> right[projectileSpriteNum];
+                    default -> null;
+                };
+            } else {
+                image = switch (direction) {
+                    case "up", "standingUp" -> up[0];
+                    case "down", "standingDown" -> down[0];
+                    case "left", "standingLeft" -> left[0];
+                    case "right", "standingRight" -> right[0];
+                    default -> null;
+                };
+            }
 
             g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
         }
     }
+
+    public boolean haveResource(Entity user) {
+        return false;
+    }
+
+    public void useResource(Entity user) {}
 }

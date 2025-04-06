@@ -1,5 +1,6 @@
 package object;
 
+import entity.Entity;
 import entity.Projectile;
 import main.GamePanel;
 
@@ -14,13 +15,20 @@ public class Fireball extends Projectile {
 
         name = "Fireball";
 
-        speed = 5;
+        speed = 6;
         maxHp = 80;
         hp = maxHp;
-        attackValue = 2;
+        attack = 2;
         useCost = 1;
         isAlive = false;
         threeSprites = true;
+
+        solidArea.x = 21;
+        solidArea.y = 21;
+        solidArea.width = 30;
+        solidArea.height = 30;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
 
         getProjectileImage();
     }
@@ -42,5 +50,15 @@ public class Fireball extends Projectile {
             right[i] = setup("objects/projectiles/fireball", "Fireball_Right_" + (i+1), gamePanel.tileSize,
                     gamePanel.tileSize);
         }
+    }
+
+    public boolean haveResource(Entity user) {
+
+        return user.mp >= useCost;
+    }
+
+    public void useResource(Entity user) {
+
+        user.mp -= useCost;
     }
 }

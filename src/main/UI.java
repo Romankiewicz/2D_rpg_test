@@ -1,7 +1,8 @@
 package main;
 
 import entity.Entity;
-import object.Heart;
+import object.HP;
+import object.MP;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,6 +15,7 @@ public class UI {
     Font courier_30, courier_40, courier_80, courier_30B, courier_40B, courier_80B;
 
     BufferedImage heartFull, heartHalf, heartEmpty;
+    BufferedImage manaCrystal, manaEmpty;
 
     ArrayList<String> message = new ArrayList<>();
     ArrayList<Integer> messageCounter = new ArrayList<>();
@@ -44,10 +46,14 @@ public class UI {
         courier_80 = new Font("Courier New", Font.PLAIN, 80);
         courier_80B = new Font("Courier New", Font.BOLD, 80);
 
-        Entity heart = new Heart(gamePanel);
+        Entity heart = new HP(gamePanel);
         heartFull = heart.image;
         heartHalf = heart.image1;
         heartEmpty = heart.image2;
+
+        Entity mana = new MP(gamePanel);
+        manaCrystal = mana.image;
+        manaEmpty = mana.image1;
     }
 
     public void draw(Graphics2D g2) {
@@ -62,15 +68,19 @@ public class UI {
             drawTitleScreen();
         } else if (gamePanel.gameState == gamePanel.playState) {
             drawPlayerHp();
+            drawPlayerMp();
             drawMessage();
         } else if (gamePanel.gameState == gamePanel.pauseState) {
             drawPlayerHp();
+            drawPlayerMp();
             drawPauseScreen();
         } else if (gamePanel.gameState == gamePanel.dialogueState) {
             drawPlayerHp();
+            drawPlayerMp();
             drawDialogueScreen();
         } else if (gamePanel.gameState == gamePanel.statsState) {
             drawPlayerHp();
+            drawPlayerMp();
             drawStatsScreen();
             drawInventory();
         }
@@ -128,6 +138,27 @@ public class UI {
             if (i < gamePanel.player.hp) {
                 g2.drawImage(heartFull, x, y, null);
             }
+            i++;
+            x += gamePanel.tileSize;
+        }
+    }
+
+    public void drawPlayerMp() {
+
+        int x = gamePanel.tileSize / 2;
+        int y = gamePanel.tileSize / 3 + gamePanel.tileSize;
+        int i = 0;
+
+        while (i < gamePanel.player.maxMp) {
+            g2.drawImage(manaEmpty, x, y, null);
+            i++;
+            x += gamePanel.tileSize;
+        }
+        x = gamePanel.tileSize / 2;
+        i = 0;
+
+        while (i < gamePanel.player.mp) {
+            g2.drawImage(manaCrystal, x, y, null);
             i++;
             x += gamePanel.tileSize;
         }
@@ -252,7 +283,7 @@ public class UI {
     public void drawStatsScreen() {
 
         final int frameX = gamePanel.tileSize / 2;
-        final int frameY = gamePanel.tileSize * 2;
+        final int frameY = gamePanel.tileSize * 2 + gamePanel.tileSize / 2;
         final int frameWidth = gamePanel.tileSize * 5;
         final int frameHeight = gamePanel.tileSize * 8;
 
@@ -365,7 +396,7 @@ public class UI {
         for (int i = 0; i < gamePanel.player.inventory.size(); i++) {
 
             if (gamePanel.player.inventory.get(i) == gamePanel.player.currentWeapon ||
-            gamePanel.player.inventory.get(i) == gamePanel.player.currentShield) {
+                    gamePanel.player.inventory.get(i) == gamePanel.player.currentShield) {
                 g2.setColor(translucentOrange);
                 g2.fillRoundRect(slotX, slotY, gamePanel.tileSize, gamePanel.tileSize, 10, 10);
             }
@@ -387,7 +418,7 @@ public class UI {
         g2.drawRoundRect(cursorX, cursorY, cursorWidth, cursorHeight, 10, 10);
 
         int dFrameY = frameY + frameHeight;
-        int dFrameHeight = gamePanel.tileSize*4;
+        int dFrameHeight = gamePanel.tileSize * 4;
 
         int textX = frameX + 35;
         int textY = dFrameY + gamePanel.tileSize;
@@ -398,7 +429,7 @@ public class UI {
 
         if (itemIndex < gamePanel.player.inventory.size()) {
             drawSubWindow(frameX, dFrameY, frameWidth, dFrameHeight);
-            for (String line : gamePanel.player.inventory.get(itemIndex).description.split("\n")){
+            for (String line : gamePanel.player.inventory.get(itemIndex).description.split("\n")) {
                 g2.drawString(line, textX, textY);
                 textY += 34;
             }
