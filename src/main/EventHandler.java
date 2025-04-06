@@ -104,6 +104,7 @@ public class EventHandler {
             gamePanel.player.mp = gamePanel.player.maxMp;
             gamePanel.playSFX(9);
             gamePanel.assetSetter.setEnemies();
+            gamePanel.assetSetter.setObject();
         }
     }
 

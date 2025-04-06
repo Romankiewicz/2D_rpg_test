@@ -78,7 +78,7 @@ public class Player extends Entity {
         mp = maxMp;
         strength = 1;
         dexterity = 1;
-        coin = 0;
+        gold = 0;
 
         currentWeapon = null;
         currentShield = null;
@@ -354,6 +354,12 @@ public class Player extends Entity {
         if (shotAvailableCounter < 50) {
             shotAvailableCounter++;
         }
+        if (hp > maxHp) {
+            hp = maxHp;
+        }
+        if (mp > maxMp) {
+            mp = maxMp;
+        }
     }
 
     public void attack() {
@@ -424,15 +430,21 @@ public class Player extends Entity {
 
         if (i != 999) {
 
-            String text = "";
-            if (inventory.size() != maxInventorySize) {
-                inventory.add(gamePanel.objects[i]);
-                gamePanel.playSFX(3);
-            } else {
-                text = "Inventory Full!";
+            if (gamePanel.objects[i].type == COIN) {
+
+                gamePanel.objects[i].use(this);
+                gamePanel.objects[i] = null;
             }
-            gamePanel.ui.addMessage(text);
-            gamePanel.objects[i] = null;
+            else if (!gamePanel.objects[i].collision) {
+                String text = "";
+                if (inventory.size() != maxInventorySize) {
+                    inventory.add(gamePanel.objects[i]);
+                    gamePanel.playSFX(3);
+                } else {
+                    text = "Inventory\n Full!";
+                }
+                gamePanel.ui.addMessage(text);
+                gamePanel.objects[i] = null;
 //            String objectName = gamePanel.objects[i].name;
 //            switch (objectName) {
 //                case "Silver Key":
@@ -491,6 +503,7 @@ public class Player extends Entity {
 //                    gamePanel.objects[i] = null;
 //                    break;
 //            }
+            }
         }
     }
 

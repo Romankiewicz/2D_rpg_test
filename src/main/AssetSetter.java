@@ -80,6 +80,21 @@ public class AssetSetter {
         gamePanel.objects[i] = new Ether(gamePanel);
         gamePanel.objects[i].worldX = gamePanel.tileSize;
         gamePanel.objects[i].worldY = gamePanel.tileSize * 9;
+        i++;
+
+        gamePanel.objects[i] = new Coin(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize * 3;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 15;
+        i++;
+
+        gamePanel.objects[i] = new Coin(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize * 11;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 10;
+        i++;
+
+        gamePanel.objects[i] = new Coin(gamePanel);
+        gamePanel.objects[i].worldX = gamePanel.tileSize * 2;
+        gamePanel.objects[i].worldY = gamePanel.tileSize * 9;
     }
 
     public void setNpc() {

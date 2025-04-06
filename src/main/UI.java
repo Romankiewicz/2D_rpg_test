@@ -101,18 +101,21 @@ public class UI {
 
         for (int i = 0; i < message.size(); i++) {
             if (message.get(i) != null) {
-                g2.setColor(translucentBlack);
-                g2.drawString(message.get(i), messageX + 2, messageY + 2);
-                g2.setColor(translucentWhite);
-                g2.drawString(message.get(i), messageX, messageY);
+                for (String line : message.get(i).split("\n")) {
 
-                int counter = messageCounter.get(i) + 1;
-                messageCounter.set(i, counter);
-                messageY += 40;
+                    g2.setColor(translucentBlack);
+                    g2.drawString(line, messageX + 2, messageY + 2);
+                    g2.setColor(translucentWhite);
+                    g2.drawString(line, messageX, messageY);
 
-                if (messageCounter.get(i) > 180) {
-                    message.remove(i);
-                    messageCounter.remove(i);
+                    int counter = messageCounter.get(i) + 1;
+                    messageCounter.set(i, counter);
+                    messageY += 40;
+
+                    if (messageCounter.get(i) > 180) {
+                        message.remove(i);
+                        messageCounter.remove(i);
+                    }
                 }
             }
         }
@@ -310,7 +313,7 @@ public class UI {
         textY += lineHeight;
         g2.drawString("Next LVL", textX, textY);
         textY += lineHeight;
-        g2.drawString("Coin", textX, textY);
+        g2.drawString("Gold", textX, textY);
         textY += lineHeight + 10;
         g2.drawString("Weapon", textX, textY);
         textY += gamePanel.tileSize;
@@ -355,7 +358,7 @@ public class UI {
         g2.drawString(value, textX, textY);
         textY += lineHeight;
 
-        value = String.valueOf(gamePanel.player.coin);
+        value = String.valueOf(gamePanel.player.gold);
         textX = getXForAlignedText(value, rightX);
         g2.drawString(value, textX, textY);
         textY += lineHeight;

@@ -26,7 +26,7 @@ public class Entity {
     public int defense;
     public int xp;
     public int nextLevelXp;
-    public int coin;
+    public int gold;
     public Entity currentWeapon;
     public Entity currentShield;
     public Projectile currentProjectile;
@@ -42,6 +42,7 @@ public class Entity {
     public int defenseValue;
     public String description = "";
     public int useCost;
+    public int value;
 
     public BufferedImage standingUp;
     public BufferedImage[] standingDown = new BufferedImage[10];
@@ -154,6 +155,20 @@ public class Entity {
     }
 
     public void use(Entity entity) {}
+
+    public void checkDrop() {}
+
+    public void dropItem(Entity droppedItem) {
+
+        for (int i = 0; i < gamePanel.objects.length; i++) {
+            if (gamePanel.objects[i] == null) {
+                gamePanel.objects[i] = droppedItem;
+                gamePanel.objects[i].worldX = worldX;
+                gamePanel.objects[i].worldY = worldY;
+                break;
+            }
+        }
+    }
 
     public void setAction() {}
 

@@ -8,7 +8,7 @@ import static entity.EntityType.CONSUMABLE;
 public class Ether extends Entity {
 
     GamePanel gamePanel;
-    int value = 1;
+
 
     public Ether(GamePanel gamePanel) {
 
@@ -18,17 +18,23 @@ public class Ether extends Entity {
         type = CONSUMABLE;
 
         name = "Ether";
+        value = 1;
+
+        solidArea.x = 16;
+        solidArea.y = 16;
+        solidArea.width = 40;
+        solidArea.height = 40;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+
         down[0] = setup("objects", "Ether", gamePanel.tileSize, gamePanel.tileSize);
 
-        description = "[" + name + "]\nA mysterious liquid\nbrewed by a Witch.\nHP: +" + value;
+        description = "[" + name + "]\nA mysterious liquid\nbrewed by a Witch.\nMP: +" + value;
     }
 
     public void use(Entity entity) {
 
         entity.mp += value;
-        if(gamePanel.player.mp > gamePanel.player.maxMp) {
-            gamePanel.player.mp = gamePanel.player.maxMp;
-        }
         gamePanel.playSFX(9);
     }
 

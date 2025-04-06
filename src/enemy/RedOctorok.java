@@ -2,6 +2,9 @@ package enemy;
 
 import entity.Entity;
 import main.GamePanel;
+import object.Coin;
+import object.Ether;
+import object.HealthPotion;
 
 import java.util.Random;
 
@@ -83,6 +86,21 @@ public class RedOctorok extends Entity {
             case "down", "standingDown" -> direction = "down";
             case "left", "standingLeft" -> direction = "left";
             case "right", "standingRight" -> direction = "right";
+        }
+    }
+
+    public void checkDrop() {
+
+        int i = new Random().nextInt(100)+1;
+
+        if (i < 50) {
+            dropItem(new Coin(gamePanel));
+        }
+        if (i >= 50 && i < 75) {
+            dropItem(new HealthPotion(gamePanel));
+        }
+        if (i >= 75 && i < 100) {
+            dropItem(new Ether(gamePanel));
         }
     }
 }
