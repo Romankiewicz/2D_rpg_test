@@ -3,6 +3,7 @@ package main;
 import enemy.BlueOctorok;
 import enemy.RedOctorok;
 import entity.NpcNakedGuy;
+import interactiveTile.Door;
 import object.*;
 
 public class AssetSetter {
@@ -26,11 +27,11 @@ public class AssetSetter {
         gamePanel.objects[i].worldX = gamePanel.tileSize * 13;
         gamePanel.objects[i].worldY = gamePanel.tileSize * 4;
         i++;
-
-        gamePanel.objects[i] = new Door(gamePanel);
-        gamePanel.objects[i].worldX = gamePanel.tileSize * 3;
-        gamePanel.objects[i].worldY = gamePanel.tileSize * 5;
-        i++;
+//
+//        gamePanel.objects[i] = new Door(gamePanel);
+//        gamePanel.objects[i].worldX = gamePanel.tileSize * 3;
+//        gamePanel.objects[i].worldY = gamePanel.tileSize * 5;
+//        i++;
 
         gamePanel.objects[i] = new ChestClosed(gamePanel);
         gamePanel.objects[i].worldX = gamePanel.tileSize * 3;
@@ -142,5 +143,12 @@ public class AssetSetter {
         gamePanel.enemies[i] = new RedOctorok(gamePanel);
         gamePanel.enemies[i].worldX = gamePanel.tileSize * 5;
         gamePanel.enemies[i].worldY = gamePanel.tileSize * 21;
+    }
+
+    public void setInteractiveTiles() {
+
+        int i = 0;
+
+        gamePanel.interactiveTiles[i] = new Door(gamePanel, 3, 5);
     }
 }
