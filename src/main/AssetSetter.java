@@ -4,6 +4,7 @@ import enemy.BlueOctorok;
 import enemy.RedOctorok;
 import entity.NpcNakedGuy;
 import interactiveTile.Door;
+import interactiveTile.InteractiveTree;
 import object.*;
 
 public class AssetSetter {
@@ -26,16 +27,6 @@ public class AssetSetter {
         gamePanel.objects[i] = new BlueKey(gamePanel);
         gamePanel.objects[i].worldX = gamePanel.tileSize * 13;
         gamePanel.objects[i].worldY = gamePanel.tileSize * 4;
-        i++;
-//
-//        gamePanel.objects[i] = new Door(gamePanel);
-//        gamePanel.objects[i].worldX = gamePanel.tileSize * 3;
-//        gamePanel.objects[i].worldY = gamePanel.tileSize * 5;
-//        i++;
-
-        gamePanel.objects[i] = new ChestClosed(gamePanel);
-        gamePanel.objects[i].worldX = gamePanel.tileSize * 3;
-        gamePanel.objects[i].worldY = gamePanel.tileSize * 2;
         i++;
 
         gamePanel.objects[i] = new OldSword(gamePanel);
@@ -116,7 +107,7 @@ public class AssetSetter {
         int i = 0;
 
         gamePanel.enemies[i] = new BlueOctorok(gamePanel);
-        gamePanel.enemies[i].worldX = gamePanel.tileSize * 3;
+        gamePanel.enemies[i].worldX = gamePanel.tileSize * 2;
         gamePanel.enemies[i].worldY = gamePanel.tileSize * 4;
         i++;
 
@@ -150,5 +141,26 @@ public class AssetSetter {
         int i = 0;
 
         gamePanel.interactiveTiles[i] = new Door(gamePanel, 3, 5);
+        i++;
+
+        gamePanel.interactiveTiles[i] = new InteractiveTree(gamePanel, 14, 5);
+        i++;
+
+        gamePanel.interactiveTiles[i] = new InteractiveTree(gamePanel, 15, 5);
+        i++;
+
+        gamePanel.interactiveTiles[i] = new InteractiveTree(gamePanel, 16, 5);
+        i++;
+
+        gamePanel.interactiveTiles[i] = new InteractiveTree(gamePanel, 20, 5);
+        i++;
+
+        gamePanel.interactiveTiles[i] = new InteractiveTree(gamePanel, 21, 5);
+        i++;
+
+        gamePanel.interactiveTiles[i] = new InteractiveTree(gamePanel, 22, 5);
+        i++;
+
+        gamePanel.interactiveTiles[i] = new InteractiveTree(gamePanel, 23, 5);
     }
 }

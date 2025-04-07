@@ -223,6 +223,8 @@ public class Entity {
         gamePanel.collisionChecker.checkObjectCollision(this, false);
         gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.enemies);
         gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.npcs);
+        gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.interactiveTiles);
+
         boolean contactsPlayer = gamePanel.collisionChecker.checkPlayerCollision(this);
 
         if (type == ENEMY && contactsPlayer) {

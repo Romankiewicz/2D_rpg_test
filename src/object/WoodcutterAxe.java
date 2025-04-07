@@ -2,8 +2,7 @@ package object;
 
 import entity.Entity;
 import main.GamePanel;
-
-import static entity.EntityType.AXE;
+import static entity.EntityType.WOODCUTTER_AXE;
 
 public class WoodcutterAxe extends Entity {
 
@@ -11,7 +10,7 @@ public class WoodcutterAxe extends Entity {
 
         super(gamePanel);
 
-        type = AXE;
+        type = WOODCUTTER_AXE;
 
         name = "Woodcutter Axe";
 

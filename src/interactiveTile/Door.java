@@ -1,8 +1,8 @@
 package interactiveTile;
 
+import entity.Entity;
 import main.GamePanel;
 
-import static entity.EntityType.DOOR;
 
 public class Door extends InteractiveTile {
 
@@ -16,11 +16,24 @@ public class Door extends InteractiveTile {
         this.worldX = gamePanel.tileSize * col;
         this.worldY = gamePanel.tileSize * row;
 
-        type = DOOR;
-
         name = "Door";
-        down[0] = setup("objects", "Door", gamePanel.tileSize, gamePanel.tileSize);
+        down[0] = setup("objects/interactiveTiles", "Interactive_Door", gamePanel.tileSize, gamePanel.tileSize);
         interactive = true;
+        destructible = true;
+    }
+    public boolean isRequiredItem(Entity entity) {
+
+        boolean isRequiredItem = false;
+        return isRequiredItem;
     }
 
+    public void playSFX() {
+        gamePanel.playSFX(4);
+    }
+
+    public InteractiveTile getInteractedTile() {
+
+        playSFX();
+        return new DoorOpen(gamePanel, worldX / gamePanel.tileSize, worldY / gamePanel.tileSize);
+    }
 }

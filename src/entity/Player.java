@@ -21,8 +21,6 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    int haveSilverKey = 0;
-    int haveBlueKey = 0;
     boolean haveSword = false;
     boolean haveAxe = false;
     boolean haveBow = false;
@@ -213,7 +211,7 @@ public class Player extends Entity {
             if (currentWeapon.type == SWORD) {
                 haveSword = true;
             }
-            if (currentWeapon.type == AXE) {
+            if (currentWeapon.type == AXE || currentWeapon.type == WOODCUTTER_AXE) {
                 haveAxe = true;
             }
             if (currentWeapon.type == BOW) {
@@ -265,6 +263,8 @@ public class Player extends Entity {
 
             int enemyIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.enemies);
             enemyInteract(enemyIndex);
+
+            int interactiveTileIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.interactiveTiles);
 
             gamePanel.eventHandler.checkEvent();
 
@@ -413,6 +413,10 @@ public class Player extends Entity {
             int enemyIndex = gamePanel.collisionChecker.checkEntityCollision(this, gamePanel.enemies);
             damageEnemy(enemyIndex, attack);
 
+            int interactiveTileIndex = gamePanel.collisionChecker.checkEntityCollision(this,
+                    gamePanel.interactiveTiles);
+            damageInteractiveTile(interactiveTileIndex);
+
             worldX = currentWorldX;
             worldY = currentWorldY;
             solidArea.width = solidAreaWidth;
@@ -434,8 +438,7 @@ public class Player extends Entity {
 
                 gamePanel.objects[i].use(this);
                 gamePanel.objects[i] = null;
-            }
-            else if (!gamePanel.objects[i].collision) {
+            } else if (!gamePanel.objects[i].collision) {
                 String text = "";
                 if (inventory.size() != maxInventorySize) {
                     inventory.add(gamePanel.objects[i]);
@@ -572,6 +575,13 @@ public class Player extends Entity {
         }
     }
 
+    public void damageInteractiveTile(int i) {
+
+        if (i != 999 && gamePanel.interactiveTiles[i].destructible && gamePanel.interactiveTiles[i].isRequiredItem(this)) {
+            gamePanel.interactiveTiles[i] = gamePanel.interactiveTiles[i].getInteractedTile();
+        }
+    }
+
     public void checkLevelUp() {
 
         if (xp >= nextLevelXp) {
@@ -627,7 +637,7 @@ public class Player extends Entity {
                     getAttack();
                 }
             }
-            if (selectedItem.type == AXE) {
+            if (selectedItem.type == AXE || selectedItem.type == WOODCUTTER_AXE) {
                 if (selectedItem == currentWeapon) {
                     currentWeapon = null;
                     attackArea.width = 24;
